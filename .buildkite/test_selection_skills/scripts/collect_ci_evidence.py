@@ -213,6 +213,47 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict
     }
 
 
+def fetch_test_runs_from_buildkite_logs(org: str, pipeline: str, build_number: str) -> list:
+    """Fetch actual test failures from Buildkite job logs."""
+    try:
+        script_dir = Path(__file__).parent
+        fetch_script = script_dir / "fetch_buildkite_test_logs.py"
+
+        if not fetch_script.exists():
+            print(f"  Warning: fetch_buildkite_test_logs.py not found at {fetch_script}", file=sys.stderr)
+            return []
+
+        # Call the log parsing script
+        cmd = [
+            sys.executable,
+            str(fetch_script),
+            "--org", org,
+            "--pipeline", pipeline,
+            "--build", str(build_number)
+        ]
+
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+
+        if result.returncode != 0:
+            print(f"  Error fetching test logs: {result.stderr}", file=sys.stderr)
+            return []
+
+        # Parse JSON output
+        data = json.loads(result.stdout)
+        failed_tests = data.get("failed_tests", [])
+
+        print(f"  Found {len(failed_tests)} failed tests from job logs")
+        return failed_tests
+
+    except subprocess.TimeoutExpired:
+        print(f"  Timeout fetching test logs", file=sys.stderr)
+    except json.JSONDecodeError as e:
+        print(f"  Error parsing test log data: {e}", file=sys.stderr)
+    except Exception as e:
+        print(f"  Could not fetch test logs: {e}", file=sys.stderr)
+    return []
+
+
 def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -> tuple[dict, list]:
     """Fetch test runs from Buildkite Test Engine using fetch_buildkite_tests.py script."""
     try:
@@ -220,7 +261,7 @@ def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -
         fetch_script = script_dir / "fetch_buildkite_tests.py"
 
         if not fetch_script.exists():
-            print(f"  Error: fetch_buildkite_tests.py not found at {fetch_script}", file=sys.stderr)
+            print(f"  Warning: fetch_buildkite_tests.py not found, skipping Test Engine data", file=sys.stderr)
             return {}, []
 
         # Call the fetch script with subprocess
@@ -235,7 +276,7 @@ def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
 
         if result.returncode != 0:
-            print(f"  Error fetching test runs: {result.stderr}", file=sys.stderr)
+            print(f"  Warning: Could not fetch Test Engine data: {result.stderr}", file=sys.stderr)
             return {}, []
 
         # Parse JSON output from the script
@@ -245,15 +286,15 @@ def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -
         test_runs = data.get("test_runs", [])
         all_tests = data.get("tests", [])
 
-        print(f"  Found {len(test_runs)} test runs with {len(all_tests)} test executions")
+        print(f"  Found {len(test_runs)} test runs with {len(all_tests)} test executions from Test Engine")
         return {"test_runs": test_runs}, all_tests
 
     except subprocess.TimeoutExpired:
-        print(f"  Timeout fetching test runs", file=sys.stderr)
+        print(f"  Timeout fetching Test Engine data", file=sys.stderr)
     except json.JSONDecodeError as e:
-        print(f"  Error parsing test run data: {e}", file=sys.stderr)
+        print(f"  Error parsing Test Engine data: {e}", file=sys.stderr)
     except Exception as e:
-        print(f"  Could not fetch test runs: {e}", file=sys.stderr)
+        print(f"  Could not fetch Test Engine data: {e}", file=sys.stderr)
     return {}, []
 
 

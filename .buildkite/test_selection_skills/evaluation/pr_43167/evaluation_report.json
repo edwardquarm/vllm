@@ -1,9 +1,11 @@
 {
   "pr_number": "43167",
   "evaluation_status": "success",
+  "buildkite_build": "70063",
+  "data_source": "buildkite_api_logs",
   "summary": {
     "true_positives": 0,
-    "false_negatives": 3,
+    "false_negatives": 141,
     "false_positives": 7,
     "coverage_rate": 0.0,
     "precision_rate": 0.0
@@ -11,19 +13,124 @@
   "true_positive_details": [],
   "false_negative_details": [
     {
-      "failed_test": "",
-      "job_name": "",
-      "why_missed": "not_in_candidate_mapping"
+      "failed_test": "tests/tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "llm_selected_quantization_tests_not_tokenizer_integration"
     },
     {
-      "failed_test": "",
-      "job_name": "",
-      "why_missed": "not_in_candidate_mapping"
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_audio.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
     },
     {
-      "failed_test": "",
-      "job_name": "",
-      "why_missed": "not_in_candidate_mapping"
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_audio_in_video.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_batched_chat_completions.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_completion.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_echo.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_error.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_chat_logit_bias_validation.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_completion_with_function_calling.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_completion_with_image_embeds.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_default_mm_loras.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_enable_force_include_usage.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_root_path.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_serving_chat.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_thinking_token_budget.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_video.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_vision.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion/test_vision_embeds.py",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "llm_selected_low_level_tests_not_api_integration"
     }
   ],
   "false_positive_details": [
@@ -56,7 +163,21 @@
       "reason": "Large PR (31 files, 4+ directories) affecting core quantization infrastructure per Rule 5"
     }
   ],
+  "analysis": {
+    "llm_selection_strategy": "Focused on low-level quantization and model executor tests based on direct code changes",
+    "actual_failures": "API integration layer - 140 entrypoints tests, 1 tokenizer test",
+    "gap": "LLM missed that internal API refactoring (KV cache loading) would break OpenAI API compatibility layer",
+    "lessons": [
+      "Internal API refactoring requires testing entire call stack, not just direct callers",
+      "Model loading changes need OpenAI API compatibility tests",
+      "Boilerplate removal PRs need broad integration testing",
+      "Test selection should include API entrypoints when core model code changes"
+    ]
+  },
   "notes": [
-    "Generated on 2026-06-09T18:03:00.096499+00:00"
+    "Generated on 2026-06-09T18:24:36.806830+00:00",
+    "Data extracted from Buildkite API build logs (build 70063)",
+    "Total failing tests: 141 (1 tokenizer + 140 entrypoints)",
+    "False negatives truncated to 25 representative samples for JSON size"
   ]
 }
