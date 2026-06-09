@@ -7,6 +7,7 @@ Usage:
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -58,7 +59,8 @@ def read_test_selection_instructions(script_dir: Path) -> str:
     return instructions_path.read_text() if instructions_path.exists() else ""
 
 
-def run_llm_selector(instructions: str, candidate_mapping: str, changed_files: list[str], diff_content: str) -> str:
+def run_llm_selector(instructions: str, candidate_mapping: str, changed_files: list[str], diff_content: str,
+                     model: str) -> str:
     """Run the LLM selector using claude CLI."""
     prompt = f"""You are selecting tests for a PR. Follow the instructions exactly.
 
@@ -89,7 +91,7 @@ Follow ALL rules. Use the output format specified in the instructions."""
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write(prompt)
             prompt_file = f.name
-        cmd = ["claude", "-p", "--model", "haiku", f"@{prompt_file}"]
+        cmd = ["claude", "-p", "--model", model, f"@{prompt_file}"]
         try:
             result = subprocess.run(cmd, capture_output=True, text=True)
             return result.stdout if result.returncode == 0 else ""
@@ -97,7 +99,7 @@ Follow ALL rules. Use the output format specified in the instructions."""
             import os
             os.unlink(prompt_file)
     else:
-        cmd = ["claude", "-p", "--model", "haiku", prompt]
+        cmd = ["claude", "-p", "--model", model, prompt]
         result = subprocess.run(cmd, capture_output=True, text=True)
         return result.stdout if result.returncode == 0 else ""
 
@@ -131,7 +133,8 @@ def parse_selector_output(output: str) -> tuple[str, list[dict]]:
 
 
 def normalize_selector_replay(pr_number: int, repo: str, pr_details: dict, changed_files: list[str],
-                              selected_tests: list[dict], notes: list[str], candidate_mapping: str = "") -> dict:
+                              selected_tests: list[dict], notes: list[str], candidate_mapping: str = "",
+                              model: str = "haiku") -> dict:
     """Normalize selector replay into standard format."""
     status = "success" if selected_tests else "partial"
 
@@ -144,7 +147,7 @@ def normalize_selector_replay(pr_number: int, repo: str, pr_details: dict, chang
         "diff_ref": pr_details.get("head", {}).get("sha", ""),
         "test_dependency_ref": "build_test_mapping.py",
         "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
-        "selector_command": "claude -p --model haiku",
+        "selector_command": f"claude -p --model {model}",
         "llm_selected_tests": selected_tests,
         "selection_reasons": [{"identifier": t["identifier"], "reason": t["reason"]} for t in selected_tests],
         "candidate_mapping": candidate_mapping,
@@ -159,6 +162,8 @@ def main():
     parser.add_argument("--repo", type=str, default="vllm-project/vllm", help="Repository name")
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
     parser.add_argument("--skip-llm", action="store_true", help="Skip LLM invocation")
+    parser.add_argument("--model", type=str, default=os.environ.get("ATS_SELECTOR_MODEL", "haiku"),
+                        help="Claude/LiteLLM model for selector replay")
     args = parser.parse_args()
 
     pr_number = args.pr_number
@@ -201,7 +206,7 @@ def main():
 
     if not args.skip_llm:
         print("  Running LLM selector...", file=sys.stderr)
-        selector_output = run_llm_selector(instructions, candidate_mapping, changed_files, diff_content)
+        selector_output = run_llm_selector(instructions, candidate_mapping, changed_files, diff_content, args.model)
         if selector_output:
             reasoning, selected_tests = parse_selector_output(selector_output)
             print(f"  Selected {len(selected_tests)} test targets", file=sys.stderr)
@@ -217,7 +222,8 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     notes = [f"Replay performed on {datetime.now(timezone.utc).isoformat()}"]
-    replay = normalize_selector_replay(pr_number, repo, pr_details, changed_files, selected_tests, notes, candidate_mapping)
+    replay = normalize_selector_replay(pr_number, repo, pr_details, changed_files, selected_tests, notes,
+                                       candidate_mapping, args.model)
 
     (output_dir / "selector_replay.json").write_text(json.dumps(replay, indent=2) + "\n")
     print(f"  Replay written to: {output_dir / 'selector_replay.json'}", file=sys.stderr)

@@ -1,3 +1,0 @@
-I'm ready to help! I'm in the vLLM repository on the `auto-test-target-determination-v2` branch. I've loaded the AGENTS.md guidelines for this project.
-
-What would you like to work on?

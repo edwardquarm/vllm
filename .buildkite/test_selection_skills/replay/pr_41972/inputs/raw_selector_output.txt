@@ -1,7 +1,0 @@
-This PR modifies the tensor initialization in the AllReduce + RMSNorm fusion pass, changing from `torch.empty_like()` (uninitialized) to `torch.zeros_like()` (zero-initialized) for the residual tensor. This is a behavior change in a core compilation fusion kernel that could affect numerical correctness. The candidate set includes tests that import this module widely, but the diff shows a targeted change to a specific function. I'm selecting tests that directly exercise the AllReduce RMSNorm fusion and general compilation correctness, including the end-to-end fusion test that most directly tests this code path.
-
----
-tests/compile/fusions_e2e/test_tp2_ar_rms.py | directly tests TP2 AllReduce RMSNorm fusion
-tests/compile/passes/distributed/test_fusion_all_reduce.py | tests AllReduce fusion pass directly
-tests/basic_correctness/test_basic_correctness.py | regression check for correctness impact
-tests/compile/fullgraph/test_full_graph.py | ensures compilation still works end-to-end

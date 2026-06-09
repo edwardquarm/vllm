@@ -1,5 +1,0 @@
-This PR adds XPU backend support to MOE operations. The changes are narrowly scoped: they add platform-specific code paths that only activate when running on XPU hardware, using PyTorch fallbacks instead of specialized kernels. The mxfp4.py changes add XPU to backend selection and weight transformation logic. The fused_topk_bias_router.py changes add a pure PyTorch fallback for topk_softplus_sqrt when on XPU. The core logic for other backends (TRTLLM, Triton, AITER) remains unchanged. I'm selecting the MOE-specific kernel tests that directly exercise these functions and code paths, particularly test_mxfp4_moe.py and test_topk_softplus_sqrt.py which are explicitly listed in the candidates and test the modified functions.
-
----
-tests/kernels/moe/test_mxfp4_moe.py | directly tests Mxfp4MoeBackend and modified _get_priority_backends()
-tests/kernels/moe/test_topk_softplus_sqrt.py | directly tests vllm_topk_softplus_sqrt() with new XPU path

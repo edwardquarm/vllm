@@ -1,5 +1,0 @@
-This PR modifies a CUDA/HIP header file in `csrc/quantization/gptq/compat.cuh`, adding a version gate for ROCm support. The change refines a preprocessor conditional to check `HIP_VERSION_MAJOR * 100 + HIP_VERSION_MINOR < 713` in addition to the existing `USE_ROCM` check. This is a kernel-level change that affects quantization compilation, not a Python source change. Per Rule 3, C/C++/CUDA source changes require running kernel tests and basic correctness tests to catch any compilation or runtime regressions from the conditional logic change.
-
----
-tests/kernels/ | csrc/ changes affect kernel compilation and behavior
-tests/basic_correctness/ | csrc/ changes may cause runtime regressions

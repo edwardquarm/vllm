@@ -1,4 +1,0 @@
-This PR updates the FlashInfer dependency version from 0.6.11.post2 to 0.6.12 across multiple infrastructure files: docker/Dockerfile, docker/Dockerfile.nightly_torch, docker/versions.json, and requirements/cuda.txt. No Python source files in vllm/ were modified—only configuration and dependency specifications. Per Rule 3, changes to `requirements/*.txt` require running `tests/basic_correctness/` to verify the dependency upgrade doesn't break core functionality.
-
----
-tests/basic_correctness/ | requirements/cuda.txt changed (Rule 3)

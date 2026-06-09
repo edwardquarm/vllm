@@ -1,8 +1,0 @@
-docs/design/cuda_graphs_multimodal.md
-examples/generate/multimodal/vision_language_offline.py
-tests/models/multimodal/generation/test_vit_cudagraph.py
-vllm/model_executor/models/interfaces.py
-vllm/model_executor/models/step3_vl.py
-vllm/model_executor/models/step_vl.py
-vllm/model_executor/models/utils.py
-vllm/v1/worker/encoder_cudagraph.py

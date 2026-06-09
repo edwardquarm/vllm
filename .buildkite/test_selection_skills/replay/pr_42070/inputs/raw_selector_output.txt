@@ -1,5 +1,0 @@
-This PR removes the `@torch.compile(fullgraph=True)` decorator from the `rearrange_mixed_qkv` method in the Mamba GDN linear attention layer. The change is decorator-only with no modifications to the actual function logic or behavior. According to Rule 1, decorator removals are low-risk and similar to comment-only changes. The function will continue to work identically; the only difference is it will no longer be eagerly compiled by torch.compile. Since this affects a mamba-specific layer, I'm including the mamba kernel tests alongside basic correctness validation.
-
----
-tests/basic_correctness/test_basic_correctness.py | Decorator removal is low-risk; basic correctness validates no regression
-tests/kernels/mamba/test_mamba_ssm.py | Mamba-specific tests directly exercise this layer's code path

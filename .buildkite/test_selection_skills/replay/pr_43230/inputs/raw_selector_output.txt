@@ -1,4 +1,0 @@
-This PR modifies `requirements/cuda.txt`, downgrading the `nvidia-cutlass-dsl[cu13]` package from version 4.5.1 to 4.5.0. According to Rule 3 of the test selection instructions, changes to `requirements/*.txt` files require running `tests/basic_correctness/`. No Python source files in vllm/ were modified, so there are no import-based candidates to filter. The dependency change could affect kernel compilation or runtime behavior, so basic correctness tests are the appropriate minimal coverage.
-
----
-tests/basic_correctness/ | requirements file changed (Rule 3)

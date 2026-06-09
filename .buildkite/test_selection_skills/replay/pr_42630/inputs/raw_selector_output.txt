@@ -1,5 +1,0 @@
-This PR modifies the Gemma3N multimodal model initialization by adding a single parameter `input_is_parallel=False` to a linear layer in the constructor. This is a targeted parameter addition to the model architecture with no logic changes. The change is specific to the Gemma3N model, so tests that directly instantiate and run this model would be affected. Basic correctness tests should also be included since any model initialization change can impact forward pass behavior.
-
----
-tests/models/multimodal/processing/test_gemma3.py | Gemma3 multimodal tests exercise this model path
-tests/basic_correctness/test_basic_correctness.py | Model initialization parameter change affects all forward passes

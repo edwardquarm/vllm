@@ -1,5 +1,0 @@
-This PR modifies only a test file (`tests/v1/kv_connector/nixl_integration/test_accuracy.py`), and no vllm source files changed (the candidate table shows no Python files in vllm/). The diff shows only a cosmetic refactoring of print statements within the test—the print message is moved earlier and slightly rewording occurs, but the test logic and assertions are unchanged. No vllm source code or configuration files were modified, so no dependent tests are affected.
-
----
-
-NONE | only test file modified with print statement refactoring; no vllm source code changes

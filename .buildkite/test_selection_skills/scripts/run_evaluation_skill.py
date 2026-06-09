@@ -66,6 +66,12 @@ def main():
         action="store_true",
         help="Run lanes 1 and 2 but skip lane 3"
     )
+    parser.add_argument(
+        "--selector-model",
+        type=str,
+        default=None,
+        help="Model passed to Lane 2 replay_selector.py"
+    )
 
     args = parser.parse_args()
 
@@ -110,8 +116,12 @@ def main():
 
     # Lane 2: Replay LLM Selector
     if not args.skip_lane_2:
+        lane2_args = [str(python), str(script_dir / "replay_selector.py"), args.pr_number, "--repo", args.repo]
+        if args.selector_model:
+            lane2_args.extend(["--model", args.selector_model])
+
         success = run_command(
-            [str(python), str(script_dir / "replay_selector.py"), args.pr_number, "--repo", args.repo],
+            lane2_args,
             "Lane 2: Replaying LLM test selector"
         )
         if not success:

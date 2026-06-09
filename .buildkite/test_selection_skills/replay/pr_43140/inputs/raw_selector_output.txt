@@ -1,5 +1,0 @@
-This PR refactors internal helper functions in the seed OSS tool parser by extracting them into utility functions in a new module. The diff removes two inline functions (`get_arguments_config` and `convert_param_value`) and replaces them with calls to extracted utilities (`find_tool_properties`, `extract_types_from_schema`, `coerce_to_schema_type`). This is a pure refactoring with no behavioral changes — the core logic remains identical. Only the test file that directly exercises this specific tool parser is affected.
-
----
-
-tests/tool_parsers/test_seed_oss_tool_parser.py | directly tests the refactored seed OSS tool parser

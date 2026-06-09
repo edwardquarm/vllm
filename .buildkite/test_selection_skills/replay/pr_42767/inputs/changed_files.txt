@@ -1,6 +1,0 @@
-CMakeLists.txt
-csrc/attention/vertical_slash_index.cu
-csrc/moe/torch_bindings.cpp
-csrc/ops.h
-csrc/torch_bindings.cpp
-vllm/_custom_ops.py

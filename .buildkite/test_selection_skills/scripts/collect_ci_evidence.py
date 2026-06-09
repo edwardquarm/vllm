@@ -63,94 +63,148 @@ def parse_buildkite_build_url(url: str) -> tuple[str, str, str] | None:
     return (org_pipeline[0], org_pipeline[1], parts[1])
 
 
-def extract_failed_jobs_from_statuses(statuses: list) -> list[dict]:
-    """Extract failed job information from GitHub commit statuses."""
-    failed_jobs = []
-    seen_jobs = set()
+def extract_buildkite_jobs_from_statuses(statuses: list) -> list[dict]:
+    """Extract all Buildkite job information from GitHub commit statuses."""
+    jobs = []
+    seen_builds = set()
 
     for status in statuses:
         context = status.get("context", "")
-        if not context.startswith("buildkite/ci/pr/"):
+        if not context.startswith("buildkite/"):
             continue
-        job_name = context.replace("buildkite/ci/pr/", "")
-        if not job_name or job_name == "ci":
-            continue
-        if job_name in seen_jobs:
-            continue
-        seen_jobs.add(job_name)
 
         target_url = status.get("target_url", "")
-        job_id = target_url.split("#")[-1] if "#" in target_url else None
+        if not target_url:
+            continue
 
-        failed_jobs.append({
-            "job_id": job_id,
-            "name": job_name,
-            "state": "failed",
-            "exit_status": 1,
-            "url": target_url,
-            "build_id": None,
-            "retry_attempt": None,
+        # Extract org, pipeline, build from URL
+        parsed = parse_buildkite_build_url(target_url)
+        if not parsed:
+            continue
+
+        org, pipeline, build_number = parsed
+        build_key = f"{org}/{pipeline}/{build_number}"
+        if build_key in seen_builds:
+            continue
+        seen_builds.add(build_key)
+
+        jobs.append({
+            "build_url": target_url,
+            "org": org,
+            "pipeline": pipeline,
+            "build_number": build_number,
+            "job_name": context.replace("buildkite/", ""),
+            "state": status.get("state", "unknown"),
         })
 
-    return failed_jobs
+    return jobs
 
 
-def normalize_ci_evidence(pr_number: int, repo: str, buildkite_build: dict, github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None) -> dict:
+def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict], github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None) -> dict:
     """Normalize collected evidence into standard format."""
     builds = []
-    if buildkite_build:
+    jobs_failed = []
+    jobs_run = []
+
+    for build in buildkite_builds:
         builds.append({
-            "build_id": buildkite_build.get("id", ""),
-            "build_number": str(buildkite_build.get("number", "")),
-            "pipeline": f"{buildkite_build.get('organization', {}).get('slug', '')}/{buildkite_build.get('pipeline', {}).get('slug', '')}",
-            "url": buildkite_build.get("url", ""),
-            "commit": buildkite_build.get("commit_id", ""),
-            "branch": buildkite_build.get("branch_name", ""),
-            "state": buildkite_build.get("state", ""),
-            "started_at": buildkite_build.get("started_at", ""),
-            "finished_at": buildkite_build.get("finished_at", ""),
+            "build_id": build.get("id", ""),
+            "build_number": str(build.get("number", "")),
+            "pipeline": f"{build.get('organization', {}).get('slug', '')}/{build.get('pipeline', {}).get('slug', '')}",
+            "url": build.get("url", ""),
+            "commit": build.get("commit_id", ""),
+            "branch": build.get("branch_name", ""),
+            "state": build.get("state", ""),
+            "started_at": build.get("started_at", ""),
+            "finished_at": build.get("finished_at", ""),
         })
 
-    failed_statuses = github_statuses.get("statuses", [])
-    jobs_failed = extract_failed_jobs_from_statuses(failed_statuses)
+        # Extract all jobs from the build
+        for job in build.get("jobs", []):
+            if job.get("state") == "failed":
+                jobs_failed.append({
+                    "job_id": job.get("id", ""),
+                    "name": job.get("name", ""),
+                    "state": job.get("state", "unknown"),
+                    "exit_status": job.get("exit_status", 1),
+                    "url": job.get("url", ""),
+                })
+            jobs_run.append({
+                "job_id": job.get("id", ""),
+                "name": job.get("name", ""),
+                "state": job.get("state", "unknown"),
+                "exit_status": job.get("exit_status", 0),
+                "url": job.get("url", ""),
+            })
 
-    # Extract tests run from test run data
-    tests_run = all_tests_run if all_tests_run else []
+    # Process test executions
+    tests_run = []
     tests_failed = []
-    if test_run_data and 'executions' in test_run_data:
-        for exec_item in test_run_data.get('executions', []):
-            test_info = {
-                "test_id": exec_item.get("test_id", ""),
-                "test_name": exec_item.get("test_name", ""),
-                "file": exec_item.get("file", ""),
-                "state": exec_item.get("state", ""),
-            }
-            if not tests_run:  # Only add if we don't have all_tests_run
+    failed_test_list = []
+
+    if all_tests_run:
+        tests_run = all_tests_run
+        for test in all_tests_run:
+            test_state = test.get("state") or test.get("status", "unknown")
+            test_name = test.get("test_name", "")
+            test_id = test.get("test_id", test.get("id", test_name))
+
+            # Only include actual test executions (exclude collected runs with no state)
+            if test_name and test_state != "unknown":
+                test_info = {
+                    "test_id": test_id,
+                    "test_name": test_name,
+                    "file": test.get("file", test_name.split("::")[0] if "::" in test_name else test_name),
+                    "state": test_state,
+                    "job_id": test.get("job_id", ""),
+                }
+
+                if test_state == "failed":
+                    tests_failed.append(test_info)
+                    failed_entry = {
+                        "identifier": test_name,
+                        "file": test_info["file"],
+                        "function": test_name.split("::")[-1] if "::" in test_name else "",
+                        "job_id": test_info["job_id"],
+                        "job_name": next((job["name"] for job in jobs_run if job.get("job_id") == test_info["job_id"]), ""),
+                        "state": test_state,
+                        "failure_details": test.get("failure_details", {})
+                    }
+                    failed_test_list.append(failed_entry)
                 tests_run.append(test_info)
-            if exec_item.get("state") == "failed":
-                tests_failed.append(test_info)
 
     # Determine status
-    status = "success" if (test_run_data or tests_run or jobs_failed) else "partial"
+    status = "success"
     notes = []
 
-    if not buildkite_build and not github_statuses and not tests_run:
+    if not buildkite_builds and not github_statuses.get("statuses"):
         status = "no_results"
-        notes.append("No Buildkite or GitHub status data found for this PR")
+        notes = ["No Buildkite build or GitHub statuses found for this PR"]
+    elif not builds:
+        status = "no_build"
+        notes = ["GitHub statuses found, but no Buildkite build data was fetched"]
+    elif not tests_run:
+        status = "partial"
+        notes = ["Buildkite build(s) found, but no test run data from Buildkite Test Engine"]
+    else:
+        notes = []
 
+    # Add standard notes
     notes.append(f"Evidence collected on {datetime.now(timezone.utc).isoformat()}")
-    notes.append(f"Tests run from Buildkite Test Engine: {len(tests_run)}")
+    notes.append(f"Buildkite builds found: {len(builds)}")
+    notes.append(f"Total tests run: {len(tests_run)}")
+    notes.append(f"Failed tests: {len(tests_failed)}")
 
     return {
         "pr_number": str(pr_number),
         "repo": repo,
         "status": status,
         "buildkite_builds": builds,
-        "jobs_run": jobs_failed,
+        "jobs_run": jobs_run,
         "jobs_failed": jobs_failed,
         "tests_run": tests_run,
         "tests_failed": tests_failed,
-        "failed_test_list": tests_failed,  # Use test-level failures
+        "failed_test_list": failed_test_list,
         "tests_run_count": len(tests_run),
         "artifacts": [],
         "notes": notes,
@@ -158,43 +212,44 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_build: dict, gith
 
 
 def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -> tuple[dict, list]:
-    """Fetch test runs from Buildkite Test Engine using subprocess to call MCP.
-
-    Returns:
-        (test_run_data, list of all tests run)
-    """
+    """Fetch test runs from Buildkite Test Engine using fetch_buildkite_tests.py script."""
     try:
-        # Use claude to call the Buildkite MCP server
-        import subprocess
-        prompt = f"""Use the Buildkite MCP server to get test run data.
-Call get_build_analytics with:
-  org_slug: "{org}"
-  pipeline_slug: "{pipeline}"
-  build_number: "{build_number}"
+        script_dir = Path(__file__).parent
+        fetch_script = script_dir / "fetch_buildkite_tests.py"
 
-Return ONLY the raw JSON response, nothing else."""
+        if not fetch_script.exists():
+            print(f"  Error: fetch_buildkite_tests.py not found at {fetch_script}", file=sys.stderr)
+            return {}, []
 
-        result = subprocess.run(
-            ["claude", "-p", "--model", "haiku", prompt],
-            capture_output=True, text=True, timeout=60
-        )
-        if result.returncode == 0:
-            # Try to parse the response
-            import re
-            json_match = re.search(r'\{.*\}', result.stdout, re.DOTALL)
-            if json_match:
-                test_data = json.loads(json_match.group())
-                # Extract test executions
-                tests = []
-                if 'test_runs' in test_data:
-                    for run in test_data['test_runs']:
-                        tests.append({
-                            "test_id": run.get("test_id", ""),
-                            "test_name": run.get("test_name", ""),
-                            "file": run.get("file", ""),
-                            "state": run.get("state", "passed")
-                        })
-                return test_data, tests
+        # Call the fetch script with subprocess
+        cmd = [
+            sys.executable,
+            str(fetch_script),
+            "--org", org,
+            "--pipeline", pipeline,
+            "--build", str(build_number)
+        ]
+
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+        if result.returncode != 0:
+            print(f"  Error fetching test runs: {result.stderr}", file=sys.stderr)
+            return {}, []
+
+        # Parse JSON output from the script
+        data = json.loads(result.stdout)
+
+        # Extract test executions
+        test_runs = data.get("test_runs", [])
+        all_tests = data.get("tests", [])
+
+        print(f"  Found {len(test_runs)} test runs with {len(all_tests)} test executions")
+        return {"test_runs": test_runs}, all_tests
+
+    except subprocess.TimeoutExpired:
+        print(f"  Timeout fetching test runs", file=sys.stderr)
+    except json.JSONDecodeError as e:
+        print(f"  Error parsing test run data: {e}", file=sys.stderr)
     except Exception as e:
         print(f"  Could not fetch test runs: {e}", file=sys.stderr)
     return {}, []
@@ -205,8 +260,8 @@ def main():
     parser.add_argument("pr_number", type=int, help="PR number to collect evidence for")
     parser.add_argument("--repo", type=str, default="vllm-project/vllm", help="Repository name")
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
-    parser.add_argument("--fetch-test-runs", action="store_true",
-                        help="Fetch full test run data from Buildkite Test Engine")
+    parser.add_argument("--skip-test-runs", action="store_true",
+                        help="Skip fetching test run data from Buildkite Test Engine")
     args = parser.parse_args()
 
     pr_number = args.pr_number
@@ -231,38 +286,34 @@ def main():
     print("  Fetching GitHub commit statuses...", file=sys.stderr)
     statuses = run_gh_api(f"repos/{repo}/commits/{commit}/status")
 
-    # Find and fetch Buildkite build
-    buildkite_build = {}
-    build_url = None
-    for status in statuses.get("statuses", []):
-        if status.get("context") == "buildkite/ci/pr":
-            build_url = status.get("target_url")
-            break
+    # Find all Buildkite builds from statuses
+    buildkite_jobs = extract_buildkite_jobs_from_statuses(statuses.get("statuses", []))
+    print(f"  Found {len(buildkite_jobs)} Buildkite jobs in statuses", file=sys.stderr)
 
+    buildkite_builds = []
     all_tests_run = []
     test_run_data = {}
 
-    if build_url:
-        parsed = parse_buildkite_build_url(build_url)
-        if parsed:
-            org, pipeline, build_num = parsed
-            print(f"  Fetching Buildkite build: {org}/{pipeline}/builds/{build_num}", file=sys.stderr)
-            api_token = os.environ.get("BUILDKITE_API_TOKEN")
-            if api_token:
-                print("  Using authenticated Buildkite API access", file=sys.stderr)
-            else:
-                print("  No BUILDKITE_API_TOKEN; using public data", file=sys.stderr)
-            buildkite_build = fetch_buildkite_build(org, pipeline, build_num, api_token)
+    for job in buildkite_jobs:
+        print(f"  Fetching Buildkite build: {job['org']}/{job['pipeline']}/builds/{job['build_number']}", file=sys.stderr)
+        api_token = os.environ.get("BUILDKITE_API_TOKEN")
+        buildkite_build = fetch_buildkite_build(job["org"], job["pipeline"], job["build_number"], api_token)
+        if buildkite_build:
+            buildkite_builds.append(buildkite_build)
 
-            # Fetch test runs if requested
-            if args.fetch_test_runs:
-                print(f"  Fetching test runs from Buildkite Test Engine...", file=sys.stderr)
-                test_run_data, all_tests_run = fetch_test_runs_from_buildkite(org, pipeline, build_num)
-                print(f"  Found {len(all_tests_run)} tests run", file=sys.stderr)
+            # Fetch test runs unless explicitly skipped
+            if not args.skip_test_runs:
+                print(f"  Fetching test runs for build {job['org']}/{job['pipeline']}/{job['build_number']}...", file=sys.stderr)
+                build_test_run_data, build_tests_run = fetch_test_runs_from_buildkite(job["org"], job["pipeline"], job["build_number"])
+                if build_test_run_data:
+                    test_run_data = build_test_run_data
+                all_tests_run.extend(build_tests_run)
+            else:
+                print("  Skipping test run data collection (--skip-test-runs)", file=sys.stderr)
 
     # Normalize evidence
     print("  Normalizing evidence...", file=sys.stderr)
-    evidence = normalize_ci_evidence(pr_number, repo, buildkite_build, statuses, test_run_data, all_tests_run)
+    evidence = normalize_ci_evidence(pr_number, repo, buildkite_builds, statuses, test_run_data, all_tests_run)
 
     # Write output
     if args.output_dir:
@@ -276,25 +327,12 @@ def main():
     evidence_path.write_text(json.dumps(evidence, indent=2) + "\n")
     print(f"  Evidence written to: {evidence_path}", file=sys.stderr)
 
-    # Write raw data
-    raw_dir = output_dir / "raw"
-    raw_dir.mkdir(parents=True, exist_ok=True)
-
-    if buildkite_build:
-        (raw_dir / f"build_{buildkite_build.get('number', 'unknown')}.json").write_text(
-            json.dumps(buildkite_build, indent=2) + "\n"
-        )
-    if statuses:
-        (raw_dir / "github_statuses.json").write_text(json.dumps(statuses, indent=2) + "\n")
-    if test_run_data:
-        (raw_dir / "test_run_data.json").write_text(json.dumps(test_run_data, indent=2) + "\n")
-
     # Print summary
     print(f"\n=== Summary ===", file=sys.stderr)
     print(f"Status: {evidence['status']}", file=sys.stderr)
     print(f"Builds found: {len(evidence['buildkite_builds'])}", file=sys.stderr)
     print(f"Tests run: {evidence['tests_run_count']}", file=sys.stderr)
-    print(f"Failed jobs: {len(evidence['jobs_failed'])}", file=sys.stderr)
+    print(f"Failed tests: {len(evidence['failed_test_list'])}", file=sys.stderr)
 
     return 0
 

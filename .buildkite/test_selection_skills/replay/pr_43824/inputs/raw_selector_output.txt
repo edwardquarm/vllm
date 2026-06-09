@@ -1,5 +1,0 @@
-This PR modifies only Buildkite CI/CD configuration files under `.buildkite/test_areas/`, changing the AMD mirror device configuration from `mi300_1` to `mi325_1` across multiple test area definitions. No Python source files in vllm/ were changed, and no test code was modified. According to Rule 3, `.buildkite/` only changes require no tests.
-
----
-
-NONE | only .buildkite/ configuration files changed (Rule 3)

@@ -1,8 +1,0 @@
-This PR reorders two method calls in the `pre_forward` method of the GPU KV connector worker: `handle_preemptions()` is now called before `bind_connector_metadata()` instead of after. This is a critical execution-order change that could affect preemption handling and metadata binding behavior in the v1 engine. The candidate set includes essentially all tests that transitively depend on the GPU worker, but I'm narrowing to tests that directly exercise KV connector, scheduling, preemption, and engine operations since those are most likely to be affected by the changed execution order. I'm excluding tests for unrelated components like LoRA, quantization, and specific models unless they happen to test the core v1 engine paths.
-
----
-tests/v1/kv_connector/ | directly tests KV connector operations and preemption handling
-tests/v1/engine/ | v1 engine tests that use the modified pre_forward method
-tests/v1/e2e/ | end-to-end v1 tests exercising full scheduling and preemption
-tests/v1/core/ | v1 scheduler tests that depend on preemption ordering
-tests/basic_correctness/test_basic_correctness.py | core forward pass correctness with kv_connector

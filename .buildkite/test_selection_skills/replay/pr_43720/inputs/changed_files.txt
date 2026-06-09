@@ -1,9 +1,0 @@
-tests/v1/kv_connector/unit/test_handshake_pp_aggregation.py
-tests/v1/kv_connector/unit/test_multi_connector.py
-tests/v1/kv_connector/unit/test_transfer_topology_sharded.py
-vllm/distributed/kv_transfer/kv_connector/utils.py
-vllm/distributed/kv_transfer/kv_connector/v1/base.py
-vllm/distributed/kv_transfer/kv_connector/v1/multi_connector.py
-vllm/v1/engine/core.py
-vllm/v1/executor/abstract.py
-vllm/v1/worker/gpu_worker.py

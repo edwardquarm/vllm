@@ -1,9 +1,0 @@
-This PR modifies the NIXL KV connector's prefix caching logic to handle SSM blocks with placeholders and adds a new test for this scenario. The changes also relax an assertion in the scheduler's mamba block alignment to allow external KV transfer during async receive. The new test in `test_nixl_connector_hma.py` directly exercises the updated `_apply_prefix_caching` method. Other KV connector tests that use this worker, and scheduler tests for mamba prefix caching, are the primary candidates. LoRA and quantization tests are unrelated to KV connector internals and can be dropped.
-
----
-tests/v1/kv_connector/unit/test_nixl_connector_hma.py | tests the _apply_prefix_caching method directly
-tests/v1/kv_connector/unit/test_nixl_connector.py | nixl connector unit tests exercise this code path
-tests/v1/core/test_scheduler.py | scheduler changes affect scheduling logic
-tests/v1/core/test_scheduler_e2e.py | scheduler e2e with mamba block alignment
-tests/v1/e2e/general/ | scheduler e2e tests exercise mamba block alignment
-tests/basic_correctness/test_basic_correctness.py | core functionality sanity check

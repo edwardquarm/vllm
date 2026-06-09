@@ -1,4 +1,0 @@
-docs/contributing/profiling.md
-docs/models/pooling_models/classify.md
-vllm/config/pooler.py
-vllm/utils/profiling.py

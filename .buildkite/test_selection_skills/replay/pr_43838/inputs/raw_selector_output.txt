@@ -1,5 +1,0 @@
-This PR refactors the cumem allocator availability check by moving it from a module-level function in `vllm/config/model.py` to a method on the Platform interface in `vllm/platforms/interface.py`. The behavior is unchanged—the function is simply relocated and called via `current_platform` instead of directly. This is a narrow refactoring with minimal risk since it only reorganizes where the function lives without altering its logic or return values.
-
----
-
-tests/basic_correctness/test_cumem.py | Tests cumem allocator functionality that was refactored

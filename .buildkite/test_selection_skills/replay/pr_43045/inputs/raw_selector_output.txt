@@ -1,8 +1,0 @@
-This PR changes logging levels from WARNING to DEBUG in quantization-related code (two logger calls and their corresponding test).
-
-The changes are minimal and low-risk: two `logger.warning()` calls are downgraded to `logger.debug()` in `vllm/model_executor/layers/quantization/__init__.py` and `vllm/model_executor/models/registry.py`, with the test updated to verify the new DEBUG-level logging. This is a logging-level change with no functional impact—no code behavior changes, only log verbosity.
-
-Per Rule 1, I'm dropping the vast candidate set. These changes don't affect core functionality, only logging configuration. The test file being modified (`tests/quantization/test_register_quantization_config.py`) explicitly tests the register_quantization_config decorator that was changed, so that's the only test that directly validates this behavior.
-
----
-tests/quantization/test_register_quantization_config.py | directly tests modified logging behavior in register_quantization_config

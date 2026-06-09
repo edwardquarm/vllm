@@ -1,3 +1,0 @@
-tests/quantization/test_register_quantization_config.py
-vllm/model_executor/layers/quantization/__init__.py
-vllm/model_executor/models/registry.py

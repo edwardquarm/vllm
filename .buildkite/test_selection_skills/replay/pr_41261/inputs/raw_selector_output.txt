@@ -1,4 +1,0 @@
-This PR modifies a CUDA kernel file in `csrc/moe/topk_softplus_sqrt_kernels.cu`, making formatting and indentation changes to an else block. The diff shows code being properly indented within the else branch (lines 301-428), but the logic and functionality remain unchanged. According to Rule 3, changes to files in `csrc/` require running `tests/kernels/` to verify CUDA compilation and kernel behavior remain correct.
-
----
-tests/kernels/ | csrc/moe/ CUDA kernels changed; verify compilation and correctness

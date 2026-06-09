@@ -1,6 +1,0 @@
-.buildkite/test_areas/engine.yaml
-.buildkite/test_areas/entrypoints.yaml
-.buildkite/test_areas/kernels.yaml
-.buildkite/test_areas/misc.yaml
-.buildkite/test_areas/models_language.yaml
-.buildkite/test_areas/models_multimodal.yaml

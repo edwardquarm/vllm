@@ -1,6 +1,0 @@
-This PR adds a patch to vllm/env_override.py that optimizes Inductor's FALLBACK_ALLOW_LIST membership checking for vllm::*/vllm_aiter::* custom ops to avoid expensive operator_str() formatting on deep MoE/TP graphs. A new test file comprehensively tests the patch's proxy semantics, patch application, and fast-path behavior. The changes are isolated to this optimization—the patch is idempotent, only applies if torch._inductor is available, and does not modify existing vllm code behavior. While env_override.py is imported widely, the diff only adds new functionality (patch + proxy class called at module load), so I'm narrowing from the massive candidate set to focus on compile tests where the patch is actually used and the new test file.
-
----
-tests/compile/test_inductor_fallback_allow_list_patch.py | directly tests new _VllmFallbackAllowList proxy and patch
-tests/compile/ | torch.compile tests exercise the patched Inductor fast-path
-tests/basic_correctness/test_basic_correctness.py | sanity check for module-level patch on core import

@@ -1,7 +1,0 @@
-This PR modifies a Triton JIT decorator in the DeepSeek V4 fused inverse RoPE FP8 quantization kernel, adding `do_not_specialize=["num_tokens"]` to control kernel specialization behavior. This is a targeted change to kernel compilation parameters, not the logic itself. The decorator change affects how the kernel is compiled and cached, which could impact performance and compatibility. I'm including the direct test of this kernel, related attention tests that exercise this code path, and basic correctness as a sanity check for this core attention operation.
-
----
-tests/kernels/test_fused_inv_rope_fp8_quant.py | directly tests the modified kernel
-tests/kernels/attention/test_attention.py | tests attention kernels using fused RoPE operations
-tests/v1/attention/test_attention_backends.py | tests v1 attention backend implementations
-tests/basic_correctness/test_basic_correctness.py | sanity check for core attention operations
