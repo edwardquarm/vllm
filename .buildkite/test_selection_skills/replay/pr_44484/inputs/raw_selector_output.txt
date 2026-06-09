@@ -1,0 +1,8 @@
+This PR refactors the `get_input_modality()` method by moving its implementation from the Step3-VL model class to the base interface class (`MultiModalBaseMixin` or similar). The diff shows that the method was returning `"image"` in step3_vl and now provides that same default implementation in the interface, with updated docstring. This is a structural change with identical runtime behavior—no logic changes, just moving the default implementation up the inheritance chain.
+
+The candidate test set is very large because these files are imported broadly, but the actual impact is narrow: model initialization and loading paths for multimodal models. I'm narrowing down from the candidates to tests that actually exercise model loading and multimodal functionality.
+
+---
+tests/basic_correctness/ | Model loading and core correctness, refactoring affects all models
+tests/models/multimodal/generation/test_common.py | Step3-VL is multimodal, tests model initialization
+tests/models/test_oot_registration.py | Model registration and loading pathways affected

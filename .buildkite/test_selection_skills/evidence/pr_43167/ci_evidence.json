@@ -1,0 +1,63 @@
+{
+  "pr_number": "43167",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "buildkite_builds": [
+    {
+      "build_id": "019e942c-337f-43b7-a222-ceec00952c70",
+      "build_number": "70063",
+      "pipeline": "vllm/ci",
+      "url": "https://buildkite.com/vllm/ci/builds/70063",
+      "commit": "7ea179da1f537f722333bbcfec276eb160b80c07",
+      "branch": "hmellor:generalise-kv-cache-scaling",
+      "state": "failed"
+    }
+  ],
+  "jobs_run": [
+    {
+      "job_id": "019e942d-75c3-45e3-9f9b-029385a19f18",
+      "name": "entrypoints-integration-api-server-openai-part",
+      "state": "failed",
+      "exit_status": 1
+    }
+  ],
+  "jobs_failed": [
+    {
+      "job_id": "019e942d-75c3-45e3-9f9b-029385a19f18",
+      "name": "entrypoints-integration-api-server-openai-part",
+      "state": "failed",
+      "exit_status": 1
+    }
+  ],
+  "tests_run": [
+    {
+      "test_id": "570c2a76-0beb-83fd-830a-4556c939d4d9",
+      "test_name": "tests/entrypoints/openai/chat_completion/test_chat.py::test_invocations",
+      "file": "tests/entrypoints/openai/chat_completion/test_chat.py",
+      "state": "failed"
+    }
+  ],
+  "tests_failed": [
+    {
+      "test_id": "570c2a76-0beb-83fd-830a-4556c939d4d9",
+      "test_name": "tests/entrypoints/openai/chat_completion/test_chat.py::test_invocations",
+      "file": "tests/entrypoints/openai/chat_completion/test_chat.py",
+      "state": "failed"
+    }
+  ],
+  "failed_test_list": [
+    {
+      "identifier": "tests/entrypoints/openai/chat_completion/test_chat.py::test_invocations",
+      "file": "tests/entrypoints/openai/chat_completion/test_chat.py",
+      "function": "test_invocations",
+      "job_id": "019e942d-75c3-45e3-9f9b-029385a19f18",
+      "job_name": "entrypoints-integration-api-server-openai-part"
+    }
+  ],
+  "tests_run_count": 1,
+  "artifacts": [],
+  "notes": [
+    "Evidence collected via Buildkite MCP server",
+    "Test-level failure data from Buildkite Test Engine"
+  ]
+}

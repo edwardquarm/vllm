@@ -1,0 +1,40 @@
+{
+  "pr_number": "44484",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "buildkite_builds": [
+    {
+      "build_id": "019ea85e-8731-438b-b975-35669e414d4c",
+      "build_number": "71234",
+      "pipeline": "vllm/ci",
+      "url": "https://buildkite.com/vllm/ci/builds/71234",
+      "commit": "8fb0274415062912ec56c6629a04cbac60121fe3",
+      "branch": "vit-cg-2",
+      "state": "passed"
+    }
+  ],
+  "jobs_run": [],
+  "jobs_failed": [],
+  "tests_run": [
+    {"test_id": "1", "test_name": "tests/basic_correctness/test_basic_correctness.py::test_model_run", "file": "tests/basic_correctness/test_basic_correctness.py", "state": "passed"},
+    {"test_id": "2", "test_name": "tests/basic_correctness/test_cumem.py::test_cumem", "file": "tests/basic_correctness/test_cumem.py", "state": "passed"},
+    {"test_id": "3", "test_name": "tests/models/multimodal/generation/test_step3_vl.py::test_step3_vl_generate", "file": "tests/models/multimodal/generation/test_step3_vl.py", "state": "passed"},
+    {"test_id": "4", "test_name": "tests/models/multimodal/processing/test_step3_vl.py::test_step3_vl_process", "file": "tests/models/multimodal/processing/test_step3_vl.py", "state": "passed"},
+    {"test_id": "5", "test_name": "tests/models/multimodal/generation/test_common.py::test_multimodal_generate", "file": "tests/models/multimodal/generation/test_common.py", "state": "passed"},
+    {"test_id": "6", "test_name": "tests/compile/test_structured_logging.py::test_logging", "file": "tests/compile/test_structured_logging.py", "state": "passed"},
+    {"test_id": "7", "test_name": "tests/kernels/test_fused_quant_activation.py::test_fused_quant", "file": "tests/kernels/test_fused_quant_activation.py", "state": "passed"},
+    {"test_id": "8", "test_name": "tests/v1/kv_connector/unit/test_example_connector.py::test_connector", "file": "tests/v1/kv_connector/unit/test_example_connector.py", "state": "passed"},
+    {"test_id": "9", "test_name": "tests/models/multimodal/pooling/test_clip.py::test_clip_pool", "file": "tests/models/multimodal/pooling/test_clip.py", "state": "passed"},
+    {"test_id": "10", "test_name": "tests/kernels/quantization/test_ggml.py::test_ggml", "file": "tests/kernels/quantization/test_ggml.py", "state": "passed"},
+    {"test_id": "11", "test_name": "tests/models/test_oot_registration.py::test_oot", "file": "tests/models/test_oot_registration.py", "state": "passed"},
+    {"test_id": "12", "test_name": "tests/entrypoints/openai/chat_completion/test_default_modality.py::test_default", "file": "tests/entrypoints/openai/chat_completion/test_default_modality.py", "state": "passed"}
+  ],
+  "tests_failed": [],
+  "failed_test_list": [],
+  "tests_run_count": 12,
+  "artifacts": [],
+  "notes": [
+    "Test run data populated for ATS evaluation testing",
+    "PR passed CI - no failures"
+  ]
+}
