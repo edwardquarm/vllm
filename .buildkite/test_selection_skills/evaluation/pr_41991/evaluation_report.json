@@ -1,0 +1,22 @@
+{
+  "pr_number": "41991",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_gemma4_tool_parser.py",
+      "reason": "tests added for gemma4_tool_parser fixes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:17:13.473697+00:00"
+  ]
+}

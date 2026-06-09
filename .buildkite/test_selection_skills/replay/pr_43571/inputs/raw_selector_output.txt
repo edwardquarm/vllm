@@ -1,0 +1,4 @@
+This PR modifies a test file, not any vllm source files. The change adds conditional import logic to handle platforms where ROCm is not available, providing a stub function to prevent import errors. Since no vllm source files changed, the candidate table is empty. However, the test file itself was modified to fix an import compatibility issue, so it should be run to verify the conditional import logic works correctly on both ROCm and non-ROCm platforms.
+
+---
+tests/models/quantization/test_gpt_oss.py | test file modified, verify import fix works on all platforms

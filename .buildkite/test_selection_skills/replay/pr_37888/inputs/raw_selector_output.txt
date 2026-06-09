@@ -1,0 +1,8 @@
+This PR refactors sparse attention indexing and adds XPU support. The changes consolidate wrapper functions and move implementations to a unified API approach.
+
+This PR modifies three core files: `vllm/_custom_ops.py` (adds wrapper functions for top-k operations), `vllm/_xpu_ops.py` (adds XPU implementations and removes old static methods), and `vllm/model_executor/layers/sparse_attn_indexer.py` (refactors to use unified wrapper APIs). The changes are primarily refactoring existing functionality into wrapper functions and adding XPU-specific logits computation. Since these files are used by attention and sparse indexing code paths, I'm selecting tests that exercise these core attention operations and basic correctness.
+
+---
+tests/basic_correctness/ | Core ops changes; baseline for attention code paths
+tests/kernels/attention/ | Attention kernel tests that may use sparse indexing
+tests/v1/attention/ | v1 attention backend tests; exercises sparse attention paths

@@ -1,0 +1,9 @@
+I'm ready to help! I notice you've referenced a file at `/tmp/claude-4218539/tmpfixwczvq.txt`, but I need to understand what you'd like me to do.
+
+What's your task or question? For example, are you looking to:
+- Fix a bug in the vLLM codebase?
+- Add a new feature?
+- Review code?
+- Something else?
+
+Once you clarify, I'll invoke the appropriate skills and get started.

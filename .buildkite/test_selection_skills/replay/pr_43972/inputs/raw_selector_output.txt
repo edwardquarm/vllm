@@ -1,0 +1,5 @@
+This PR only modifies ReadTheDocs build configuration (`.readthedocs.yaml`) and a documentation build helper script (`docs/pre_run_check.sh`). The changes reorder build steps and add logic to skip documentation builds when docs-affecting files haven't changed. No Python source files in `vllm/` are modified, and the candidate test set is empty. Per Rule 3, configuration-only and docs-only changes require no tests.
+
+---
+
+NONE | only .readthedocs.yaml and docs/ shell script changed; no Python source files in vllm/ affected (Rule 3)

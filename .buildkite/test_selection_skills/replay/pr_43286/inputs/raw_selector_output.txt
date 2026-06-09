@@ -1,0 +1,10 @@
+This PR replaces assertion statements with proper exception handling (ValueError, TypeError, RuntimeError) while maintaining identical validation logic across four files: two pooling-related modules, one activation function module, and one metadata module. The changes are purely refactoring—no functional logic is altered, only how exceptions are raised and their error messages are improved.
+
+Since these are validation-only changes with no logic modifications, I'm narrowing down from the extensive candidate lists to tests that directly exercise these error paths and core pooling functionality. The test file in the PR was already updated to expect the new exception type.
+
+---
+tests/model_executor/layers/test_pooler_activations.py | directly tests get_act_fn() exception behavior
+tests/test_pooling_params.py | directly tests pooling_params.py validation
+tests/entrypoints/pooling/ | pooling entrypoint tests exercise pooling_params and activations
+tests/v1/e2e/general/test_pooling_chunked_prefill.py | v1 pool metadata integration test
+tests/basic_correctness/ | core validation changes warrant basic correctness check

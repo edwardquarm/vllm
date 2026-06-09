@@ -1,0 +1,8 @@
+I see you've referenced a file path, but I'm not sure what you'd like me to do with it. Could you clarify what you need? For example:
+
+- Read the file contents?
+- Run a command related to it?
+- Review or modify something in it?
+- Something else?
+
+Once I understand what you're trying to accomplish, I can help!

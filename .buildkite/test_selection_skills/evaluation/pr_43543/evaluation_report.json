@@ -1,0 +1,42 @@
+{
+  "pr_number": "43543",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/spec_decode/",
+      "reason": "spec_decode tests directly affected by AttentionGroupKey change"
+    },
+    {
+      "selected_test": "tests/v1/e2e/spec_decode/",
+      "reason": "spec_decode e2e tests mentioned in yaml file"
+    },
+    {
+      "selected_test": "tests/v1/attention/",
+      "reason": "attention backend selection and initialization tests"
+    },
+    {
+      "selected_test": "tests/v1/worker/test_gpu_model_runner.py",
+      "reason": "direct tests for gpu_model_runner changes"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/",
+      "reason": "general e2e tests exercise attention initialization"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "core attention and model runner functionality"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T05:59:01.876305+00:00"
+  ]
+}

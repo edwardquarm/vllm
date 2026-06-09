@@ -1,0 +1,9 @@
+This PR modifies the `AttentionGroupKey` deduplication logic in the GPU model runner's attention initialization, adding a new `num_heads_q` field to handle spec_decode scenarios where draft models have different attention head counts than target models. The change ensures layers with different Q-head counts get separate metadata builders. The `.buildkite/test_areas/spec_decode.yaml` update explicitly signals that spec_decode tests should now depend on attention backend changes.
+
+---
+tests/v1/spec_decode/ | spec_decode tests directly affected by AttentionGroupKey change
+tests/v1/e2e/spec_decode/ | spec_decode e2e tests mentioned in yaml file
+tests/v1/attention/ | attention backend selection and initialization tests
+tests/v1/worker/test_gpu_model_runner.py | direct tests for gpu_model_runner changes
+tests/v1/e2e/general/ | general e2e tests exercise attention initialization
+tests/basic_correctness/ | core attention and model runner functionality

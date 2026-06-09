@@ -1,0 +1,34 @@
+{
+  "pr_number": "42767",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 4,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "CMakeLists.txt changed (Rule 3)"
+    },
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "csrc/ files modified and kernel deleted (Rule 3)"
+    },
+    {
+      "selected_test": "tests/kernels/attention/",
+      "reason": "vertical_slash_index.cu deleted - sparse attention kernel"
+    },
+    {
+      "selected_test": "tests/kernels/moe/",
+      "reason": "MOE Marlin bindings removed - verify other MOE paths work"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:12:16.790546+00:00"
+  ]
+}

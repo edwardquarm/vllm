@@ -1,0 +1,8 @@
+This PR modifies the GDN (Gated Delta Rule) linear attention kernel selection logic and adds CUDA runtime version detection. Changes include: (1) two new helper functions in `gdn_linear_attn.py` that encapsulate FlashInfer backend feasibility checks and logging, supporting Blackwell (SM100) GPUs with CUDA 13+ and head_k_dim=128; (2) refactored `ChunkGatedDeltaRule.__init__()` to accept `head_k_dim` for better platform-specific kernel selection; (3) a new `get_cuda_runtime_major()` utility in `cuda.py` for runtime version extraction. These are functional changes to core attention/platform code, not documentation or comments. The changes affect how the Mamba attention layer selects between FlashInfer and Triton/FLA kernels based on platform capabilities. I'm including tests that exercise GDN attention, platform detection, and basic model inference, along with basic_correctness as a safety baseline.
+
+---
+tests/kernels/mamba/test_mamba_ssm.py | tests GDN linear attention kernel
+tests/basic_correctness/test_basic_correctness.py | core attention code path changed
+tests/v1/e2e/general/test_async_scheduling.py | end-to-end attention code path
+tests/models/language/generation/test_common.py | exercises mamba-based models
+tests/kernels/attention/test_attention.py | tests attention selection/fallback logic

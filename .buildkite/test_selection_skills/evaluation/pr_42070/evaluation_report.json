@@ -1,0 +1,26 @@
+{
+  "pr_number": "42070",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 2,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "Decorator removal is low-risk; basic correctness validates no regression"
+    },
+    {
+      "selected_test": "tests/kernels/mamba/test_mamba_ssm.py",
+      "reason": "Mamba-specific tests directly exercise this layer's code path"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:09:22.289925+00:00"
+  ]
+}

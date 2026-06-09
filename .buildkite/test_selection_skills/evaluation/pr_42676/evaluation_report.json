@@ -1,0 +1,38 @@
+{
+  "pr_number": "42676",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/",
+      "reason": "directly tests KV connector operations and preemption handling"
+    },
+    {
+      "selected_test": "tests/v1/engine/",
+      "reason": "v1 engine tests that use the modified pre_forward method"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "end-to-end v1 tests exercising full scheduling and preemption"
+    },
+    {
+      "selected_test": "tests/v1/core/",
+      "reason": "v1 scheduler tests that depend on preemption ordering"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "core forward pass correctness with kv_connector"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:14:08.866328+00:00"
+  ]
+}

@@ -1,0 +1,24 @@
+Now I understand the full scope. This PR adds:
+1. A new `postprocess_encoder_output()` method to the `SupportsEncoderCudaGraph` protocol
+2. Full encoder CUDA graph support to `Step3VLForConditionalGeneration` by implementing `SupportsEncoderCudaGraph`
+3. A new test for Step3-VL in the vit_cudagraph test file
+4. Documentation updates
+
+Let me provide the test selection:
+
+---
+
+## Reasoning
+
+This PR adds encoder CUDA graph support to the Step3-VL model by implementing the `SupportsEncoderCudaGraph` protocol. The changes include:
+1. A new optional method `postprocess_encoder_output()` in `vllm/model_executor/models/interfaces.py` with a default implementation that delegates to `scatter_output_slices`
+2. Full implementation of encoder CUDA graph methods in `Step3VLForConditionalGeneration` (vision encoder hooks, budget calculation, post-processing)
+3. A new test configuration for Step3-VL in `tests/models/multimodal/generation/test_vit_cudagraph.py`
+4. Minor documentation and example updates
+
+The changes are localized to Step3-VL model support and encoder CUDA graph functionality. The existing method in `interfaces.py` changes are backward-compatible (new optional method with default). The most critical test is `test_vit_cudagraph.py` which directly tests Step3-VL encoder CUDA graphs. Since this touches core multimodal model execution paths and interfaces, basic correctness tests should also run.
+
+---
+
+tests/models/multimodal/generation/test_vit_cudagraph.py | New Step3-VL test config; encoder CUDA graph functional test
+tests/basic_correctness/test_basic_correctness.py | Multimodal model loading and forward pass regression detection

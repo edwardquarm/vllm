@@ -1,0 +1,38 @@
+{
+  "pr_number": "40717",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/mamba/test_mamba_ssm.py",
+      "reason": "tests GDN linear attention kernel"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "core attention code path changed"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_async_scheduling.py",
+      "reason": "end-to-end attention code path"
+    },
+    {
+      "selected_test": "tests/models/language/generation/test_common.py",
+      "reason": "exercises mamba-based models"
+    },
+    {
+      "selected_test": "tests/kernels/attention/test_attention.py",
+      "reason": "tests attention selection/fallback logic"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:14:36.315451+00:00"
+  ]
+}

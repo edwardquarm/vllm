@@ -1,0 +1,38 @@
+{
+  "pr_number": "43325",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/attention/test_mla_prefill_registry.py",
+      "reason": "new test file for backend registration system"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla_backends.py",
+      "reason": "MLA backend integration tests"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_sparse_mla_backends.py",
+      "reason": "sparse MLA backend tests"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends_selection.py",
+      "reason": "backend selection logic affected by registry changes"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "smoke test for core functionality"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:04:40.371740+00:00"
+  ]
+}

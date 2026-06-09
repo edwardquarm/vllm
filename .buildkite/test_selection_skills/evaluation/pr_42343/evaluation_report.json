@@ -1,0 +1,46 @@
+{
+  "pr_number": "42343",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 7,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/engine/test_async_llm.py",
+      "reason": "tests engine async initialization with DP coordination"
+    },
+    {
+      "selected_test": "tests/v1/engine/test_llm_engine.py",
+      "reason": "tests LLM engine initialization path"
+    },
+    {
+      "selected_test": "tests/v1/engine/test_engine_core.py",
+      "reason": "tests core engine including startup"
+    },
+    {
+      "selected_test": "tests/v1/distributed/test_async_llm_dp.py",
+      "reason": "DP-specific async engine tests"
+    },
+    {
+      "selected_test": "tests/v1/distributed/test_dbo.py",
+      "reason": "DP distributed backend orchestration"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_async_scheduling.py",
+      "reason": "e2e async scheduling with engine startup"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "baseline engine correctness"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:03:48.927507+00:00"
+  ]
+}

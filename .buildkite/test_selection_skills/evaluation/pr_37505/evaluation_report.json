@@ -1,0 +1,62 @@
+{
+  "pr_number": "37505",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 11,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/test_kv_cache_spec_registry.py",
+      "reason": "New test file for KV cache spec registry"
+    },
+    {
+      "selected_test": "tests/v1/core/test_kv_cache_utils.py",
+      "reason": "Tests kv_cache_utils module directly affected"
+    },
+    {
+      "selected_test": "tests/v1/core/test_single_type_kv_cache_manager.py",
+      "reason": "Tests single type KV cache manager"
+    },
+    {
+      "selected_test": "tests/v1/core/test_async_scheduler.py",
+      "reason": "Tests async scheduler which uses create_scheduler"
+    },
+    {
+      "selected_test": "tests/v1/core/test_scheduler.py",
+      "reason": "Tests scheduler which uses create_scheduler"
+    },
+    {
+      "selected_test": "tests/v1/core/test_scheduler_e2e.py",
+      "reason": "End-to-end scheduler tests"
+    },
+    {
+      "selected_test": "tests/v1/simple_kv_offload/test_scheduler.py",
+      "reason": "Test file directly modified with register call"
+    },
+    {
+      "selected_test": "tests/v1/simple_kv_offload/test_integration.py",
+      "reason": "Integration tests for KV offload scheduler"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "Critical v1 end-to-end tests for all features"
+    },
+    {
+      "selected_test": "tests/v1/engine/test_engine_core.py",
+      "reason": "Tests engine core which uses scheduler"
+    },
+    {
+      "selected_test": "tests/v1/engine/test_async_llm.py",
+      "reason": "Tests async LLM engine"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:00:22.208364+00:00"
+  ]
+}

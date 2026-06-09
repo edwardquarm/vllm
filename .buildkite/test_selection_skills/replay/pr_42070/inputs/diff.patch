@@ -1,0 +1,12 @@
+diff --git a/vllm/model_executor/layers/mamba/gdn_linear_attn.py b/vllm/model_executor/layers/mamba/gdn_linear_attn.py
+index 518e9d4f0cff..10760d6116cc 100644
+--- a/vllm/model_executor/layers/mamba/gdn_linear_attn.py
++++ b/vllm/model_executor/layers/mamba/gdn_linear_attn.py
+@@ -637,7 +637,6 @@ def prepare_gdn_attention_core_inputs(
+ 
+         return mixed_qkv_out, z_out, b_out, a_out
+ 
+-    @torch.compile(fullgraph=True)
+     def rearrange_mixed_qkv(self, mixed_qkv):
+         """Split packed qkv into contiguous (1, seq, heads, dim) tensors.
+ 

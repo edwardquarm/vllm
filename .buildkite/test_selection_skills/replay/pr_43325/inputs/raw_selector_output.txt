@@ -1,0 +1,8 @@
+This PR adds backend registration and override capabilities to the MLA prefill backend system. The changes include a new `CUSTOM` enum member, override mechanisms (`_MLA_PREFILL_OVERRIDES`, `is_overridden()`, `clear_override()`), and a new `register_mla_prefill_backend()` function. A new test file (`test_mla_prefill_registry.py`) directly tests this registration system. The changes are to low-level registry infrastructure with backward-compatible behavior—existing code that doesn't use the override mechanism should work the same way. I'll include the new test file plus MLA-specific tests to verify the registration system works and doesn't break existing backend selection.
+
+---
+tests/v1/attention/test_mla_prefill_registry.py | new test file for backend registration system
+tests/v1/attention/test_mla_backends.py | MLA backend integration tests
+tests/v1/attention/test_sparse_mla_backends.py | sparse MLA backend tests
+tests/v1/attention/test_attention_backends_selection.py | backend selection logic affected by registry changes
+tests/basic_correctness/test_basic_correctness.py | smoke test for core functionality

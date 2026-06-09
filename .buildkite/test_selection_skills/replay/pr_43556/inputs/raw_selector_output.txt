@@ -1,0 +1,3 @@
+I'm ready to help with vLLM work. I see you're on the `auto-test-target-determination-v2` branch with some test evaluation output directories staged.
+
+What would you like me to help with? I'll follow the AGENTS.md contribution policy (no duplicate PRs, human accountability, using `uv` for Python, etc.) and the development workflows outlined.

@@ -1,0 +1,17 @@
+{
+  "pr_number": "39337",
+  "repo": "vllm-project/vllm",
+  "status": "partial",
+  "buildkite_builds": [],
+  "jobs_run": [],
+  "jobs_failed": [],
+  "tests_run": [],
+  "tests_failed": [],
+  "failed_test_list": [],
+  "tests_run_count": 0,
+  "artifacts": [],
+  "notes": [
+    "Evidence collected on 2026-06-09T06:12:53.352096+00:00",
+    "Tests run from Buildkite Test Engine: 0"
+  ]
+}

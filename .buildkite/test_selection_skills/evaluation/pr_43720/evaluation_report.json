@@ -1,0 +1,38 @@
+{
+  "pr_number": "43720",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_handshake_pp_aggregation.py",
+      "reason": "new test file for PP-aware handshake aggregation"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_multi_connector.py",
+      "reason": "tests multi-connector integration with new method"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_transfer_topology_sharded.py",
+      "reason": "new test for PP-aware transfer topology"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_backwards_compatibility.py",
+      "reason": "ensures old and new handshake methods coexist"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_example_connector.py",
+      "reason": "exercises get_kv_connector_handshake_metadata()"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T05:58:37.305337+00:00"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "pr_number": "41972",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 4,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/fusions_e2e/test_tp2_ar_rms.py",
+      "reason": "directly tests TP2 AllReduce RMSNorm fusion"
+    },
+    {
+      "selected_test": "tests/compile/passes/distributed/test_fusion_all_reduce.py",
+      "reason": "tests AllReduce fusion pass directly"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "regression check for correctness impact"
+    },
+    {
+      "selected_test": "tests/compile/fullgraph/test_full_graph.py",
+      "reason": "ensures compilation still works end-to-end"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:09:01.834512+00:00"
+  ]
+}

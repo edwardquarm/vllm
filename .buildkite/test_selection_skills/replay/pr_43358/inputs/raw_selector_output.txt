@@ -1,0 +1,16 @@
+This PR removes deprecated functionality: the `logit_bias`/`logit_scale` fields from `PoolerConfig` and the `vllm.utils.profiling` module. These are low-risk removals since the deprecated code paths are being eliminated.
+
+The changes are:
+1. **vllm/config/pooler.py**: Removes deprecated fields `logit_bias`, `logit_scale` and their validation logic
+2. **vllm/utils/profiling.py**: Deleted (was already deprecated)
+3. **Documentation**: Updated to remove references to deprecated features
+
+Since we're removing deprecated code rather than changing core logic, the scope is narrow. Tests that exercise the PoolerConfig through pooling endpoints would be the most relevant to verify no regressions.
+
+---
+
+tests/entrypoints/pooling/classify/ | PoolerConfig usage in classification
+tests/entrypoints/pooling/scoring/ | PoolerConfig usage in scoring models
+tests/entrypoints/pooling/embed/ | PoolerConfig usage in embedding models
+tests/entrypoints/pooling/reward/ | PoolerConfig usage in reward models
+tests/entrypoints/pooling/token_classify/ | PoolerConfig usage in token classification

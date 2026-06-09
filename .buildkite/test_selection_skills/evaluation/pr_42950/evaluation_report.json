@@ -1,0 +1,62 @@
+{
+  "pr_number": "42950",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 11,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "<test_path>",
+      "reason": "<reason>"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "Core integration test; exercises activation functions and model forward passes"
+    },
+    {
+      "selected_test": "tests/compile/test_config.py",
+      "reason": "Tests compilation config; activation functions are core to compilation"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_fusion_attn.py",
+      "reason": "Validates attention fusion including activation function fusion patterns"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_silu_mul_quant_fusion.py",
+      "reason": "Directly tests SiluAndMulWithClamp fusion (changed activation function)"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_lowering.py",
+      "reason": "Tests IR lowering of operators including activations"
+    },
+    {
+      "selected_test": "tests/compile/fullgraph/test_full_graph.py",
+      "reason": "Full-graph compilation exercises changed activation paths"
+    },
+    {
+      "selected_test": "tests/compile/fusions_e2e/test_tp2_async_tp.py",
+      "reason": "E2E fusion tests with distributed execution"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla.py",
+      "reason": "Tests MLA attention backend (sparse_swa.py changed for XPU support)"
+    },
+    {
+      "selected_test": "tests/distributed/test_expert_parallel.py",
+      "reason": "Tests expert-parallel execution with attention; uses activation functions"
+    },
+    {
+      "selected_test": "tests/kernels/test_triton_ops.py",
+      "reason": "Tests low-level Triton operators used in attention"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:10:57.214149+00:00"
+  ]
+}

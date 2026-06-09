@@ -1,0 +1,5 @@
+This PR modifies the Gemma4 tool parser with bug fixes for handling malformed input and edge cases in string parsing, along with corresponding test additions. The changes are defensive—adding guards against infinite loops and improving string delimiter handling—without changing the parser's API or affecting correct input handling. The diff shows localized changes to internal parsing logic with new test coverage.
+
+---
+
+tests/tool_parsers/test_gemma4_tool_parser.py | tests added for gemma4_tool_parser fixes

@@ -1,0 +1,9 @@
+I'm ready to help with your vLLM work. I see you're on the `auto-test-target-determination-v2` branch with several test selection evaluation directories staged.
+
+What would you like to work on? For example:
+- Continue development on automatic test selection?
+- Review or test changes on this branch?
+- Start a new feature or fix?
+- Something else?
+
+Let me know what you'd like to do, and I'll help you make progress.

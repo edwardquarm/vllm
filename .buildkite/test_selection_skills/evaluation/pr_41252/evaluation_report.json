@@ -1,0 +1,38 @@
+{
+  "pr_number": "41252",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/determinism/test_batch_invariance.py",
+      "reason": "directly modified test with new block_m/block_n parameters"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "tests flex attention backend implementation and configuration"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends_selection.py",
+      "reason": "tests attention backend selection logic"
+    },
+    {
+      "selected_test": "tests/kernels/test_flex_attention.py",
+      "reason": "direct flex attention kernel tests"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "core functionality regression tests"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:18:19.337501+00:00"
+  ]
+}

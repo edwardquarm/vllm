@@ -1,0 +1,4 @@
+This PR adds return type annotations to functions in pooler-related modules and adds one assertion in the special.py pooler. The changes are primarily type-hint additions with one safety check (assertion) that doesn't alter runtime behavior. According to Rule 1, type hint additions are low-risk and only warrant running `tests/basic_correctness/`. The assertion in special.py is a safety check that prevents accessing a potentially None value—important but also low-risk. No non-Python files changed, so Rule 3 doesn't apply. The PR touches only 2 source directories (vllm/model_executor/layers/pooler and vllm/v1/pool), staying below the Rule 5 threshold of 5+ directories.
+
+---
+tests/basic_correctness/ | Type annotations and assertion added, low-risk changes

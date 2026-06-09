@@ -1,0 +1,42 @@
+{
+  "pr_number": "40172",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/worker/test_mamba_utils.py",
+      "reason": "new golden tests for postprocess_mamba_fused_kernel"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_mamba_prefix_cache.py",
+      "reason": "refactored mamba test infrastructure"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/",
+      "reason": "e2e mamba tests exercise affected code paths"
+    },
+    {
+      "selected_test": "tests/v1/worker/",
+      "reason": "worker-level mamba and gpu_model_runner tests"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "core code path changes to worker and model runner"
+    },
+    {
+      "selected_test": "tests/kernels/mamba/",
+      "reason": "mamba ssm kernel tests affected by state handling changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:07:33.488836+00:00"
+  ]
+}

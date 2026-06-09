@@ -1,0 +1,22 @@
+{
+  "pr_number": "39601",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_glm4_moe_tool_parser.py",
+      "reason": "directly tests refactored glm4_moe_tool_parser code"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:15:48.663181+00:00"
+  ]
+}

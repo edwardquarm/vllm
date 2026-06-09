@@ -1,0 +1,5 @@
+This PR adds a new unit test file for testing MultiConnector with NixlConnector and SimpleCPUOffloadConnector integration. However, no vllm source files were modified—only a test file was added. The candidate table shows no changed Python files in vllm/, meaning no existing tests are affected by source code changes. Since the goal is to select tests affected by source changes, and there are no source changes, no tests need to be run.
+
+---
+
+NONE | No vllm source files changed, only new test file added

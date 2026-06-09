@@ -1,0 +1,10 @@
+This PR modifies the DP Coordinator's `_wait_for_zmq_addrs()` method in `vllm/v1/engine/coordinator.py`. The changes are: extracting the timeout value from hardcoded 30 to a configurable 120 seconds, and enhancing the error message to include the timeout value. This is a localized change to the startup/initialization path for distributed data parallelism. While the candidate table is extensive (200+ tests), most are unaffected since they don't exercise DP coordination. The relevant tests are those that directly test engine initialization and DP coordination.
+
+---
+tests/v1/engine/test_async_llm.py | tests engine async initialization with DP coordination
+tests/v1/engine/test_llm_engine.py | tests LLM engine initialization path
+tests/v1/engine/test_engine_core.py | tests core engine including startup
+tests/v1/distributed/test_async_llm_dp.py | DP-specific async engine tests
+tests/v1/distributed/test_dbo.py | DP distributed backend orchestration
+tests/v1/e2e/general/test_async_scheduling.py | e2e async scheduling with engine startup
+tests/basic_correctness/test_basic_correctness.py | baseline engine correctness

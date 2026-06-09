@@ -1,0 +1,9 @@
+This PR refactors Mamba postprocess testing infrastructure, removing an unused test helper and adding a comprehensive golden-test suite for the fused kernel. Changes to the source files (`gpu_model_runner.py` and `mamba_utils.py`) have truncated diffs, so I'm applying the safe default: include all candidate tests from the import analysis (Rule 1). However, the practical focus is on Mamba-related code paths (v1 worker and e2e tests) plus basic correctness, since changes to low-level worker code affect many downstream tests.
+
+---
+tests/v1/worker/test_mamba_utils.py | new golden tests for postprocess_mamba_fused_kernel
+tests/v1/e2e/general/test_mamba_prefix_cache.py | refactored mamba test infrastructure
+tests/v1/e2e/general/ | e2e mamba tests exercise affected code paths
+tests/v1/worker/ | worker-level mamba and gpu_model_runner tests
+tests/basic_correctness/ | core code path changes to worker and model runner
+tests/kernels/mamba/ | mamba ssm kernel tests affected by state handling changes

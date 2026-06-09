@@ -1,0 +1,22 @@
+{
+  "pr_number": "43045",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/quantization/test_register_quantization_config.py",
+      "reason": "directly tests modified logging behavior in register_quantization_config"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T06:02:02.615365+00:00"
+  ]
+}

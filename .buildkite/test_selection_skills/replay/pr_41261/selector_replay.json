@@ -1,0 +1,32 @@
+{
+  "pr_number": "41261",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "csrc/moe/topk_softplus_sqrt_kernels.cu"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "4cad6f5f189d5743b786d97c72b83709484bfc5d",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/kernels/",
+      "granularity": "unknown",
+      "reason": "csrc/moe/ CUDA kernels changed; verify compilation and correctness",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/kernels/",
+      "reason": "csrc/moe/ CUDA kernels changed; verify compilation and correctness"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-09T06:08:18.397899+00:00"
+  ]
+}

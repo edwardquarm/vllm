@@ -1,0 +1,5 @@
+This PR removes the `_patch_should_realize_on_reuse()` function and its call from `vllm/env_override.py`. The removed function was a torch 2.11-specific workaround that patched Inductor's materialization heuristic. Since this patch was conditional on torch 2.11 and the fix was included in torch 2.12+, removing it is a safe cleanup. The function only affected compilation behavior and was called once at module load time. The most relevant tests are those that exercise torch.compile features and basic correctness sanity checks.
+
+---
+tests/compile/ | tests torch.compile features affected by removed Inductor patch
+tests/basic_correctness/test_basic_correctness.py | smoke test for basic functionality after patch removal
