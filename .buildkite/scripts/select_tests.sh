@@ -12,13 +12,20 @@
 #
 # Requirements:
 #   - claude CLI (Anthropic Claude Code)
-#   - python3 (for the mapping script)
+#   - .venv/bin/python (for the mapping script)
 #   - gh CLI (for posting PR comments, unless --dry-run)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PYTHON="$REPO_ROOT/.venv/bin/python"
+
+if [ ! -x "$PYTHON" ]; then
+    echo "Error: $PYTHON not found or not executable." >&2
+    echo "Run 'uv venv --python 3.12' and install dependencies first." >&2
+    exit 1
+fi
 
 # Parse arguments
 DRY_RUN=false
@@ -71,7 +78,7 @@ fi
 # Convert newline-separated file list to comma-separated for --files flag
 FILES_CSV=$(echo "$CHANGED_FILES" | paste -sd ',' -)
 echo "Generating pre-filtered import mapping..." >&2
-MAPPING=$(python3 "$SCRIPT_DIR/build_test_mapping.py" --files "$FILES_CSV" 2>/dev/null)
+MAPPING=$("$PYTHON" "$SCRIPT_DIR/build_test_mapping.py" --files "$FILES_CSV" 2>/dev/null)
 
 # ---------------------------------------------------------------------------
 # Step 3: Read static instructions

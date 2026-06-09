@@ -33,7 +33,7 @@ PR opened / updated
         |
         |--- Step 1: git diff → changed files list + full diff content
         |
-        |--- Step 2: python3 build_test_mapping.py --files <changed>
+        |--- Step 2: .venv/bin/python build_test_mapping.py --files <changed>
         |            (AST-based import analysis → pre-filtered candidates
         |             for changed files only)
         |
@@ -106,8 +106,9 @@ End-to-end shell script that ties everything together:
    for the file list, `git diff origin/main...HEAD -- '*.py'` for full patch
    content (truncated at 50KB to control prompt size)
 2. **Generate pre-filtered candidates** — Runs
-   `build_test_mapping.py --files <changed_files>` to produce a candidate
-   table scoped to only the changed files (not the full codebase mapping)
+   `.venv/bin/python build_test_mapping.py --files <changed_files>` to produce
+   a candidate table scoped to only the changed files (not the full codebase
+   mapping)
 3. **Read instructions** — Loads `TEST_SELECTION.md`
 4. **Ask Claude** — Sends a single prompt containing instructions +
    pre-filtered candidates + changed files + diff content to
@@ -133,7 +134,8 @@ Also outputs clean test paths to stdout for future CI pipeline consumption.
 .buildkite/scripts/select_tests.sh 1234 origin/release
 ```
 
-**Requirements:** `claude` CLI, `python3`, `gh` CLI (except in dry-run mode).
+**Requirements:** `claude` CLI, `.venv/bin/python`, `gh` CLI (except in
+dry-run mode).
 
 ## Prompt Structure
 
@@ -159,6 +161,27 @@ truncated. Files within the limit get full diff (LLM can reason precisely
 about what changed). Files beyond the limit still appear in the changed
 files list — the LLM falls back to including all mapped tests for them.
 This means truncation degrades precision but never correctness.
+
+## Offline Evaluation for Historical PRs
+
+Offline evaluation uses historical PR outcomes to measure selector quality
+without changing CI behavior.
+
+1. **Historical CI evidence lane** collects actual Buildkite results for an old
+   PR, including failed jobs, failed tests, and artifact references. The
+   collection procedure is defined in
+   `.buildkite/COLLECT_BUILDKITE_CI_EVIDENCE.md`.
+2. **Offline selector replay lane** reruns the LLM selector against the same
+   historical PR inputs: changed files, diff content, generated candidate
+   mapping, and `TEST_SELECTION.md`. The replay procedure is defined in
+   `.buildkite/REPLAY_LLM_SELECTOR_FOR_HISTORICAL_PR.md`.
+3. **Comparison** checks whether the LLM-selected tests would have covered the
+   historical failures and records misses, over-selection, and feedback for
+   future selector updates.
+
+This evaluation flow is intentionally separate from the PR comment workflow.
+It can be run repeatedly against old PRs to refine rules before selector output
+is used to control CI jobs.
 
 ## Rollout Plan
 
