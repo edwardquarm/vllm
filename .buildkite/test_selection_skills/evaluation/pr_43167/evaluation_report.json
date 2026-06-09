@@ -1,0 +1,62 @@
+{
+  "pr_number": "43167",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 3,
+    "false_positives": 7,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "",
+      "job_name": "",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "",
+      "job_name": "",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "",
+      "job_name": "",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/model_executor/test_eagle_quantization.py",
+      "reason": "Modified test file - verifies quantization for EAGLE models after test removal"
+    },
+    {
+      "selected_test": "tests/model_executor/test_weight_utils.py",
+      "reason": "Tests weight loading utilities including maybe_remap_kv_scale_name which was modified"
+    },
+    {
+      "selected_test": "tests/quantization/test_per_token_kv_cache.py",
+      "reason": "Tests KV cache quantization - directly affected by kv_cache.py changes"
+    },
+    {
+      "selected_test": "tests/quantization/test_compressed_tensors.py",
+      "reason": "Tests compressed-tensors quantization which uses get_cache_scale_mapper"
+    },
+    {
+      "selected_test": "tests/quantization/test_fp8.py",
+      "reason": "Tests FP8 quantization config which had get_cache_scale method replaced"
+    },
+    {
+      "selected_test": "tests/quantization/test_configs.py",
+      "reason": "Tests quantization config base classes modified in this PR"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Large PR (31 files, 4+ directories) affecting core quantization infrastructure per Rule 5"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-09T18:03:00.096499+00:00"
+  ]
+}

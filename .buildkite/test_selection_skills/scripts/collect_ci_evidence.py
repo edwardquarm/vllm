@@ -60,7 +60,9 @@ def parse_buildkite_build_url(url: str) -> tuple[str, str, str] | None:
     org_pipeline = parts[0].split("/")
     if len(org_pipeline) != 2:
         return None
-    return (org_pipeline[0], org_pipeline[1], parts[1])
+    # Strip job ID fragment (e.g., "70063#019e942c-..." -> "70063")
+    build_number = parts[1].split("#")[0]
+    return (org_pipeline[0], org_pipeline[1], build_number)
 
 
 def extract_buildkite_jobs_from_statuses(statuses: list) -> list[dict]:
