@@ -16,11 +16,4 @@
 - **Actual Failed Tests: 2** (corrected from earlier incorrect report of 141)
 - LLM Selections: 7
 
-## Correction Note
-
-An earlier version of these files reported 141 test failures. The actual Buildkite logs
-(`build 70063`) show only **2 failures** total:
-1. `test_chat.py::test_invocations` (API response schema mismatch)
-2. `test_mistral.py::test_apply_chat_template[...Magistral-Small-2509]` (token mismatch)
-
 Generated: 2026-06-15

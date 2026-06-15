@@ -43,14 +43,6 @@ This is an API **response schema** change, not directly related to KV cache load
 
 ---
 
-## Correction Note
-
-An earlier analysis of this build incorrectly reported 140 failures in the entrypoints job.
-The actual pytest output was: **`1 failed, 269 passed, 6 skipped`**.
-The 140 figure was a data collection error (likely confused test files collected vs tests that failed).
-
----
-
 ## What the LLM Selected (7 targets, 0 overlapping with failures)
 
 | Selected | Failed in CI? |

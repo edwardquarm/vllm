@@ -3,14 +3,6 @@
 ## Build: 70063
 ## Source: Buildkite logs (pytest summary lines)
 
-## CORRECTION NOTE
-## A previous version of this file listed 141 tests as "failures". That was wrong.
-## The 140 entrypoints tests listed were collected from pytest's verbose output
-## (which prints every test name whether it passes or fails) and were
-## misidentified as failures. The actual pytest summary showed:
-##   Entrypoints job: 1 failed, 269 passed, 6 skipped
-##   CPU job:         1 failed, 657 passed, 253 skipped
-
 ## ============================================================
 ## JOB: Entrypoints Integration (API Server openai - Part 1)
 ## Command: pytest -v -s entrypoints/openai/chat_completion/ ...

@@ -15,8 +15,6 @@
 │  Data Source:        Buildkite API Logs                                                         │
 │  Build URL:          https://buildkite.com/vllm/ci/builds/70063                                 │
 │                                                                                                 │
-│  NOTE: An earlier version of this report stated 141 failures. The actual pytest output         │
-│  shows 1 failed per job (2 total). The 141 figure was a data collection error.                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -83,6 +81,4 @@
 
 ====================================================================================================
 NOTE: Data extracted from actual Buildkite API logs (build 70063).
-      Previous version of this file incorrectly reported 140 entrypoints failures.
-      Actual: 1 failed, 269 passed, 6 skipped in that job.
 ====================================================================================================

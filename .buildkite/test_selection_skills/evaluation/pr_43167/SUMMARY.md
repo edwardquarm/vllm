@@ -12,10 +12,6 @@
 | **False Negatives** | **2** (LLM missed) |
 | False Positives | 7 (LLM selected, did not fail in CI) |
 
-> **Correction**: An earlier version of this report stated 141 failures. The actual Buildkite
-> logs show `1 failed, 269 passed, 6 skipped` for the entrypoints job and `1 failed, 657 passed,
-> 253 skipped` for the CPU job. Total actual failures: **2**.
-
 ## What Actually Failed (2 tests)
 
 ### ❌ Entrypoints Integration (API Server openai - Part 1)
@@ -65,4 +61,4 @@ but missed two failure modes:
 or response serialization code changes, and include tokenizer tests when core model init changes.
 
 ---
-Generated: 2026-06-15 (corrected from initial report)
+Generated: 2026-06-15

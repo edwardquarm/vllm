@@ -62,7 +62,6 @@
     "llm_selection_strategy": "Focused on low-level quantization and model executor tests based on direct code changes",
     "actual_failures": "2 tests: 1 API entrypoints (test_chat.py::test_invocations) + 1 tokenizer (test_mistral.py)",
     "gap": "LLM correctly identified the changed code areas (KV cache / quantization) but missed that the API response schema also changed, breaking test_invocations' dict-key assertion",
-    "note_on_previous_error": "An earlier version of this report incorrectly stated 141 failures. The actual Buildkite log shows '1 failed, 269 passed, 6 skipped' for the entrypoints job and '1 failed, 657 passed, 253 skipped' for the CPU job.",
     "lessons": [
       "Internal API refactoring can change response schemas, requiring API integration tests",
       "Test selection should include entrypoints/openai/ when model loading or response serialization changes",
@@ -70,7 +69,7 @@
     ]
   },
   "notes": [
-    "Generated on 2026-06-15 (corrected from initial incorrect 141-failure report)",
+    "Generated on 2026-06-15",
     "Data source: Buildkite build 70063 logs",
     "Entrypoints job: 1 failed, 269 passed, 6 skipped",
     "CPU job (Retry 2): 1 failed, 657 passed, 253 skipped"
