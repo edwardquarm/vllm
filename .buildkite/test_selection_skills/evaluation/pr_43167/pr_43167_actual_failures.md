@@ -2,77 +2,67 @@
 
 ## Build Information
 - **PR**: https://github.com/vllm-project/vllm/pull/43167
-- **Title**: Remove KV cache scale boilerplate from model weight loading methods  
+- **Title**: Remove KV cache scale boilerplate from model weight loading methods
 - **Buildkite Build**: 70063 (https://buildkite.com/vllm/ci/builds/70063)
 - **Build Status**: FAILED
 - **Date**: 2026-06-04
 
 ## Summary
-- **Total Failed Jobs**: 2
-- **Total Failed Tests**: 141
 
-## Failed Job 1: Async Engine, Inputs, Utils, Worker, Config (CPU)
+| Job | Failed | Passed | Skipped |
+|-----|--------|--------|---------|
+| Entrypoints Integration (API Server openai - Part 1) | 1 | 269 | 6 |
+| Async Engine, Inputs, Utils, Worker, Config (CPU) | 1 | 657 | 253 |
+| **Total** | **2** | **926** | **259** |
+
+## Failed Job 1: Entrypoints Integration (API Server openai - Part 1)
 
 **Failed Tests**: 1
 
-1. `tests/tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]`
+1. `entrypoints/openai/chat_completion/test_chat.py::test_invocations`
 
-**Failure Type**: Assertion error in tokenizer chat template application
+**Failure**: `AssertionError: assert dict_keys([...]) == dict_keys([...])`
 
----
+The response JSON contained an extra `moderation` key not expected by the test:
+```
+- dict_keys(['id', 'object', 'created', 'model', 'choices', 'service_tier', 'system_fingerprint', 'usage', ...])
++ dict_keys(['id', 'choices', 'created', 'model', 'object', 'moderation', 'service_tier', ...])
+```
 
-## Failed Job 2: Entrypoints Integration (API Server openai - Part 1)
-
-**Failed Tests**: 140
-
-All failures are in the `tests/entrypoints/openai/chat_completion/` directory:
-
-### Test Files Affected:
-- test_audio.py (5 tests)
-- test_audio_in_video.py (3 tests)  
-- test_batched_chat_completions.py (2 tests)
-- test_chat.py (32 tests) ⚠️ **Most failures**
-- test_chat_completion.py (4 tests)
-- test_chat_completion_with_mixed_audio_embeds.py (2 tests)
-- test_chat_completion_with_mixed_image_embeds.py (2 tests)
-- test_chat_completion_with_prompt_embeds.py (8 tests)
-- test_chat_echo.py (3 tests)
-- test_chat_error.py (13 tests)
-- test_chat_logit_bias_validation.py (1 test)
-- test_completion_with_function_calling.py (6 tests)
-- test_completion_with_image_embeds.py (1 test)
-- test_default_mm_loras.py (1 test)
-- test_enable_force_include_usage.py (1 test)
-- test_root_path.py (1 test)
-- test_serving_chat.py (15 tests)
-- test_serving_chat_stream_harmony.py (2 tests)
-- test_structured_outputs_choice_chat_logprobs.py (1 test)
-- test_thinking_token_budget.py (4 tests)
-- test_thinking_token_budget_validation.py (6 tests)
-- test_video.py (13 tests)
-- test_vision.py (13 tests)
-- test_vision_embeds.py (2 tests)
-
-### Pattern Analysis:
-The failures are concentrated in **OpenAI API chat completion endpoints**, particularly:
-- Chat completion with various features (streaming, n-parameter, structured outputs, etc.)
-- Multi-modal inputs (vision, audio, video)
-- Function/tool calling
-- Thinking token budgets
-- Prompt embeddings
+This is an API **response schema** change, not directly related to KV cache loading.
 
 ---
 
-## Root Cause Analysis
+## Failed Job 2: Async Engine, Inputs, Utils, Worker, Config (CPU)
 
-The PR changed KV cache scale loading from individual `get_cache_scale` calls in each model's `load_weights` to a centralized `get_cache_scale_mapper` at the top level. This appears to have caused:
+**Failed Tests**: 1
 
-1. **Tokenizer-related failure**: Likely indirect - the mistral tokenizer test may be sensitive to model loading changes
-2. **Widespread API integration failures**: 140 tests in entrypoints suggest the changes affected how models are initialized/loaded in the API server, breaking the OpenAI-compatible chat completion API
+1. `tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]`
 
-The failures are NOT in quantization tests (which the LLM selector chose), but in:
-- Tokenizer integration
-- API entrypoint integration with model loading
+**Failure**: Token sequence mismatch — right side contains one extra token `2`.
 
-This is a classic case where refactoring internal APIs (KV cache loading) had unexpected downstream effects on higher-level integration points.
+---
 
+## Correction Note
+
+An earlier analysis of this build incorrectly reported 140 failures in the entrypoints job.
+The actual pytest output was: **`1 failed, 269 passed, 6 skipped`**.
+The 140 figure was a data collection error (likely confused test files collected vs tests that failed).
+
+---
+
+## What the LLM Selected (7 targets, 0 overlapping with failures)
+
+| Selected | Failed in CI? |
+|----------|--------------|
+| `tests/model_executor/test_eagle_quantization.py` | No |
+| `tests/model_executor/test_weight_utils.py` | No |
+| `tests/quantization/test_per_token_kv_cache.py` | No |
+| `tests/quantization/test_compressed_tensors.py` | No |
+| `tests/quantization/test_fp8.py` | No |
+| `tests/quantization/test_configs.py` | No |
+| `tests/basic_correctness/` | No |
+
+**Recall: 0%** — The LLM correctly identified the changed code areas (KV cache / quantization)
+but missed that the change also affected API response serialization (`test_invocations`) and
+indirectly a tokenizer test.

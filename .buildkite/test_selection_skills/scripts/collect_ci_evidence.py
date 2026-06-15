@@ -102,7 +102,7 @@ def extract_buildkite_jobs_from_statuses(statuses: list) -> list[dict]:
     return jobs
 
 
-def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict], github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None) -> dict:
+def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict], github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None, summary_stats: dict = None) -> dict:
     """Normalize collected evidence into standard format."""
     builds = []
     jobs_failed = []
@@ -145,8 +145,8 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict
     failed_test_list = []
 
     if all_tests_run:
-        tests_run = all_tests_run
-        for test in all_tests_run:
+        # Iterate over a copy — appending to a list while iterating it would process new items too
+        for test in list(all_tests_run):
             test_state = test.get("state") or test.get("status", "unknown")
             test_name = test.get("test_name", "")
             test_id = test.get("test_id", test.get("id", test_name))
@@ -159,6 +159,7 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict
                     "file": test.get("file", test_name.split("::")[0] if "::" in test_name else test_name),
                     "state": test_state,
                     "job_id": test.get("job_id", ""),
+                    "source": test.get("source", ""),
                 }
 
                 if test_state == "failed":
@@ -208,20 +209,24 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict
         "tests_failed": tests_failed,
         "failed_test_list": failed_test_list,
         "tests_run_count": len(tests_run),
+        "summary_stats": summary_stats or {},
         "artifacts": [],
         "notes": notes,
     }
 
 
-def fetch_test_runs_from_buildkite_logs(org: str, pipeline: str, build_number: str) -> list:
-    """Fetch actual test failures from Buildkite job logs."""
+def fetch_test_runs_from_buildkite_logs(org: str, pipeline: str, build_number: str) -> tuple[list, dict]:
+    """Fetch actual test failures from Buildkite job logs.
+
+    Returns (failed_tests, summary_stats) where summary_stats has pass/fail/skip counts.
+    """
     try:
         script_dir = Path(__file__).parent
         fetch_script = script_dir / "fetch_buildkite_test_logs.py"
 
         if not fetch_script.exists():
             print(f"  Warning: fetch_buildkite_test_logs.py not found at {fetch_script}", file=sys.stderr)
-            return []
+            return [], {}
 
         # Call the log parsing script
         cmd = [
@@ -236,14 +241,17 @@ def fetch_test_runs_from_buildkite_logs(org: str, pipeline: str, build_number: s
 
         if result.returncode != 0:
             print(f"  Error fetching test logs: {result.stderr}", file=sys.stderr)
-            return []
+            return [], {}
 
         # Parse JSON output
         data = json.loads(result.stdout)
         failed_tests = data.get("failed_tests", [])
+        summary_stats = data.get("summary_stats", {})
 
-        print(f"  Found {len(failed_tests)} failed tests from job logs")
-        return failed_tests
+        stats_str = (f"{summary_stats.get('passed', 0)} passed, "
+                     f"{summary_stats.get('skipped', 0)} skipped")
+        print(f"  Found {len(failed_tests)} failed tests from job logs ({stats_str})", file=sys.stderr)
+        return failed_tests, summary_stats
 
     except subprocess.TimeoutExpired:
         print(f"  Timeout fetching test logs", file=sys.stderr)
@@ -251,7 +259,7 @@ def fetch_test_runs_from_buildkite_logs(org: str, pipeline: str, build_number: s
         print(f"  Error parsing test log data: {e}", file=sys.stderr)
     except Exception as e:
         print(f"  Could not fetch test logs: {e}", file=sys.stderr)
-    return []
+    return [], {}
 
 
 def fetch_test_runs_from_buildkite(org: str, pipeline: str, build_number: str) -> tuple[dict, list]:
@@ -336,6 +344,7 @@ def main():
     buildkite_builds = []
     all_tests_run = []
     test_run_data = {}
+    aggregate_summary_stats: dict = {}
 
     for job in buildkite_jobs:
         print(f"  Fetching Buildkite build: {job['org']}/{job['pipeline']}/builds/{job['build_number']}", file=sys.stderr)
@@ -346,17 +355,45 @@ def main():
 
             # Fetch test runs unless explicitly skipped
             if not args.skip_test_runs:
-                print(f"  Fetching test runs for build {job['org']}/{job['pipeline']}/{job['build_number']}...", file=sys.stderr)
-                build_test_run_data, build_tests_run = fetch_test_runs_from_buildkite(job["org"], job["pipeline"], job["build_number"])
-                if build_test_run_data:
-                    test_run_data = build_test_run_data
-                all_tests_run.extend(build_tests_run)
+                # Try to fetch from logs first (more reliable for failures)
+                print(f"  Fetching failed tests from job logs for build {job['build_number']}...", file=sys.stderr)
+                failed_tests_from_logs, summary_stats = fetch_test_runs_from_buildkite_logs(
+                    job["org"], job["pipeline"], job["build_number"])
+
+                if failed_tests_from_logs is not None:
+                    # Accumulate summary stats across jobs
+                    for k in ("failed", "passed", "skipped", "error"):
+                        aggregate_summary_stats[k] = (
+                            aggregate_summary_stats.get(k, 0) + summary_stats.get(k, 0))
+
+                if failed_tests_from_logs:
+                    # Convert log format to test run format
+                    for test in failed_tests_from_logs:
+                        all_tests_run.append({
+                            "test_name": test.get("test_name", ""),
+                            "test_id": test.get("test_name", ""),
+                            "file": test.get("test_name", "").split("::")[0] if "::" in test.get("test_name", "") else "",
+                            "state": "failed",
+                            "status": "failed",
+                            "job_id": test.get("job_id", ""),
+                            "job_name": test.get("job_name", ""),
+                            "source": "buildkite_logs"
+                        })
+                else:
+                    # Fallback to Test Engine if available
+                    print(f"  No test failures in logs, trying Buildkite Test Engine...", file=sys.stderr)
+                    build_test_run_data, build_tests_run = fetch_test_runs_from_buildkite(job["org"], job["pipeline"], job["build_number"])
+                    if build_test_run_data:
+                        test_run_data = build_test_run_data
+                    all_tests_run.extend(build_tests_run)
             else:
                 print("  Skipping test run data collection (--skip-test-runs)", file=sys.stderr)
 
     # Normalize evidence
     print("  Normalizing evidence...", file=sys.stderr)
-    evidence = normalize_ci_evidence(pr_number, repo, buildkite_builds, statuses, test_run_data, all_tests_run)
+    evidence = normalize_ci_evidence(
+        pr_number, repo, buildkite_builds, statuses, test_run_data, all_tests_run,
+        summary_stats=aggregate_summary_stats or None)
 
     # Write output
     if args.output_dir:

@@ -91,32 +91,47 @@ def parse_pytest_failures(log_content: str) -> List[str]:
 
     failed_tests = []
 
-    # Pattern 1: Lines with "test_xyz.py::test_name FAILED"
+    # Pattern 1: Lines with "test_xyz.py::test_name FAILED" (verbose pytest -v output)
     # Matches: "test_file.py::TestClass::test_method[param] FAILED"
     pattern1 = r'([\w/_]+\.py::\S+)\s+FAILED'
     matches1 = re.findall(pattern1, clean_log)
 
-    # Pattern 2: FAILED lines in summary section
+    # Pattern 2: FAILED lines in short summary section
     # Matches: "FAILED test_file.py::test_name - AssertionError..."
     pattern2 = r'FAILED\s+([\w/_]+\.py::\S+)'
     matches2 = re.findall(pattern2, clean_log)
 
-    # Combine and deduplicate
-    all_matches = matches1 + matches2
-
-    # Extract base test name (remove parametrization details for deduplication)
-    # But keep the full name for the final list
-    seen_base = set()
-    for match in all_matches:
-        # Extract base name (without parameters)
-        base_match = re.sub(r'\[.*?\]$', '', match)
-
-        # Only add if we haven't seen this base test
-        if base_match not in seen_base:
+    # Combine and deduplicate, keeping full parametrized names
+    # but avoiding duplicates where pattern1 and pattern2 both matched
+    seen = set()
+    for match in matches1 + matches2:
+        if match not in seen:
             failed_tests.append(match)
-            seen_base.add(base_match)
+            seen.add(match)
 
     return failed_tests
+
+
+def parse_pytest_summary_stats(log_content: str) -> dict:
+    """Parse the pytest summary line for pass/fail/skip counts.
+
+    Extracts counts from lines like:
+      "====== 1 failed, 269 passed, 6 skipped, 88 warnings in 2075.78s ======"
+    """
+    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+    clean_log = ansi_escape.sub('', log_content)
+
+    stats = {"failed": 0, "passed": 0, "skipped": 0, "error": 0}
+
+    # Match the final summary line (= ... in N.Ns =)
+    m = re.search(r'=+ (.+?) in [\d.]+s[\s(]', clean_log)
+    if m:
+        summary_text = m.group(1)
+        for count_m in re.finditer(r'(\d+) (failed|passed|skipped|error)', summary_text):
+            key = count_m.group(2)
+            stats[key] = int(count_m.group(1))
+
+    return stats
 
 
 def main():
@@ -166,13 +181,16 @@ def main():
             continue
 
         failed_tests = parse_pytest_failures(log_content)
-        print(f"    Found {len(failed_tests)} failed tests", file=sys.stderr)
+        summary_stats = parse_pytest_summary_stats(log_content)
+        print(f"    Found {len(failed_tests)} failed tests "
+              f"({summary_stats['passed']} passed, {summary_stats['skipped']} skipped)", file=sys.stderr)
 
         job_details.append({
             "job_id": job['id'],
             "job_name": job['name'],
             "failed_tests": failed_tests,
             "test_count": len(failed_tests),
+            "summary_stats": summary_stats,
             "log_fetched": True,
         })
 
@@ -184,6 +202,12 @@ def main():
                 "job_name": job['name'],
             })
 
+    # Aggregate summary stats across all jobs
+    total_stats = {"failed": 0, "passed": 0, "skipped": 0, "error": 0}
+    for jd in job_details:
+        for k in total_stats:
+            total_stats[k] += jd.get("summary_stats", {}).get(k, 0)
+
     result = {
         "org": args.org,
         "pipeline": args.pipeline,
@@ -191,6 +215,7 @@ def main():
         "failed_jobs": job_details,
         "failed_tests": all_failed_tests,
         "total_failures": len(all_failed_tests),
+        "summary_stats": total_stats,
     }
 
     # Output

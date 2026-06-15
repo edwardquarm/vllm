@@ -4,104 +4,65 @@
 
 | Metric | Value |
 |--------|-------|
-| PR Number | [#43167](https://github.com/vllm-project/vllm/pull/43167) |
-| Title | Remove KV cache scale boilerplate from model weight loading methods |
+| PR Number | #43167 |
 | Buildkite Build | [70063](https://buildkite.com/vllm/ci/builds/70063) |
-| Build Status | ❌ FAILED |
 | **Coverage (Recall)** | **0.0%** |
 | **Precision** | **0.0%** |
 | True Positives | 0 |
-| **False Negatives** | **141** (LLM missed) |
-| False Positives | 7 (LLM selected but passed) |
+| **False Negatives** | **2** (LLM missed) |
+| False Positives | 7 (LLM selected, did not fail in CI) |
 
-## What Actually Failed
+> **Correction**: An earlier version of this report stated 141 failures. The actual Buildkite
+> logs show `1 failed, 269 passed, 6 skipped` for the entrypoints job and `1 failed, 657 passed,
+> 253 skipped` for the CPU job. Total actual failures: **2**.
 
-### ❌ Job 1: Async Engine, Inputs, Utils, Worker, Config (CPU)
+## What Actually Failed (2 tests)
+
+### ❌ Entrypoints Integration (API Server openai - Part 1)
 **1 test failed:**
-- `tests/tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[...]`
+- `entrypoints/openai/chat_completion/test_chat.py::test_invocations`
 
-### ❌ Job 2: Entrypoints Integration (API Server openai - Part 1)  
-**140 tests failed:**
-- All in `tests/entrypoints/openai/chat_completion/`
-- Top failures:
-  - `test_chat.py` (32 tests)
-  - `test_serving_chat.py` (15 tests)
-  - `test_chat_error.py` (13 tests)
-  - `test_video.py` (13 tests)
-  - `test_vision.py` (13 tests)
-  - Plus 19 more test files
+**Failure detail**: `AssertionError` — response `dict_keys` mismatch. The response JSON had an
+extra `moderation` field the test didn't expect. This is a response schema change, not a KV
+cache logic failure.
 
-## What LLM Selected (All Passed ✓)
+**Job stats**: 1 failed, 269 passed, 6 skipped
 
-The LLM selected **7 test targets**, all focused on quantization:
-1. ✓ `tests/model_executor/test_eagle_quantization.py`
-2. ✓ `tests/model_executor/test_weight_utils.py`
-3. ✓ `tests/quantization/test_per_token_kv_cache.py`
-4. ✓ `tests/quantization/test_compressed_tensors.py`
-5. ✓ `tests/quantization/test_fp8.py`
-6. ✓ `tests/quantization/test_configs.py`
-7. ✓ `tests/basic_correctness/`
+### ❌ Async Engine, Inputs, Utils, Worker, Config (CPU)
+**1 test failed:**
+- `tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]`
 
-## The Gap
+**Failure detail**: Token sequence mismatch — expected list has one fewer token (missing `2`
+at end). Indirect failure from model loading changes.
 
-```
-PR Changes:        Internal API refactoring of KV cache scale loading
-                   ↓
-LLM Selected:      Low-level quantization & model executor tests ✓
-                   ↓
-What Broke:        High-level API integration layer ❌
-                   • OpenAI chat completion API (140 tests)
-                   • Tokenizer integration (1 test)
-```
+**Job stats**: 1 failed, 657 passed, 253 skipped (Retry 2 of 2)
 
-## Why The LLM Missed
+## What LLM Selected (7 targets)
 
-1. **Focused on direct code changes** (kv_cache.py, quantization configs)
-2. **Didn't consider downstream integration effects**
-3. **No API entrypoint tests selected** despite model loading changes
-4. **Missed tokenizer integration dependencies**
+- [ ] `tests/model_executor/test_eagle_quantization.py` - Modified test file
+- [ ] `tests/model_executor/test_weight_utils.py` - Tests maybe_remap_kv_scale_name
+- [ ] `tests/quantization/test_per_token_kv_cache.py` - KV cache quantization
+- [ ] `tests/quantization/test_compressed_tensors.py` - Uses get_cache_scale_mapper
+- [ ] `tests/quantization/test_fp8.py` - FP8 quantization config changes
+- [ ] `tests/quantization/test_configs.py` - Quantization config base classes
+- [ ] `tests/basic_correctness/` - Rule 5 broad coverage for large PR
 
-## Root Cause
+None of the 7 selected tests overlapped with either actual failure.
 
-The PR refactored how KV cache scales are loaded during model initialization:
-- **Before:** Each model's `load_weights` method called `get_cache_scale`
-- **After:** Centralized `get_cache_scale_mapper` at AutoWeightsLoader level
+## Analysis
 
-This internal change broke:
-- Model initialization in API server context
-- OpenAI-compatible chat completion endpoints  
-- Tokenizer integration (indirect dependency)
+The LLM correctly identified the changed code areas (KV cache loading, quantization configs)
+but missed two failure modes:
 
-## Key Lessons
+1. **API response schema side effect** — the PR touched model serialization paths, and
+   `test_invocations` asserts on the exact set of keys in the response dict. The LLM didn't
+   consider that internal model-loading changes can affect response serialization.
 
-### For Test Selection:
-- ✅ **Test the entire call stack** for internal API refactoring
-- ✅ **Include API entrypoints** when core model code changes
-- ✅ **Consider integration layers** not just unit tests
-- ✅ **"Boilerplate removal" needs broad testing**
+2. **Indirect tokenizer failure** — the Mistral tokenizer test failed likely due to a change in
+   how the model is initialized during the chat template application path.
 
-### For This PR Specifically:
-- Should have selected: `tests/entrypoints/openai/chat_completion/`
-- Should have selected: `tests/tokenizers_/`
-- The quantization tests were reasonable but insufficient
-
-## Data Quality Note
-
-✅ **High Quality Data**  
-This evaluation used actual test execution results from Buildkite API logs, not inferred from pipeline configurations.
-
-- Source: Buildkite Build 70063 job logs
-- Method: Parsed pytest output from failed jobs
-- Result: 141 concrete failing test names (not job-level estimates)
-
-## Files Generated
-
-1. `test_comparison_table.txt` - Visual comparison of LLM vs CI
-2. `pr_43167_actual_failures.md` - Detailed failure breakdown
-3. `evaluation_report.json` - Machine-readable metrics
-4. `SUMMARY.md` - This file
+**To catch these in future runs**: include `entrypoints/openai/` tests when any model loading
+or response serialization code changes, and include tokenizer tests when core model init changes.
 
 ---
-
-**Generated:** 2026-06-09  
-**Data Source:** Buildkite API (Build 70063)
+Generated: 2026-06-15 (corrected from initial report)

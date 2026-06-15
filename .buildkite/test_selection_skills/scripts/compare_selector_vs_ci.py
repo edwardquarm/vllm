@@ -114,8 +114,17 @@ def generate_text_table(pr_number: str, ci_evidence: dict, selector_replay: dict
     """Generate ASCII comparison table: CI tests run vs LLM selected."""
     lines = []
     w = 100
+
+    # Get build number and data source info
+    builds = ci_evidence.get('buildkite_builds', [])
+    build_number = builds[0].get('build_number', 'unknown') if builds else 'unknown'
+    data_source = "Buildkite API Logs" if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', [])) else "Buildkite Test Engine"
+
     lines.append("=" * w)
-    lines.append(f"PR #{pr_number} - TEST SELECTION COMPARISON".center(w))
+    title = f"PR #{pr_number} - TEST SELECTION COMPARISON"
+    subtitle = f"(Build {build_number} - {data_source})"
+    lines.append(title.center(w))
+    lines.append(subtitle.center(w))
     lines.append("=" * w)
     lines.append("")
 
@@ -128,6 +137,11 @@ def generate_text_table(pr_number: str, ci_evidence: dict, selector_replay: dict
     lines.append(f"│  True Positives:     {len(tp)} (LLM selected + CI failed)".ljust(w - 2) + "│")
     lines.append(f"│  False Negatives:    {len(fn)} (CI failed, LLM missed)".ljust(w - 2) + "│")
     lines.append(f"│  False Positives:    {len(fp)} (LLM selected, CI passed)".ljust(w - 2) + "│")
+    lines.append("│".ljust(w - 2) + "│")
+    lines.append(f"│  Data Source:        {data_source}".ljust(w - 2) + "│")
+    if builds:
+        build_url = f"https://buildkite.com/{builds[0].get('pipeline', '')}/builds/{build_number}"
+        lines.append(f"│  Build URL:          {build_url[:70]}".ljust(w - 2) + "│")
     lines.append("└" + "─" * (w - 2) + "┘")
     lines.append("")
 
@@ -138,36 +152,40 @@ def generate_text_table(pr_number: str, ci_evidence: dict, selector_replay: dict
     failed_jobs = ci_evidence.get('jobs_failed', [])
 
     lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  CI APPROACH (Buildkite - tests actually run)".ljust(w - 2) + "│")
+    lines.append("│  CI APPROACH (Buildkite - actual test failures from logs)".ljust(w - 2) + "│")
     lines.append("├" + "─" * (w - 2) + "┤")
-    if tests_run:
-        lines.append(f"│  Total tests run: {tests_run_count}".ljust(w - 2) + "│")
-        lines.append(f"│  Tests failed: {len(failed_tests)}".ljust(w - 2) + "│")
+    if failed_tests:
+        lines.append(f"│  Total Failed Tests: {len(failed_tests)}".ljust(w - 2) + "│")
+        lines.append(f"│  Failed Jobs: {len(failed_jobs)}".ljust(w - 2) + "│")
         lines.append("│".ljust(w - 2) + "│")
-        if failed_tests:
-            lines.append("│  FAILED TESTS:".ljust(w - 2) + "│")
-            for t in failed_tests[:10]:
-                test_short = t.get('test_name', t.get('identifier', ''))[:55]
-                lines.append(f"│  [FAIL] {test_short}".ljust(w - 2) + "│")
-            if len(failed_tests) > 10:
-                lines.append(f"│  ... and {len(failed_tests) - 10} more failures".ljust(w - 2) + "│")
+
+        # Group failures by job
+        tests_by_job = {}
+        for t in failed_tests:
+            job_name = t.get('job_name', 'Unknown Job')
+            if job_name not in tests_by_job:
+                tests_by_job[job_name] = []
+            test_name = t.get('test_name', t.get('identifier', ''))
+            tests_by_job[job_name].append(test_name)
+
+        for job_name, job_tests in tests_by_job.items():
+            lines.append(f"│  [FAIL] {job_name} - {len(job_tests)} test(s) failed".ljust(w - 2) + "│")
+            # Show first few tests from this job
+            for test in job_tests[:5]:
+                test_short = test[:80]
+                lines.append(f"│    ✗ {test_short}".ljust(w - 2) + "│")
+            if len(job_tests) > 5:
+                lines.append(f"│    + {len(job_tests) - 5} more tests in this job".ljust(w - 2) + "│")
             lines.append("│".ljust(w - 2) + "│")
-        lines.append("│  ALL TESTS RUN:".ljust(w - 2) + "│")
-        for i, t in enumerate(tests_run[:30], 1):
-            test_name = t.get('test_name', t.get('identifier', ''))[:52]
-            state = "FAIL" if t.get('state') == 'failed' else "PASS"
-            lines.append(f"│  {i:2}. [{state}] {test_name}".ljust(w - 2) + "│")
-        if len(tests_run) > 30:
-            lines.append(f"│  ... and {len(tests_run) - 30} more tests".ljust(w - 2) + "│")
+
     elif failed_jobs:
         lines.append(f"│  Tests run: N/A (only job-level data available)".ljust(w - 2) + "│")
         lines.append(f"│  Jobs failed: {len(failed_jobs)}".ljust(w - 2) + "│")
         lines.append("│".ljust(w - 2) + "│")
         for j in failed_jobs:
-            lines.append(f"│  [FAIL] {j.get('name', 'unknown')}".ljust(w - 2) + "│")
+            lines.append(f"│  [FAIL] {j.get('name', 'unknown')[:80]}".ljust(w - 2) + "│")
     else:
-        lines.append("│  No CI test data available".ljust(w - 2) + "│")
-        lines.append("│  (Buildkite Test Engine data not collected)".ljust(w - 2) + "│")
+        lines.append("│  No CI test failures".ljust(w - 2) + "│")
     lines.append("└" + "─" * (w - 2) + "┘")
     lines.append("")
 
@@ -316,7 +334,8 @@ def main():
         sys.exit(1)
 
     # Extract data
-    failed_tests = ci_evidence.get("jobs_failed", [])
+    # Use failed_test_list (individual tests with identifier field), not jobs_failed (job-level)
+    failed_tests = ci_evidence.get("failed_test_list", [])
     selected_tests = selector_replay.get("llm_selected_tests", [])
 
     # Classify
@@ -350,7 +369,7 @@ def main():
         if excel_data:
             (output_dir / f"PR{pr_number}_Comparison.xlsx").write_bytes(excel_data)
 
-    # Write summary
+    # Write simple summary
     summary = f"# Evaluation for PR #{pr_number}\n\n"
     summary += f"Coverage: {metrics['coverage_rate']:.1%}\n\n"
     summary += f"## False Negatives ({len(fn)})\n"
@@ -361,8 +380,90 @@ def main():
         summary += f"- {f['selected_test']}\n"
     (output_dir / "evaluation_summary.md").write_text(summary)
 
+    # Write comprehensive SUMMARY.md
+    builds = ci_evidence.get('buildkite_builds', [])
+    build_number = builds[0].get('build_number', 'unknown') if builds else 'unknown'
+    build_url = f"https://buildkite.com/{builds[0].get('pipeline', '')}/builds/{build_number}" if builds else ""
+
+    comprehensive_summary = f"""# PR #{pr_number} Test Selection Evaluation - SUMMARY
+
+## Quick Facts
+
+| Metric | Value |
+|--------|-------|
+| PR Number | #{pr_number} |
+| Buildkite Build | [{build_number}]({build_url}) |
+| **Coverage (Recall)** | **{metrics['coverage_rate']:.1%}** |
+| **Precision** | **{metrics['precision_rate']:.1%}** |
+| True Positives | {len(tp)} |
+| **False Negatives** | **{len(fn)}** (LLM missed) |
+| False Positives | {len(fp)} (LLM selected but passed) |
+
+## What Actually Failed ({len(failed_tests)} tests)
+
+"""
+    # Group failures by job
+    tests_by_job = {}
+    for t in failed_tests:
+        job_name = t.get('job_name', 'Unknown Job')
+        if job_name not in tests_by_job:
+            tests_by_job[job_name] = []
+        test_name = t.get('test_name', t.get('identifier', ''))
+        tests_by_job[job_name].append(test_name)
+
+    for job_name, job_tests in tests_by_job.items():
+        comprehensive_summary += f"### ❌ {job_name}\n**{len(job_tests)} test(s) failed:**\n"
+        for test in job_tests[:20]:
+            comprehensive_summary += f"- `{test}`\n"
+        if len(job_tests) > 20:
+            comprehensive_summary += f"- ... and {len(job_tests) - 20} more\n"
+        comprehensive_summary += "\n"
+
+    comprehensive_summary += f"""## What LLM Selected ({len(selected_tests)} targets)
+
+"""
+    for t in selected_tests:
+        caught = any(tp_item['selected_test'] == t.get('identifier') for tp_item in tp)
+        status = "✓" if caught else " "
+        comprehensive_summary += f"- [{status}] `{t.get('identifier', '')}` - {t.get('reason', '')}\n"
+
+    comprehensive_summary += f"""
+## Data Quality Note
+
+✅ **{ci_evidence.get('status', 'unknown').upper()}** - Data extracted from Buildkite API
+- Source: Build {build_number}
+- Method: {"Parsed from job logs" if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', [])) else "Buildkite Test Engine"}
+
+---
+Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
+"""
+
+    (output_dir / "SUMMARY.md").write_text(comprehensive_summary)
+
+    # Write README.md
+    readme = f"""# PR #{pr_number} - Test Selection Evaluation
+
+## Files in This Directory
+
+- **`SUMMARY.md`** - Executive summary ⭐ **START HERE**
+- **`test_comparison_table.txt`** - Visual comparison
+- **`evaluation_report.json`** - Machine-readable metrics
+- **`evaluation_summary.md`** - Legacy summary
+
+## Key Results
+
+- Coverage: {metrics['coverage_rate']:.1%}
+- Precision: {metrics['precision_rate']:.1%}
+- Failed Tests: {len(failed_tests)}
+- LLM Selections: {len(selected_tests)}
+
+Generated: {now.strftime('%Y-%m-%d')}
+"""
+    (output_dir / "README.md").write_text(readme)
+
     print(f"Coverage: {metrics['coverage_rate']:.1%}, Precision: {metrics['precision_rate']:.1%}", file=sys.stderr)
     print(f"TP: {len(tp)}, FN: {len(fn)}, FP: {len(fp)}", file=sys.stderr)
+    print(f"Generated comprehensive reports in: {output_dir}", file=sys.stderr)
 
     return 0
 

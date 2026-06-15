@@ -1,6 +1,6 @@
 ====================================================================================================
                                PR #43167 - TEST SELECTION COMPARISON
-                                    (Build 70063 - Actual Buildkite Data)
+                                    (Build 70063 - Buildkite API Logs)
 ====================================================================================================
 
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -9,47 +9,33 @@
 │  Coverage (Recall):  0.0%                                                                       │
 │  Precision:          0.0%                                                                       │
 │  True Positives:     0 (LLM selected + CI failed)                                               │
-│  False Negatives:    141 (CI failed, LLM missed)                                                │
-│  False Positives:    7 (LLM selected, CI passed)                                                │
+│  False Negatives:    2 (CI failed, LLM missed)                                                  │
+│  False Positives:    7 (LLM selected, did not fail in CI)                                       │
 │                                                                                                 │
-│  Data Source:        Buildkite API (Build 70063)                                                │
+│  Data Source:        Buildkite API Logs                                                         │
 │  Build URL:          https://buildkite.com/vllm/ci/builds/70063                                 │
+│                                                                                                 │
+│  NOTE: An earlier version of this report stated 141 failures. The actual pytest output         │
+│  shows 1 failed per job (2 total). The 141 figure was a data collection error.                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  CI APPROACH (Buildkite - actual test failures from logs)                                       │
+│  CI APPROACH (Buildkite - actual test results)                                                  │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│  Total Failed Tests: 141                                                                        │
+│  Total Failed Tests: 2                                                                          │
 │  Failed Jobs: 2                                                                                 │
 │                                                                                                 │
-│  [FAIL] Async Engine, Inputs, Utils, Worker, Config (CPU) - 1 test failed                       │
-│    ✗ tests/tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[...]     │
+│  [FAIL] Entrypoints Integration (API Server openai - Part 1) - 1 test failed                   │
+│    ✗ entrypoints/openai/chat_completion/test_chat.py::test_invocations                          │
+│    Failure: API response dict_keys mismatch (extra 'moderation' key)                           │
+│    Stats: 1 failed, 269 passed, 6 skipped                                                      │
 │                                                                                                 │
-│  [FAIL] Entrypoints Integration (API Server openai - Part 1) - 140 tests failed                 │
+│  [FAIL] Async Engine, Inputs, Utils, Worker, Config (CPU) - 1 test failed                      │
+│    ✗ tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[...]           │
+│    Failure: Token sequence mismatch (right side has one extra token: 2)                        │
+│    Stats: 1 failed, 657 passed, 253 skipped                                                    │
 │                                                                                                 │
-│    All failures in: tests/entrypoints/openai/chat_completion/                                   │
-│                                                                                                 │
-│    Most affected files:                                                                         │
-│      ✗ test_chat.py (32 tests)                                                                  │
-│      ✗ test_serving_chat.py (15 tests)                                                          │
-│      ✗ test_chat_error.py (13 tests)                                                            │
-│      ✗ test_video.py (13 tests)                                                                 │
-│      ✗ test_vision.py (13 tests)                                                                │
-│      ✗ test_chat_completion_with_prompt_embeds.py (8 tests)                                     │
-│      ✗ test_completion_with_function_calling.py (6 tests)                                       │
-│      ✗ test_thinking_token_budget_validation.py (6 tests)                                       │
-│      ✗ test_audio.py (5 tests)                                                                  │
-│      ✗ test_chat_completion.py (4 tests)                                                        │
-│      ✗ test_thinking_token_budget.py (4 tests)                                                  │
-│      ✗ test_audio_in_video.py (3 tests)                                                         │
-│      ✗ test_chat_echo.py (3 tests)                                                              │
-│      ✗ + 11 more test files with 1-2 failures each                                              │
-│                                                                                                 │
-│    Failure Pattern:                                                                             │
-│    - OpenAI API chat completion endpoints                                                       │
-│    - Multi-modal inputs (vision, audio, video)                                                  │
-│    - Function/tool calling                                                                      │
-│    - Streaming, structured outputs, prompt embeddings                                           │
+│  Total across both jobs: 2 failed, 926 passed, 259 skipped                                     │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -57,96 +43,46 @@
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
 │  Total selected: 7                                                                              │
 │                                                                                                 │
-│  SELECTED (no failure in CI):                                                                   │
+│  SELECTED (no failure in CI for these):                                                         │
 │  [ ] tests/model_executor/test_eagle_quantization.py                                            │
 │  [ ] tests/model_executor/test_weight_utils.py                                                  │
-│  [ ] tests/quantization/test_per_token_kv_cache.py                                              │
-│  [ ] tests/quantization/test_compressed_tensors.py                                              │
-│  [ ] tests/quantization/test_fp8.py                                                             │
-│  [ ] tests/quantization/test_configs.py                                                         │
+│  [ ] tests/quantization/test_per_token_kv_cache.py                                             │
+│  [ ] tests/quantization/test_compressed_tensors.py                                             │
+│  [ ] tests/quantization/test_fp8.py                                                            │
+│  [ ] tests/quantization/test_configs.py                                                        │
 │  [ ] tests/basic_correctness/                                                                   │
 │                                                                                                 │
 │  LLM Reasoning:                                                                                 │
-│  The LLM focused on quantization and KV cache tests based on the PR's direct code changes       │
+│  The LLM focused on quantization and KV cache tests based on the PR's direct code changes      │
 │  to kv_cache.py and quantization config files.                                                  │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │  COMPARISON: CI vs LLM                                                                          │
 ├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│  ✗ LLM MISSED 141 failures across 2 job categories:                                             │
+│  ✗ LLM MISSED 2 failures:                                                                       │
 │                                                                                                 │
-│  1. Tokenizer Integration (1 test)                                                              │
-│     tests/tokenizers_/test_mistral.py - Chat template application                               │
+│  1. API Entrypoints (1 test)                                                                    │
+│     entrypoints/openai/chat_completion/test_chat.py::test_invocations                           │
+│     → Response schema changed (extra 'moderation' key), unrelated to KV cache logic            │
 │                                                                                                 │
-│  2. API Entrypoints Integration (140 tests)                                                     │
-│     tests/entrypoints/openai/chat_completion/* - Entire OpenAI chat completion API              │
+│  2. Tokenizer (1 test)                                                                          │
+│     tokenizers_/test_mistral.py::test_apply_chat_template[...Magistral-Small-2509]             │
+│     → Indirect failure from model loading changes                                              │
 │                                                                                                 │
-│  ROOT CAUSE ANALYSIS:                                                                           │
-│  ═══════════════════                                                                            │
-│  The PR refactored KV cache scale loading from distributed `get_cache_scale` calls in each      │
-│  model's load_weights to a centralized `get_cache_scale_mapper`. This internal API change       │
-│  had cascading effects:                                                                         │
+│  ROOT CAUSE:                                                                                    │
+│  The LLM correctly identified the changed code areas (KV cache / quantization) but missed      │
+│  that the PR also had a side effect on API response serialization (test_invocations failure)   │
+│  and indirectly on a tokenizer test.                                                            │
 │                                                                                                 │
-│  → Direct Impact (expected): Model weight loading behavior                                      │
-│  → Indirect Impact (LLM missed): Model initialization in API server context                     │
-│  → Downstream Impact (LLM missed): OpenAI API compatibility layer                               │
-│                                                                                                 │
-│  WHY THE LLM MISSED THESE:                                                                      │
-│  ─────────────────────────                                                                      │
-│  ✗ Selected low-level tests (quantization, model_executor)                                      │
-│  ✗ Missed integration layer tests (API entrypoints)                                             │
-│  ✗ Didn't consider that internal refactoring could break API contracts                          │
-│  ✗ No selection of tokenizer tests (indirect dependency)                                        │
-│                                                                                                 │
-│  LESSONS LEARNED:                                                                               │
-│  ─────────────────                                                                              │
-│  • Internal API refactoring requires testing the ENTIRE call stack, not just direct callers     │
-│  • OpenAI API compatibility tests are critical for model loading changes                        │
-│  • "Boilerplate removal" PRs need broad integration testing                                     │
-│  • Test selection should include API entrypoints when core model code changes                   │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  DETAILED FAILURE BREAKDOWN                                                                     │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│  Category 1: Tokenizer Tests (1 failure)                                                        │
-│  ════════════════════════════════════════                                                       │
-│  • test_mistral.py::test_apply_chat_template - Chat template token mismatch                     │
-│                                                                                                 │
-│  Category 2: Chat Completion Core (32 failures)                                                 │
-│  ══════════════════════════════════════════                                                     │
-│  • test_chat.py::test_invocations                                                               │
-│  • test_chat.py::test_single_chat_session                                                       │
-│  • test_chat.py::test_chat_streaming                                                            │
-│  • test_chat.py::test_structured_outputs_*                                                      │
-│  • test_chat.py::test_response_format_*                                                         │
-│  • test_chat.py::test_*_logprobs_chat                                                           │
-│  • test_chat.py::test_chat_completion_*                                                         │
-│  • + 20 more chat completion tests                                                              │
-│                                                                                                 │
-│  Category 3: Multi-Modal (39 failures)                                                          │
-│  ═════════════════════════════════                                                              │
-│  • Vision: test_vision.py (13 tests)                                                            │
-│  • Video: test_video.py (13 tests)                                                              │
-│  • Audio: test_audio.py (5 tests)                                                               │
-│  • Audio in Video: test_audio_in_video.py (3 tests)                                             │
-│  • Vision Embeds: test_vision_embeds.py (2 tests)                                               │
-│  • Mixed Image Embeds: test_completion_with_image_embeds.py (1 test)                            │
-│  • + other multi-modal combinations (2 tests)                                                   │
-│                                                                                                 │
-│  Category 4: Advanced Features (36 failures)                                                    │
-│  ═══════════════════════════════════════                                                        │
-│  • Serving/Chat: test_serving_chat.py (15 tests)                                                │
-│  • Error Handling: test_chat_error.py (13 tests)                                                │
-│  • Thinking Budgets: test_thinking_token_budget*.py (10 tests)                                  │
-│  • Prompt Embeds: test_chat_completion_with_prompt_embeds.py (8 tests)                          │
-│  • Function Calling: test_completion_with_function_calling.py (6 tests)                         │
-│  • Batched Completions: test_batched_chat_completions.py (2 tests)                              │
-│  • Other: 9 tests across 7 files                                                                │
+│  LESSONS:                                                                                       │
+│  • Include entrypoints/openai/ tests when model loading or response serialization changes      │
+│  • 'Boilerplate removal' PRs that touch serialization paths need API integration tests         │
+│  • Tokenizer tests can fail indirectly when model loading is refactored                        │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ====================================================================================================
-NOTE: This data was extracted from actual Buildkite API logs, not inferred from pipeline configs.
-Complete test list available in: /tmp/pr_43167_actual_failures.md
+NOTE: Data extracted from actual Buildkite API logs (build 70063).
+      Previous version of this file incorrectly reported 140 entrypoints failures.
+      Actual: 1 failed, 269 passed, 6 skipped in that job.
 ====================================================================================================
