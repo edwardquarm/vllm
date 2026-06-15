@@ -1,566 +1,67 @@
-# Complete List of Failed Tests - PR #43167
+# Tests Run by CI - PR #43167
 
 ## Build: 70063
-## Total Failures: 141
+## Source: Buildkite logs (pytest summary lines)
 
-## Job 1: Async Engine, Inputs, Utils, Worker, Config (CPU) - 1 failure
+## CORRECTION NOTE
+## A previous version of this file listed 141 tests as "failures". That was wrong.
+## The 140 entrypoints tests listed were collected from pytest's verbose output
+## (which prints every test name whether it passes or fails) and were
+## misidentified as failures. The actual pytest summary showed:
+##   Entrypoints job: 1 failed, 269 passed, 6 skipped
+##   CPU job:         1 failed, 657 passed, 253 skipped
 
-```
-tests/tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]
-```
+## ============================================================
+## JOB: Entrypoints Integration (API Server openai - Part 1)
+## Command: pytest -v -s entrypoints/openai/chat_completion/ ...
+## ============================================================
 
-## Job 2: Entrypoints Integration (API Server openai - Part 1) - 140 failures
+SUMMARY: 1 failed, 269 passed, 6 skipped (276 total)
 
-All tests are in: `tests/entrypoints/openai/chat_completion/`
+FAILED (1):
+  entrypoints/openai/chat_completion/test_chat.py::test_invocations
 
-```
-  1. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/mary_had_lamb.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
-  2. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/mary_had_lamb.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
-  3. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
-  4. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
-  5. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/mary_had_lamb.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
-  6. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/mary_had_lamb.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
-  7. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
-  8. entrypoints/openai/chat_completion/test_audio.py::test_chat_streaming_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
-  9. entrypoints/openai/chat_completion/test_audio.py::test_error_on_invalid_audio_url_type[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 10. entrypoints/openai/chat_completion/test_audio.py::test_error_on_invalid_audio_url_type[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 11. entrypoints/openai/chat_completion/test_audio.py::test_multi_audio_input[audio_urls0-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 12. entrypoints/openai/chat_completion/test_audio.py::test_multi_audio_input[audio_urls0-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 13. entrypoints/openai/chat_completion/test_audio.py::test_multi_audio_input[audio_urls1-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 14. entrypoints/openai/chat_completion/test_audio.py::test_multi_audio_input[audio_urls1-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 15. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 16. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 17. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_audio_base64encoded[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 18. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_audio_base64encoded[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 19. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b]
- 20. entrypoints/openai/chat_completion/test_audio.py::test_single_chat_session_input_audio[https://vllm-public-assets.s3.us-west-2.amazonaws.com/multimodal_asset/winning_call.ogg-fixie-ai/ultravox-v0_5-llama-3_2-1b],
- 21. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video
- 22. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video,
- 23. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video_interleaved
- 24. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video_interleaved,
- 25. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video_multi_videos
- 26. entrypoints/openai/chat_completion/test_audio_in_video.py::test_online_audio_in_video_multi_videos,
- 27. entrypoints/openai/chat_completion/test_batched_chat_completions.py::test_batched_chat_completions[Qwen/Qwen2.5-1.5B-Instruct]
- 28. entrypoints/openai/chat_completion/test_batched_chat_completions.py::test_batched_chat_completions[Qwen/Qwen2.5-1.5B-Instruct],
- 29. entrypoints/openai/chat_completion/test_batched_chat_completions.py::test_batched_chat_completions_with_json_schema[Qwen/Qwen2.5-1.5B-Instruct]
- 30. entrypoints/openai/chat_completion/test_batched_chat_completions.py::test_batched_chat_completions_with_json_schema[Qwen/Qwen2.5-1.5B-Instruct],
- 31. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_equals_1[HuggingFaceH4/zephyr-7b-beta]
- 32. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_equals_1[HuggingFaceH4/zephyr-7b-beta],
- 33. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_parameter_non_streaming[HuggingFaceH4/zephyr-7b-beta]
- 34. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_parameter_non_streaming[HuggingFaceH4/zephyr-7b-beta],
- 35. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_parameter_streaming[HuggingFaceH4/zephyr-7b-beta]
- 36. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_parameter_streaming[HuggingFaceH4/zephyr-7b-beta],
- 37. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_with_seed[HuggingFaceH4/zephyr-7b-beta]
- 38. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_n_with_seed[HuggingFaceH4/zephyr-7b-beta],
- 39. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_accepts_model_specific_reasoning_effort
- 40. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_accepts_model_specific_reasoning_effort,
- 41. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_at_limit
- 42. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_at_limit,
- 43. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_custom_limit
- 44. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_custom_limit,
- 45. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_default
- 46. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_default,
- 47. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_exceeds_default_limit
- 48. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_exceeds_default_limit,
- 49. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_massive_value
- 50. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_massive_value,
- 51. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_to_sampling_params
- 52. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_to_sampling_params,
- 53. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_various_values
- 54. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_n_parameter_various_values,
- 55. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_rejects_unknown_reasoning_effort
- 56. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_request_rejects_unknown_reasoning_effort,
- 57. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_stream_options[HuggingFaceH4/zephyr-7b-beta]
- 58. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_stream_options[HuggingFaceH4/zephyr-7b-beta],
- 59. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_stream_options[zephyr-lora]
- 60. entrypoints/openai/chat_completion/test_chat.py::test_chat_completion_stream_options[zephyr-lora],
- 61. entrypoints/openai/chat_completion/test_chat.py::test_chat_streaming[HuggingFaceH4/zephyr-7b-beta]
- 62. entrypoints/openai/chat_completion/test_chat.py::test_chat_streaming[HuggingFaceH4/zephyr-7b-beta],
- 63. entrypoints/openai/chat_completion/test_chat.py::test_chat_streaming[zephyr-lora]
- 64. entrypoints/openai/chat_completion/test_chat.py::test_chat_streaming[zephyr-lora],
- 65. entrypoints/openai/chat_completion/test_chat.py::test_complex_message_content
- 66. entrypoints/openai/chat_completion/test_chat.py::test_complex_message_content,
- 67. entrypoints/openai/chat_completion/test_chat.py::test_custom_role
- 68. entrypoints/openai/chat_completion/test_chat.py::test_custom_role,
- 69. entrypoints/openai/chat_completion/test_chat.py::test_extra_fields_allowed
- 70. entrypoints/openai/chat_completion/test_chat.py::test_extra_fields_allowed,
- 71. entrypoints/openai/chat_completion/test_chat.py::test_invocations
- 72. entrypoints/openai/chat_completion/test_chat.py::test_invocations,
- 73. entrypoints/openai/chat_completion/test_chat.py::test_long_seed
- 74. entrypoints/openai/chat_completion/test_chat.py::test_long_seed,
- 75. entrypoints/openai/chat_completion/test_chat.py::test_more_than_one_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta]
- 76. entrypoints/openai/chat_completion/test_chat.py::test_more_than_one_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta],
- 77. entrypoints/openai/chat_completion/test_chat.py::test_no_logprobs_chat[HuggingFaceH4/zephyr-7b-beta]
- 78. entrypoints/openai/chat_completion/test_chat.py::test_no_logprobs_chat[HuggingFaceH4/zephyr-7b-beta],
- 79. entrypoints/openai/chat_completion/test_chat.py::test_no_logprobs_chat[zephyr-lora]
- 80. entrypoints/openai/chat_completion/test_chat.py::test_no_logprobs_chat[zephyr-lora],
- 81. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta--1]
- 82. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta--1],
- 83. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-0]
- 84. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-0],
- 85. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-1]
- 86. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-1],
- 87. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-None]
- 88. entrypoints/openai/chat_completion/test_chat.py::test_prompt_logprobs_chat[HuggingFaceH4/zephyr-7b-beta-None],
- 89. entrypoints/openai/chat_completion/test_chat.py::test_response_format_json_object
- 90. entrypoints/openai/chat_completion/test_chat.py::test_response_format_json_object,
- 91. entrypoints/openai/chat_completion/test_chat.py::test_response_format_json_schema
- 92. entrypoints/openai/chat_completion/test_chat.py::test_response_format_json_schema,
- 93. entrypoints/openai/chat_completion/test_chat.py::test_response_format_text
- 94. entrypoints/openai/chat_completion/test_chat.py::test_response_format_text,
- 95. entrypoints/openai/chat_completion/test_chat.py::test_single_chat_session[HuggingFaceH4/zephyr-7b-beta]
- 96. entrypoints/openai/chat_completion/test_chat.py::test_single_chat_session[HuggingFaceH4/zephyr-7b-beta],
- 97. entrypoints/openai/chat_completion/test_chat.py::test_single_chat_session[zephyr-lora]
- 98. entrypoints/openai/chat_completion/test_chat.py::test_single_chat_session[zephyr-lora],
- 99. entrypoints/openai/chat_completion/test_chat.py::test_some_logprobs_chat[HuggingFaceH4/zephyr-7b-beta]
-100. entrypoints/openai/chat_completion/test_chat.py::test_some_logprobs_chat[HuggingFaceH4/zephyr-7b-beta],
-101. entrypoints/openai/chat_completion/test_chat.py::test_some_logprobs_chat[zephyr-lora]
-102. entrypoints/openai/chat_completion/test_chat.py::test_some_logprobs_chat[zephyr-lora],
-103. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_choice_chat
-104. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_choice_chat,
-105. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_choice_chat_logprobs
-106. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_choice_chat_logprobs,
-107. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_json_chat
-108. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_json_chat,
-109. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_regex_chat
-110. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_regex_chat,
-111. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_type_error
-112. entrypoints/openai/chat_completion/test_chat.py::test_structured_outputs_type_error,
-113. entrypoints/openai/chat_completion/test_chat.py::test_too_many_chat_logprobs[HuggingFaceH4/zephyr-7b-beta]
-114. entrypoints/openai/chat_completion/test_chat.py::test_too_many_chat_logprobs[HuggingFaceH4/zephyr-7b-beta],
-115. entrypoints/openai/chat_completion/test_chat.py::test_too_many_chat_logprobs[zephyr-lora]
-116. entrypoints/openai/chat_completion/test_chat.py::test_too_many_chat_logprobs[zephyr-lora],
-117. entrypoints/openai/chat_completion/test_chat.py::test_zero_logprobs_chat[HuggingFaceH4/zephyr-7b-beta]
-118. entrypoints/openai/chat_completion/test_chat.py::test_zero_logprobs_chat[HuggingFaceH4/zephyr-7b-beta],
-119. entrypoints/openai/chat_completion/test_chat.py::test_zero_logprobs_chat[zephyr-lora]
-120. entrypoints/openai/chat_completion/test_chat.py::test_zero_logprobs_chat[zephyr-lora],
-121. entrypoints/openai/chat_completion/test_chat_completion.py::test_empty_grammar[Qwen/Qwen2.5-1.5B-Instruct]
-122. entrypoints/openai/chat_completion/test_chat_completion.py::test_empty_grammar[Qwen/Qwen2.5-1.5B-Instruct],
-123. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_grammar[Qwen/Qwen2.5-1.5B-Instruct]
-124. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_grammar[Qwen/Qwen2.5-1.5B-Instruct],
-125. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_json_schema[Qwen/Qwen2.5-1.5B-Instruct]
-126. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_json_schema[Qwen/Qwen2.5-1.5B-Instruct],
-127. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_regex[Qwen/Qwen2.5-1.5B-Instruct]
-128. entrypoints/openai/chat_completion/test_chat_completion.py::test_invalid_regex[Qwen/Qwen2.5-1.5B-Instruct],
-129. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_prompt_embeds_plus_audio_embeds
-130. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_prompt_embeds_plus_audio_embeds,
-131. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_text_content_and_prompt_embeds_match_with_audio_embeds[audio_embeds-then-text]
-132. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_text_content_and_prompt_embeds_match_with_audio_embeds[audio_embeds-then-text],
-133. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_text_content_and_prompt_embeds_match_with_audio_embeds[text-then-audio_embeds]
-134. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_audio_embeds.py::test_text_content_and_prompt_embeds_match_with_audio_embeds[text-then-audio_embeds],
-135. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_embeds[image_embeds-then-text]
-136. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_embeds[image_embeds-then-text],
-137. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_embeds[text-then-image_embeds]
-138. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_embeds[text-then-image_embeds],
-139. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_url[image_url-then-text]
-140. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_url[image_url-then-text],
-141. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_url[text-then-image_url]
-142. entrypoints/openai/chat_completion/test_chat_completion_with_mixed_image_embeds.py::test_text_content_and_prompt_embeds_match_with_image_url[text-then-image_url],
-143. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_invalid_base64
-144. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_invalid_base64,
-145. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_missing_data_field
-146. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_missing_data_field,
-147. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_multi_message_conversation
-148. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_multi_message_conversation,
-149. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_multiple_prompt_embeds_parts
-150. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_multiple_prompt_embeds_parts,
-151. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_single_prompt_embeds_part
-152. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_single_prompt_embeds_part,
-153. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_streaming
-154. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_streaming,
-155. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_text_content_and_prompt_embeds_match
-156. entrypoints/openai/chat_completion/test_chat_completion_with_prompt_embeds.py::test_text_content_and_prompt_embeds_match,
-157. entrypoints/openai/chat_completion/test_chat_echo.py::test_chat_session_with_echo_and_continue_final_message[test_case0]
-158. entrypoints/openai/chat_completion/test_chat_echo.py::test_chat_session_with_echo_and_continue_final_message[test_case0],
-159. entrypoints/openai/chat_completion/test_chat_echo.py::test_chat_session_with_echo_and_continue_final_message[test_case1]
-160. entrypoints/openai/chat_completion/test_chat_echo.py::test_chat_session_with_echo_and_continue_final_message[test_case1],
-161. entrypoints/openai/chat_completion/test_chat_echo.py::test_prompt_logprobs
-162. entrypoints/openai/chat_completion/test_chat_echo.py::test_prompt_logprobs,
-163. entrypoints/openai/chat_completion/test_chat_echo.py::test_top_logprobs
-164. entrypoints/openai/chat_completion/test_chat_echo.py::test_top_logprobs,
-165. entrypoints/openai/chat_completion/test_chat_error.py::test_batch_structural_tag_response_format_invalid[None]
-166. entrypoints/openai/chat_completion/test_chat_error.py::test_batch_structural_tag_response_format_invalid[None],
-167. entrypoints/openai/chat_completion/test_chat_error.py::test_batch_structural_tag_response_format_invalid[format_value1]
-168. entrypoints/openai/chat_completion/test_chat_error.py::test_batch_structural_tag_response_format_invalid[format_value1],
-169. entrypoints/openai/chat_completion/test_chat_error.py::test_chat_error_non_stream
-170. entrypoints/openai/chat_completion/test_chat_error.py::test_chat_error_non_stream,
-171. entrypoints/openai/chat_completion/test_chat_error.py::test_chat_error_stream
-172. entrypoints/openai/chat_completion/test_chat_error.py::test_chat_error_stream,
-173. entrypoints/openai/chat_completion/test_chat_error.py::test_json_schema_response_format_missing_schema
-174. entrypoints/openai/chat_completion/test_chat_error.py::test_json_schema_response_format_missing_schema,
-175. entrypoints/openai/chat_completion/test_chat_error.py::test_openai_chat_keeps_mm_cache_for_engine_execution
-176. entrypoints/openai/chat_completion/test_chat_error.py::test_openai_chat_keeps_mm_cache_for_engine_execution,
-177. entrypoints/openai/chat_completion/test_chat_error.py::test_renderer_only_chat_request_skips_mm_cache
-178. entrypoints/openai/chat_completion/test_chat_error.py::test_renderer_only_chat_request_skips_mm_cache,
-179. entrypoints/openai/chat_completion/test_chat_error.py::test_structural_tag_response_format_invalid[None]
-180. entrypoints/openai/chat_completion/test_chat_error.py::test_structural_tag_response_format_invalid[None],
-181. entrypoints/openai/chat_completion/test_chat_error.py::test_structural_tag_response_format_invalid[format_value1]
-182. entrypoints/openai/chat_completion/test_chat_error.py::test_structural_tag_response_format_invalid[format_value1],
-183. entrypoints/openai/chat_completion/test_chat_error.py::test_structured_outputs_structural_tag_invalid[]
-184. entrypoints/openai/chat_completion/test_chat_error.py::test_structured_outputs_structural_tag_invalid[],
-185. entrypoints/openai/chat_completion/test_chat_error.py::test_structured_outputs_structural_tag_invalid[not
-186. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_accepts_text
-187. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_accepts_text,
-188. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_accepts_text_array
-189. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_accepts_text_array,
-190. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_audio[audio_content0]
-191. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_audio[audio_content0],
-192. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_audio[audio_content1]
-193. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_audio[audio_content1],
-194. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_image[image_content0]
-195. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_image[image_content0],
-196. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_image[image_content1]
-197. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_image[image_content1],
-198. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_video[video_content0]
-199. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_video[video_content0],
-200. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_video[video_content1]
-201. entrypoints/openai/chat_completion/test_chat_error.py::test_system_message_warns_on_video[video_content1],
-202. entrypoints/openai/chat_completion/test_chat_error.py::test_user_message_accepts_image
-203. entrypoints/openai/chat_completion/test_chat_error.py::test_user_message_accepts_image,
-204. entrypoints/openai/chat_completion/test_chat_logit_bias_validation.py::test_chat_logit_bias_invalid
-205. entrypoints/openai/chat_completion/test_chat_logit_bias_validation.py::test_chat_logit_bias_invalid,
-206. entrypoints/openai/chat_completion/test_chat_logit_bias_validation.py::test_chat_logit_bias_valid
-207. entrypoints/openai/chat_completion/test_chat_logit_bias_validation.py::test_chat_logit_bias_valid,
-208. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-auto-False-Qwen/Qwen3-0.6B]
-209. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-auto-False-Qwen/Qwen3-0.6B],
-210. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-auto-True-Qwen/Qwen3-0.6B]
-211. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-auto-True-Qwen/Qwen3-0.6B],
-212. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-required-False-Qwen/Qwen3-0.6B]
-213. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-required-False-Qwen/Qwen3-0.6B],
-214. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-required-True-Qwen/Qwen3-0.6B]
-215. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-required-True-Qwen/Qwen3-0.6B],
-216. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-tool_choice2-False-Qwen/Qwen3-0.6B]
-217. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-tool_choice2-False-Qwen/Qwen3-0.6B],
-218. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-tool_choice2-True-Qwen/Qwen3-0.6B]
-219. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[False-tool_choice2-True-Qwen/Qwen3-0.6B],
-220. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-auto-False-Qwen/Qwen3-0.6B]
-221. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-auto-False-Qwen/Qwen3-0.6B],
-222. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-auto-True-Qwen/Qwen3-0.6B]
-223. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-auto-True-Qwen/Qwen3-0.6B],
-224. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-required-False-Qwen/Qwen3-0.6B]
-225. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-required-False-Qwen/Qwen3-0.6B],
-226. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-required-True-Qwen/Qwen3-0.6B]
-227. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-required-True-Qwen/Qwen3-0.6B],
-228. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-tool_choice2-False-Qwen/Qwen3-0.6B]
-229. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-tool_choice2-False-Qwen/Qwen3-0.6B],
-230. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-tool_choice2-True-Qwen/Qwen3-0.6B]
-231. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_function_tool_use[True-tool_choice2-True-Qwen/Qwen3-0.6B],
-232. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_inconsistent_tool_choice_and_tools
-233. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_inconsistent_tool_choice_and_tools,
-234. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_max_tokens_with_tool_choice_required[required]
-235. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_max_tokens_with_tool_choice_required[required],
-236. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_max_tokens_with_tool_choice_required[tool_choice1]
-237. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_max_tokens_with_tool_choice_required[tool_choice1],
-238. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_named_tool_use
-239. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_named_tool_use,
-240. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_no_args_tool_call[-Qwen/Qwen3-0.6B]
-241. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_no_args_tool_call[-Qwen/Qwen3-0.6B],
-242. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_no_args_tool_call[{}-Qwen/Qwen3-0.6B]
-243. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_no_args_tool_call[{}-Qwen/Qwen3-0.6B],
-244. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_tool_id_kimi_k2[required-False-Qwen/Qwen3-0.6B]
-245. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_tool_id_kimi_k2[required-False-Qwen/Qwen3-0.6B],
-246. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_tool_id_kimi_k2[required-True-Qwen/Qwen3-0.6B]
-247. entrypoints/openai/chat_completion/test_completion_with_function_calling.py::test_tool_id_kimi_k2[required-True-Qwen/Qwen3-0.6B],
-248. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype0-llava-hf/llava-1.5-7b-hf]
-249. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype0-llava-hf/llava-1.5-7b-hf],
-250. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype1-llava-hf/llava-1.5-7b-hf]
-251. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype1-llava-hf/llava-1.5-7b-hf],
-252. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype2-llava-hf/llava-1.5-7b-hf]
-253. entrypoints/openai/chat_completion/test_completion_with_image_embeds.py::test_completions_with_image_embeds[dtype2-llava-hf/llava-1.5-7b-hf],
-254. entrypoints/openai/chat_completion/test_default_mm_loras.py::test_default_mm_lora_chat_completions[/fsx/hf_cache/hub/models--microsoft--Phi-4-multimodal-instruct/snapshots/93f923e1a7727d1c4f446756212d9d3e8fcc5d81]
-255. entrypoints/openai/chat_completion/test_default_mm_loras.py::test_default_mm_lora_chat_completions[/fsx/hf_cache/hub/models--microsoft--Phi-4-multimodal-instruct/snapshots/93f923e1a7727d1c4f446756212d9d3e8fcc5d81],
-256. entrypoints/openai/chat_completion/test_default_mm_loras.py::test_default_mm_lora_chat_completions[speech]
-257. entrypoints/openai/chat_completion/test_default_mm_loras.py::test_default_mm_lora_chat_completions[speech],
-258. entrypoints/openai/chat_completion/test_enable_force_include_usage.py::test_chat_with_enable_force_include_usage
-259. entrypoints/openai/chat_completion/test_enable_force_include_usage.py::test_chat_with_enable_force_include_usage,
-260. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case0]
-261. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case0],
-262. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case1]
-263. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case1],
-264. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case2]
-265. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case2],
-266. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case3]
-267. entrypoints/openai/chat_completion/test_root_path.py::test_chat_session_root_path_with_api_key[test_case3],
-268. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_chat_tool_call_streaming[with_tool_parser-exclude_tools_when_tool_choice_none]
-269. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_chat_tool_call_streaming[with_tool_parser-exclude_tools_when_tool_choice_none],
-270. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_chat_tool_call_streaming[without_tool_parser-exclude_tools_when_tool_choice_none]
-271. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_chat_tool_call_streaming[without_tool_parser-exclude_tools_when_tool_choice_none],
-272. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_multi_turn_chat[with_tool_parser-exclude_tools_when_tool_choice_none]
-273. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_multi_turn_chat[with_tool_parser-exclude_tools_when_tool_choice_none],
-274. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_multi_turn_chat[without_tool_parser-exclude_tools_when_tool_choice_none]
-275. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_multi_turn_chat[without_tool_parser-exclude_tools_when_tool_choice_none],
-276. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_choice_none[with_tool_parser-exclude_tools_when_tool_choice_none]
-277. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_choice_none[with_tool_parser-exclude_tools_when_tool_choice_none],
-278. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_choice_none[without_tool_parser-exclude_tools_when_tool_choice_none]
-279. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_choice_none[without_tool_parser-exclude_tools_when_tool_choice_none],
-280. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_message_array_content[with_tool_parser-exclude_tools_when_tool_choice_none]
-281. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_message_array_content[with_tool_parser-exclude_tools_when_tool_choice_none],
-282. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_message_array_content[without_tool_parser-exclude_tools_when_tool_choice_none]
-283. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSChat::test_gpt_oss_tool_message_array_content[without_tool_parser-exclude_tools_when_tool_choice_none],
-284. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSSpeculativeChat::test_gpt_oss_speculative_reasoning_leakage[with_tool_parser-exclude_tools_when_tool_choice_none]
-285. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSSpeculativeChat::test_gpt_oss_speculative_reasoning_leakage[with_tool_parser-exclude_tools_when_tool_choice_none],
-286. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSSpeculativeChat::test_gpt_oss_speculative_reasoning_leakage[without_tool_parser-exclude_tools_when_tool_choice_none]
-287. entrypoints/openai/chat_completion/test_serving_chat.py::TestGPTOSSSpeculativeChat::test_gpt_oss_speculative_reasoning_leakage[without_tool_parser-exclude_tools_when_tool_choice_none],
-288. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_multi_turn_tools_and_reasoning[non_streaming]
-289. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_multi_turn_tools_and_reasoning[non_streaming],
-290. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_multi_turn_tools_and_reasoning[streaming]
-291. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_multi_turn_tools_and_reasoning[streaming],
-292. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning
-293. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning,
-294. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning_empty_content
-295. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning_empty_content,
-296. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning_empty_content_list
-297. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_non_tool_reasoning_empty_content_list,
-298. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_simple_chat[non_streaming]
-299. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_simple_chat[non_streaming],
-300. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_simple_chat[streaming]
-301. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_simple_chat[streaming],
-302. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_tool_call_response_with_content[non_streaming]
-303. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_tool_call_response_with_content[non_streaming],
-304. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_tool_call_response_with_content[streaming]
-305. entrypoints/openai/chat_completion/test_serving_chat.py::TestServingChatWithHarmony::test_tool_call_response_with_content[streaming],
-306. entrypoints/openai/chat_completion/test_serving_chat.py::test_async_serving_chat_init
-307. entrypoints/openai/chat_completion/test_serving_chat.py::test_async_serving_chat_init,
-308. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_could_load_correct_generation_config
-309. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_could_load_correct_generation_config,
-310. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_data_parallel_rank_extraction
-311. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_data_parallel_rank_extraction,
-312. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_did_set_correct_cache_salt[any]
-313. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_did_set_correct_cache_salt[any],
-314. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_did_set_correct_cache_salt[gpt_oss]
-315. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_did_set_correct_cache_salt[gpt_oss],
-316. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_mistral_token_ids_prompt_is_validated
-317. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_mistral_token_ids_prompt_is_validated,
-318. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_mistral_token_ids_prompt_too_long_is_rejected
-319. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_mistral_token_ids_prompt_too_long_is_rejected,
-320. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_returns_correct_model_name
-321. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_returns_correct_model_name,
-322. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_should_set_correct_max_tokens
-323. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_should_set_correct_max_tokens,
-324. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_truncate_prompt_tokens_max_token_accounting
-325. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_truncate_prompt_tokens_max_token_accounting,
-326. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_truncation_side_controls_prompt_truncation
-327. entrypoints/openai/chat_completion/test_serving_chat.py::test_serving_chat_truncation_side_controls_prompt_truncation,
-328. entrypoints/openai/chat_completion/test_serving_chat.py::test_streaming_n_gt1_independent_tool_parsers
-329. entrypoints/openai/chat_completion/test_serving_chat.py::test_streaming_n_gt1_independent_tool_parsers,
-330. entrypoints/openai/chat_completion/test_serving_chat.py::test_tool_choice_validation_without_parser
-331. entrypoints/openai/chat_completion/test_serving_chat.py::test_tool_choice_validation_without_parser,
-332. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_analysis_channel_reasoning[False-False]
-333. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_analysis_channel_reasoning[False-False],
-334. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_analysis_channel_reasoning[True-True]
-335. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_analysis_channel_reasoning[True-True],
-336. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_complex_batch_permutation
-337. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_complex_batch_permutation,
-338. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_consecutive_token_grouping
-339. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_consecutive_token_grouping,
-340. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_final_channel_returns_content_delta[-]
-341. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_final_channel_returns_content_delta[-],
-342. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_final_channel_returns_content_delta[Hello,
-343. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call[analysis]
-344. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call[analysis],
-345. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call[commentary]
-346. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call[commentary],
-347. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call_dotted_function_name[analysis]
-348. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call_dotted_function_name[analysis],
-349. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call_dotted_function_name[commentary]
-350. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_new_tool_call_dotted_function_name[commentary],
-351. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[None-None]
-352. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[None-None],
-353. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[commentary-assistant]
-354. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[commentary-assistant],
-355. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[commentary-browser.search]
-356. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[commentary-browser.search],
-357. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[unknown_channel-None]
-358. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_none_for_invalid_inputs[unknown_channel-None],
-359. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_preambles_as_content
-360. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_returns_preambles_as_content,
-361. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_argument_streaming[analysis]
-362. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_argument_streaming[analysis],
-363. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_argument_streaming[commentary]
-364. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_argument_streaming[commentary],
-365. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_empty_arguments_returns_none[analysis]
-366. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_empty_arguments_returns_none[analysis],
-367. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_empty_arguments_returns_none[commentary]
-368. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_empty_arguments_returns_none[commentary],
-369. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_index_consistency_with_ongoing_call
-370. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_index_consistency_with_ongoing_call,
-371. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_index_from_previous_messages
-372. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestExtractHarmonyStreamingDelta::test_tool_call_index_from_previous_messages,
-373. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_bare_tool_call_on_comment_channel
-374. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_bare_tool_call_on_comment_channel,
-375. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_base_index_counts_tool_calls_on_comment_channel
-376. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_base_index_counts_tool_calls_on_comment_channel,
-377. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_prefixed_tool_call_on_comment_channel
-378. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_prefixed_tool_call_on_comment_channel,
-379. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_tool_call_arguments_on_comment_channel
-380. entrypoints/openai/chat_completion/test_serving_chat_stream_harmony.py::TestToolCallsOnNonStandardChannels::test_tool_call_arguments_on_comment_channel,
-381. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_streaming_with_thinking_disabled_stays_in_content[auto_config]
-382. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_streaming_with_thinking_disabled_stays_in_content[auto_config],
-383. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_streaming_with_thinking_disabled_stays_in_content[default]
-384. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_streaming_with_thinking_disabled_stays_in_content[default],
-385. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_limits_reasoning[auto_config]
-386. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_limits_reasoning[auto_config],
-387. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_limits_reasoning[default]
-388. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_limits_reasoning[default],
-389. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_mixed_requests[auto_config]
-390. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_mixed_requests[auto_config],
-391. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_mixed_requests[default]
-392. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_mixed_requests[default],
-393. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_qwen35_fp8_mtp_concurrent_mixed_budget_and_plain
-394. entrypoints/openai/chat_completion/test_thinking_token_budget.py::test_thinking_token_budget_qwen35_fp8_mtp_concurrent_mixed_budget_and_plain,
-395. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_accepts_minus_one_as_unlimited
-396. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_accepts_minus_one_as_unlimited,
-397. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_accepts_valid_thinking_token_budget
-398. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_accepts_valid_thinking_token_budget,
-399. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[-2]
-400. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[-2],
-401. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[0.6]
-402. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[0.6],
-403. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[10.5]
-404. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_chat_completion_request_rejects_invalid_thinking_token_budget[10.5],
-405. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_accepts_minus_one_as_unlimited
-406. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_accepts_minus_one_as_unlimited,
-407. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_accepts_valid_thinking_token_budget
-408. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_accepts_valid_thinking_token_budget,
-409. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[-2]
-410. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[-2],
-411. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[0.6]
-412. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[0.6],
-413. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[3.14]
-414. entrypoints/openai/chat_completion/test_thinking_token_budget_validation.py::test_completion_request_rejects_invalid_thinking_token_budget[3.14],
-415. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-416. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-417. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-418. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-419. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-420. entrypoints/openai/chat_completion/test_video.py::test_chat_streaming_video[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-421. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-422. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-423. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-424. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-425. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-426. entrypoints/openai/chat_completion/test_video.py::test_error_on_invalid_video_url_type[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-427. entrypoints/openai/chat_completion/test_video.py::test_invalid_num_frames_request_recoverable[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-428. entrypoints/openai/chat_completion/test_video.py::test_invalid_num_frames_request_recoverable[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-429. entrypoints/openai/chat_completion/test_video.py::test_multi_video_input[video_urls0-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-430. entrypoints/openai/chat_completion/test_video.py::test_multi_video_input[video_urls0-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-431. entrypoints/openai/chat_completion/test_video.py::test_request_media_io_kwargs_override_uses_fewer_video_frames[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-432. entrypoints/openai/chat_completion/test_video.py::test_request_media_io_kwargs_override_uses_fewer_video_frames[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-433. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-434. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-435. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-436. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-437. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-438. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-439. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-440. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-441. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-442. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-443. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-444. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-445. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-446. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-447. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-448. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-449. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-450. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_base64encoded_beamsearch[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-451. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-452. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/Megamind.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-453. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-454. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://github.com/opencv/opencv/raw/refs/tags/4.12.0/samples/data/vtest.avi-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-455. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf]
-456. entrypoints/openai/chat_completion/test_video.py::test_single_chat_session_video_beamsearch[https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4-llava-hf/llava-onevision-qwen2-0.5b-ov-hf],
-457. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-458. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-459. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-460. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-461. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-462. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-463. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-464. entrypoints/openai/chat_completion/test_vision.py::test_chat_streaming_image[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-465. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_empty_image_with_uuid_without_cache_hit[microsoft/Phi-3.5-vision-instruct]
-466. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_empty_image_with_uuid_without_cache_hit[microsoft/Phi-3.5-vision-instruct],
-467. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image[image_urls0-microsoft/Phi-3.5-vision-instruct]
-468. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image[image_urls0-microsoft/Phi-3.5-vision-instruct],
-469. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image[image_urls1-microsoft/Phi-3.5-vision-instruct]
-470. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image[image_urls1-microsoft/Phi-3.5-vision-instruct],
-471. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_incorrect_uuid_format[image_urls0-microsoft/Phi-3.5-vision-instruct]
-472. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_incorrect_uuid_format[image_urls0-microsoft/Phi-3.5-vision-instruct],
-473. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_incorrect_uuid_format[image_urls1-microsoft/Phi-3.5-vision-instruct]
-474. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_incorrect_uuid_format[image_urls1-microsoft/Phi-3.5-vision-instruct],
-475. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_uuid[image_urls0-microsoft/Phi-3.5-vision-instruct]
-476. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_uuid[image_urls0-microsoft/Phi-3.5-vision-instruct],
-477. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_uuid[image_urls1-microsoft/Phi-3.5-vision-instruct]
-478. entrypoints/openai/chat_completion/test_vision.py::test_completions_with_image_with_uuid[image_urls1-microsoft/Phi-3.5-vision-instruct],
-479. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-480. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-481. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-482. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-483. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-484. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-485. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-486. entrypoints/openai/chat_completion/test_vision.py::test_error_on_invalid_image_url_type[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-487. entrypoints/openai/chat_completion/test_vision.py::test_multi_image_input[image_urls0-microsoft/Phi-3.5-vision-instruct]
-488. entrypoints/openai/chat_completion/test_vision.py::test_multi_image_input[image_urls0-microsoft/Phi-3.5-vision-instruct],
-489. entrypoints/openai/chat_completion/test_vision.py::test_multi_image_input[image_urls1-microsoft/Phi-3.5-vision-instruct]
-490. entrypoints/openai/chat_completion/test_vision.py::test_multi_image_input[image_urls1-microsoft/Phi-3.5-vision-instruct],
-491. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-492. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-493. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-494. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-495. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-496. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-497. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-498. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-499. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-500. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-501. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-502. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-503. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-504. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-505. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-506. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[1280px-Venn_diagram_rgb.svg.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-507. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-508. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-509. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-510. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-511. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-512. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-513. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-514. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-515. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-516. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-517. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-518. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-519. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-520. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-521. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-522. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[Grayscale_8bits_palette_sample_image.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-523. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-524. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-525. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-526. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-527. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-528. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-529. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-530. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded[RGBA_comp.png-RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-531. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[0-microsoft/Phi-3.5-vision-instruct]
-532. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[0-microsoft/Phi-3.5-vision-instruct],
-533. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[1-microsoft/Phi-3.5-vision-instruct]
-534. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[1-microsoft/Phi-3.5-vision-instruct],
-535. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[2-microsoft/Phi-3.5-vision-instruct]
-536. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[2-microsoft/Phi-3.5-vision-instruct],
-537. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[3-microsoft/Phi-3.5-vision-instruct]
-538. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_base64encoded_beamsearch[3-microsoft/Phi-3.5-vision-instruct],
-539. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct]
-540. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[1280px-Venn_diagram_rgb.svg.png-microsoft/Phi-3.5-vision-instruct],
-541. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct]
-542. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg-microsoft/Phi-3.5-vision-instruct],
-543. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct]
-544. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[Grayscale_8bits_palette_sample_image.png-microsoft/Phi-3.5-vision-instruct],
-545. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct]
-546. entrypoints/openai/chat_completion/test_vision.py::test_single_chat_session_image_beamsearch[RGBA_comp.png-microsoft/Phi-3.5-vision-instruct],
-547. entrypoints/openai/chat_completion/test_vision_embeds.py::test_multi_content[Qwen/Qwen3-VL-2B-Instruct]
-548. entrypoints/openai/chat_completion/test_vision_embeds.py::test_single_content[ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL-Sen1Floods11]
-549. entrypoints/openai/chat_completion/test_vision_embeds.py::test_single_content[ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL-Sen1Floods11],
-```
+PASSED (269) and SKIPPED (6):
+  Individual names not captured — test logs only record failing test names.
+  All other tests in entrypoints/openai/chat_completion/ passed or were skipped.
+
+## ============================================================
+## JOB: Async Engine, Inputs, Utils, Worker, Config (CPU)  [Retry 2 of 2]
+## Commands: pytest -v -s tokenizers_ | reasoning | tool_parsers | config | ...
+## ============================================================
+
+SUMMARY: 1 failed, 657 passed, 253 skipped (911 total)
+
+FAILED (1):
+  tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]
+
+PASSED (657) and SKIPPED (253):
+  Individual names not captured — covered test_inputs, test_outputs,
+  test_pooling_params, test_ray_env, multimodal, renderers, tokenizers_,
+  reasoning, tool_parsers, parser, transformers_utils, config directories.
+
+## ============================================================
+## TOTALS ACROSS FAILING JOBS
+## ============================================================
+
+Total tests run (in failing jobs): ~1187
+  Failed:  2
+  Passed:  926
+  Skipped: 259
+
+## ============================================================
+## LLM SELECTIONS vs CI RUN
+## ============================================================
+
+The LLM selected 7 test targets:
+  tests/model_executor/test_eagle_quantization.py
+  tests/model_executor/test_weight_utils.py
+  tests/quantization/test_per_token_kv_cache.py
+  tests/quantization/test_compressed_tensors.py
+  tests/quantization/test_fp8.py
+  tests/quantization/test_configs.py
+  tests/basic_correctness/
+
+None of these overlap with the 2 tests that actually failed.
+These targets were not covered by the 2 failing CI jobs above — they
+would be in other CI jobs (quantization, model executor jobs) that passed.
