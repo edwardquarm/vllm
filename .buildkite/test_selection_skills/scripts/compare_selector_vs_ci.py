@@ -218,14 +218,7 @@ def main():
     }
     (output_dir / "evaluation_report.json").write_text(json.dumps(report, indent=2))
 
-    # Write Excel
-    buildkite_jobs = ci_evidence.get("jobs_run", []) + ci_evidence.get("jobs_failed", [])
-    if OPENPYXL_AVAILABLE:
-        excel_data = generate_excel(pr_number, ci_evidence, selector_replay, buildkite_jobs, metrics, tp, fn, fp)
-        if excel_data:
-            (output_dir / f"PR{pr_number}_Comparison.xlsx").write_bytes(excel_data)
-
-    # Write report.md (follows report.template.md structure)
+    # Write report.md — single output file (follows report.template.md structure)
     builds = ci_evidence.get('buildkite_builds', [])
     # Prefer the main vllm/ci pipeline build over subsidiary pipelines (e.g. intel-ci)
     main_build = next(
@@ -234,13 +227,23 @@ def main():
     )
     build_number = main_build.get('build_number', 'unknown')
     build_url = f"https://buildkite.com/vllm/ci/builds/{build_number}" if build_number != 'unknown' else ""
-    data_source = ("Buildkite job logs"
-                   if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', []))
-                   else "Buildkite job logs (patched)")
+
+    # Group failures by job for use in multiple sections
+    tests_by_job: dict = {}
+    for t in failed_tests:
+        tests_by_job.setdefault(t.get('job_name', 'Unknown Job'), []).append(
+            t.get('identifier', t.get('test_name', '')))
+
+    summary_stats = ci_evidence.get('summary_stats', {})
+    jobs_run = ci_evidence.get('jobs_run', [])
+    n_passed_jobs = sum(1 for j in jobs_run if j.get('state') == 'passed')
+    n_failed_jobs = sum(1 for j in jobs_run if j.get('state') == 'failed')
+    n_blocked_jobs = sum(1 for j in jobs_run if j.get('state') == 'blocked')
 
     report_md = f"# PR #{pr_number} — Test Selection Evaluation\n\n"
-    report_md += f"> **Build**: [{build_number}]({build_url}) · **Date**: {now.strftime('%Y-%m-%d')} · **Source**: {data_source}\n\n"
+    report_md += f"> **Build**: [{build_number}]({build_url}) · **Date**: {now.strftime('%Y-%m-%d')}\n\n"
 
+    # --- Metrics ---
     report_md += "## Metrics\n\n"
     report_md += "| Metric | Value |\n|--------|-------|\n"
     report_md += f"| **Recall** | **{metrics['coverage_rate']:.1%}** |\n"
@@ -249,25 +252,41 @@ def main():
     report_md += f"| False Negatives (CI failed, LLM missed) | {len(fn)} |\n"
     report_md += f"| False Positives (LLM selected, passed) | {len(fp)} |\n\n"
 
-    summary_stats = ci_evidence.get('summary_stats', {})
-    report_md += f"## CI Failures — {len(failed_tests)} test(s)\n\n"
+    # --- Full CI picture ---
+    report_md += "## CI Test Results\n\n"
+
     if summary_stats:
-        report_md += (f"*Across failing jobs: {summary_stats.get('failed', '?')} failed"
-                      f" · {summary_stats.get('passed', '?')} passed"
-                      f" · {summary_stats.get('skipped', '?')} skipped*\n\n")
-    if failed_tests:
-        tests_by_job: dict = {}
-        for t in failed_tests:
-            job_name = t.get('job_name', 'Unknown Job')
-            tests_by_job.setdefault(job_name, []).append(t.get('identifier', t.get('test_name', '')))
+        total = summary_stats.get('failed', 0) + summary_stats.get('passed', 0) + summary_stats.get('skipped', 0)
+        report_md += (f"| Failed | Passed | Skipped | Total |\n"
+                      f"|--------|--------|---------|-------|\n"
+                      f"| {summary_stats.get('failed', '?')} "
+                      f"| {summary_stats.get('passed', '?')} "
+                      f"| {summary_stats.get('skipped', '?')} "
+                      f"| {total} |\n\n")
+
+    if jobs_run:
+        report_md += (f"**CI jobs:** {n_passed_jobs} passed · "
+                      f"{n_failed_jobs} failed · {n_blocked_jobs} blocked\n\n")
+
+    # Per-job breakdown: failed jobs with named tests, passing jobs summarised
+    if tests_by_job:
+        report_md += "### Failed jobs\n\n"
         for job_name, job_tests in tests_by_job.items():
-            report_md += f"### ❌ {job_name}\n\n"
+            report_md += f"**❌ {job_name}** — {len(job_tests)} test(s) failed\n\n"
             for test in job_tests:
                 report_md += f"- `{test}`\n"
             report_md += "\n"
-    else:
-        report_md += "No failures — build passed.\n\n"
 
+    # Passing jobs that are relevant (non-blocked, non-empty name)
+    passing_jobs = [j for j in jobs_run
+                    if j.get('state') == 'passed' and j.get('name', '').strip()]
+    if passing_jobs:
+        report_md += "### Passing jobs\n\n"
+        for j in passing_jobs:
+            report_md += f"- ✅ {j['name']}\n"
+        report_md += "\n"
+
+    # --- LLM selections ---
     report_md += f"## LLM Selections — {len(selected_tests)} target(s)\n\n"
     report_md += "| | Target | Reason |\n|--|--------|--------|\n"
     for t in selected_tests:
@@ -276,41 +295,19 @@ def main():
         report_md += f"| {status} | `{t.get('identifier', '')}` | {t.get('reason', '')} |\n"
     report_md += "\n"
 
+    # --- Gap analysis ---
     report_md += "## Gap Analysis\n\n"
     if fn:
         report_md += "**Why the LLM missed:**\n"
-        seen_reasons: set = set()
-        for f in fn:
-            reason = f.get('why_missed', '').replace('_', ' ')
-            if reason and reason not in seen_reasons:
-                report_md += f"- {reason}\n"
-                seen_reasons.add(reason)
-        report_md += "\n**To improve coverage:**\n"
-        report_md += "- *(fill in after reviewing the failure patterns above)*\n\n"
+        report_md += "- *(fill in after reviewing the failures above)*\n\n"
+        report_md += "**To improve coverage:**\n"
+        report_md += "- *(fill in)*\n\n"
     else:
         report_md += "LLM caught all CI failures.\n\n"
 
     report_md += f"---\n*Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}*\n"
 
     (output_dir / "report.md").write_text(report_md)
-
-    # Write README.md
-    readme = f"""# PR #{pr_number} — Test Selection Evaluation
-
-## Files
-
-- **`report.md`** ⭐ start here
-- **`evaluation_report.json`** — machine-readable metrics
-
-## Key Results
-
-| Recall | Precision | Failures | LLM Selections |
-|--------|-----------|----------|----------------|
-| {metrics['coverage_rate']:.1%} | {metrics['precision_rate']:.1%} | {len(failed_tests)} | {len(selected_tests)} |
-
-Generated: {now.strftime('%Y-%m-%d')}
-"""
-    (output_dir / "README.md").write_text(readme)
 
     print(f"Coverage: {metrics['coverage_rate']:.1%}, Precision: {metrics['precision_rate']:.1%}", file=sys.stderr)
     print(f"TP: {len(tp)}, FN: {len(fn)}, FP: {len(fp)}", file=sys.stderr)

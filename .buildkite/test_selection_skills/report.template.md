@@ -1,6 +1,6 @@
 # PR #{{PR_NUMBER}} — Test Selection Evaluation
 
-> **Build**: [{{BUILD_NUMBER}}]({{BUILD_URL}}) · **Date**: {{DATE}} · **Source**: {{DATA_SOURCE}}
+> **Build**: [{{BUILD_NUMBER}}]({{BUILD_URL}}) · **Date**: {{DATE}}
 
 ## Metrics
 
@@ -12,24 +12,29 @@
 | False Negatives (CI failed, LLM missed) | {{FN}} |
 | False Positives (LLM selected, passed) | {{FP}} |
 
-## CI Failures — {{FAILURE_COUNT}} test(s)
+## CI Test Results
 
-<!--
-One sub-section per failed CI job. Repeat the block below for each.
-If the build passed entirely, write: "No failures — build passed."
--->
+| Failed | Passed | Skipped | Total |
+|--------|--------|---------|-------|
+| {{FAILED}} | {{PASSED}} | {{SKIPPED}} | {{TOTAL}} |
 
-### ❌ {{JOB_NAME}}
+**CI jobs:** {{N_PASSED_JOBS}} passed · {{N_FAILED_JOBS}} failed · {{N_BLOCKED_JOBS}} blocked
 
-*{{FAILED}} failed · {{PASSED}} passed · {{SKIPPED}} skipped*
+### Failed jobs
 
-- `{{TEST_ID}}` — {{FAILURE_SUMMARY}}
+**❌ {{JOB_NAME}}** — {{N}} test(s) failed
+
+- `{{TEST_ID}}`
+
+### Passing jobs
+
+- ✅ {{JOB_NAME}}
 
 ## LLM Selections — {{SELECTION_COUNT}} target(s)
 
 <!--
 ✅ = LLM selected AND CI failed (true positive)
-➖ = LLM selected, CI passed or did not run (not a caught failure)
+➖ = LLM selected, CI passed or did not run
 -->
 
 | | Target | Reason |
@@ -38,11 +43,6 @@ If the build passed entirely, write: "No failures — build passed."
 | ➖ | `{{TARGET}}` | {{REASON}} |
 
 ## Gap Analysis
-
-<!--
-Explain WHY the LLM missed failures and what this teaches us about improving
-the selection strategy. Be specific about the failure mode.
--->
 
 **Why the LLM missed:**
 - {{MISSED_REASON}}
