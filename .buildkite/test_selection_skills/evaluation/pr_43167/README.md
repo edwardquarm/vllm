@@ -4,7 +4,6 @@
 
 - **`report.md`** ⭐ start here
 - **`evaluation_report.json`** — machine-readable metrics
-- **`complete_test_list.txt`** — CI job summaries and raw test data
 
 ## Key Results
 
@@ -12,4 +11,4 @@
 |--------|-----------|----------|----------------|
 | 0.0% | 0.0% | 2 | 7 |
 
-Generated: 2026-06-15
+Generated: 2026-06-16

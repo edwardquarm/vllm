@@ -1,7 +1,7 @@
 {
   "pr_number": "43167",
   "repo": "vllm-project/vllm",
-  "status": "partial",
+  "status": "success",
   "buildkite_builds": [
     {
       "build_id": "019e97b9-0dc6-4c19-b36b-513be8c69343",
@@ -16,9 +16,9 @@
     },
     {
       "build_id": "019e97b9-0ce4-4f1f-b7ff-4ddfef03d22b",
-      "build_number": "70204",
+      "build_number": "70063",
       "pipeline": "/ci",
-      "url": "https://api.buildkite.com/v2/organizations/vllm/pipelines/ci/builds/70204",
+      "url": "https://api.buildkite.com/v2/organizations/vllm/pipelines/ci/builds/70063",
       "commit": "",
       "branch": "",
       "state": "failed",
@@ -2657,7 +2657,26 @@
   ],
   "tests_run": [],
   "tests_failed": [],
-  "failed_test_list": [],
+  "failed_test_list": [
+    {
+      "identifier": "entrypoints/openai/chat_completion/test_chat.py::test_invocations",
+      "file": "entrypoints/openai/chat_completion/test_chat.py",
+      "function": "test_invocations",
+      "job_id": "",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "state": "failed",
+      "failure_details": {}
+    },
+    {
+      "identifier": "tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]",
+      "file": "tokenizers_/test_mistral.py",
+      "function": "TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]",
+      "job_id": "",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "state": "failed",
+      "failure_details": {}
+    }
+  ],
   "tests_run_count": 0,
   "artifacts": [],
   "notes": [
@@ -2665,6 +2684,13 @@
     "Evidence collected on 2026-06-09T18:00:03.327961+00:00",
     "Buildkite builds found: 2",
     "Total tests run: 0",
-    "Failed tests: 0"
-  ]
+    "Failed tests: 0",
+    "failed_test_list patched from build 70063 logs (PR head CI run)",
+    "build 70204 was the merge commit run where failures were already fixed"
+  ],
+  "summary_stats": {
+    "failed": 2,
+    "passed": 926,
+    "skipped": 259
+  }
 }

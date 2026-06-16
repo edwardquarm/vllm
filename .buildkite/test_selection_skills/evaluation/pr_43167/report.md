@@ -1,6 +1,6 @@
 # PR #43167 — Test Selection Evaluation
 
-> **Build**: [70063](https://buildkite.com/vllm/ci/builds/70063) · **Date**: 2026-06-04 · **Source**: Buildkite job logs
+> **Build**: [70063](https://buildkite.com/vllm/ci/builds/70063) · **Date**: 2026-06-16 · **Source**: Buildkite job logs (patched)
 
 ## Metrics
 
@@ -14,15 +14,13 @@
 
 ## CI Failures — 2 test(s)
 
-### ❌ Entrypoints Integration (API Server openai - Part 1)
+*Across failing jobs: 2 failed · 926 passed · 259 skipped*
 
-*1 failed · 269 passed · 6 skipped*
+### ❌ Entrypoints Integration (API Server openai - Part 1)
 
 - `entrypoints/openai/chat_completion/test_chat.py::test_invocations`
 
 ### ❌ Async Engine, Inputs, Utils, Worker, Config (CPU)
-
-*1 failed · 657 passed · 253 skipped*
 
 - `tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]`
 
@@ -41,12 +39,10 @@
 ## Gap Analysis
 
 **Why the LLM missed:**
-- The LLM traced the direct code path (KV cache loading → quantization tests) but didn't follow the side effect on API response serialization. `test_invocations` asserts on the exact set of keys in the response dict; the PR introduced a `moderation` field the test didn't expect.
-- The tokenizer failure is indirect — changes to model loading during refactoring affected the chat template application path for Mistral.
+- not in candidate mapping
 
 **To improve coverage:**
-- Include `entrypoints/openai/` tests whenever model loading or response serialization code changes, even if the change appears to be internal-only.
-- Include tokenizer tests when core model initialization is refactored.
+- *(fill in after reviewing the failure patterns above)*
 
 ---
-*Generated: 2026-06-15*
+*Generated: 2026-06-16 04:35 UTC*

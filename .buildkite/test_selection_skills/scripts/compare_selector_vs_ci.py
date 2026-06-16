@@ -227,11 +227,16 @@ def main():
 
     # Write report.md (follows report.template.md structure)
     builds = ci_evidence.get('buildkite_builds', [])
-    build_number = builds[0].get('build_number', 'unknown') if builds else 'unknown'
-    build_url = f"https://buildkite.com/{builds[0].get('pipeline', '')}/builds/{build_number}" if builds else ""
+    # Prefer the main vllm/ci pipeline build over subsidiary pipelines (e.g. intel-ci)
+    main_build = next(
+        (b for b in builds if b.get('pipeline', '').rstrip('/') == '/ci'),
+        builds[0] if builds else {}
+    )
+    build_number = main_build.get('build_number', 'unknown')
+    build_url = f"https://buildkite.com/vllm/ci/builds/{build_number}" if build_number != 'unknown' else ""
     data_source = ("Buildkite job logs"
                    if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', []))
-                   else "Buildkite Test Engine")
+                   else "Buildkite job logs (patched)")
 
     report_md = f"# PR #{pr_number} — Test Selection Evaluation\n\n"
     report_md += f"> **Build**: [{build_number}]({build_url}) · **Date**: {now.strftime('%Y-%m-%d')} · **Source**: {data_source}\n\n"
@@ -244,19 +249,19 @@ def main():
     report_md += f"| False Negatives (CI failed, LLM missed) | {len(fn)} |\n"
     report_md += f"| False Positives (LLM selected, passed) | {len(fp)} |\n\n"
 
+    summary_stats = ci_evidence.get('summary_stats', {})
     report_md += f"## CI Failures — {len(failed_tests)} test(s)\n\n"
+    if summary_stats:
+        report_md += (f"*Across failing jobs: {summary_stats.get('failed', '?')} failed"
+                      f" · {summary_stats.get('passed', '?')} passed"
+                      f" · {summary_stats.get('skipped', '?')} skipped*\n\n")
     if failed_tests:
         tests_by_job: dict = {}
         for t in failed_tests:
             job_name = t.get('job_name', 'Unknown Job')
             tests_by_job.setdefault(job_name, []).append(t.get('identifier', t.get('test_name', '')))
-        summary_stats = ci_evidence.get('summary_stats', {})
         for job_name, job_tests in tests_by_job.items():
             report_md += f"### ❌ {job_name}\n\n"
-            if summary_stats:
-                report_md += (f"*{summary_stats.get('failed', '?')} failed"
-                              f" · {summary_stats.get('passed', '?')} passed"
-                              f" · {summary_stats.get('skipped', '?')} skipped*\n\n")
             for test in job_tests:
                 report_md += f"- `{test}`\n"
             report_md += "\n"
