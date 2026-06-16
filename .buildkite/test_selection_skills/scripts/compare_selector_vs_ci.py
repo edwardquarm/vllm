@@ -295,15 +295,35 @@ def main():
         report_md += f"| {status} | `{t.get('identifier', '')}` | {t.get('reason', '')} |\n"
     report_md += "\n"
 
-    # --- Gap analysis ---
+    # --- Gap analysis (auto-derived from test paths) ---
     report_md += "## Gap Analysis\n\n"
     if fn:
+        # Extract top-level test directory from a test path
+        def top_dir(path: str) -> str:
+            p = path.replace("\\", "/").split("::")[0]  # strip ::test_fn
+            p = p.removeprefix("tests/")
+            return p.split("/")[0]
+
+        failed_dirs = {top_dir(f.get('failed_test', '')) for f in fn if f.get('failed_test')}
+        selected_dirs = {top_dir(t.get('identifier', '')) for t in selected_tests if t.get('identifier')}
+
+        missed_dirs = failed_dirs - selected_dirs
+
         report_md += "**Why the LLM missed:**\n"
-        report_md += "- *(fill in after reviewing the failures above)*\n\n"
-        report_md += "**To improve coverage:**\n"
-        report_md += "- *(fill in)*\n\n"
+        if missed_dirs:
+            report_md += (f"- LLM selections covered `{'`, `'.join(sorted(selected_dirs))}` "
+                          f"but failures occurred in `{'`, `'.join(sorted(missed_dirs))}`\n")
+        for f in fn:
+            test = f.get('failed_test', '')
+            job = f.get('job_name', '')
+            report_md += f"- `{test}` (job: {job}) was not covered by any selection\n"
+
+        report_md += "\n**To improve coverage:**\n"
+        for d in sorted(missed_dirs):
+            report_md += f"- Add `tests/{d}/` (or relevant sub-paths) to selections when related code changes\n"
+        report_md += "\n"
     else:
-        report_md += "LLM caught all CI failures.\n\n"
+        report_md += "LLM caught all CI failures — no gap to analyse.\n\n"
 
     report_md += f"---\n*Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}*\n"
 

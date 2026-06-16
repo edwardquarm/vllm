@@ -112,10 +112,13 @@
 ## Gap Analysis
 
 **Why the LLM missed:**
-- *(fill in after reviewing the failures above)*
+- LLM selections covered `basic_correctness`, `model_executor`, `quantization` but failures occurred in `entrypoints`, `tokenizers_`
+- `entrypoints/openai/chat_completion/test_chat.py::test_invocations` (job: Entrypoints Integration (API Server openai - Part 1)) was not covered by any selection
+- `tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]` (job: Async Engine, Inputs, Utils, Worker, Config (CPU)) was not covered by any selection
 
 **To improve coverage:**
-- *(fill in)*
+- Add `tests/entrypoints/` (or relevant sub-paths) to selections when related code changes
+- Add `tests/tokenizers_/` (or relevant sub-paths) to selections when related code changes
 
 ---
-*Generated: 2026-06-16 04:47 UTC*
+*Generated: 2026-06-16 04:55 UTC*
