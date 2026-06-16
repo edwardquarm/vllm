@@ -109,146 +109,6 @@ def compute_metrics(tp: list, fn: list, fp: list) -> dict:
     }
 
 
-def generate_text_table(pr_number: str, ci_evidence: dict, selector_replay: dict, buildkite_jobs: list,
-                        metrics: dict, tp: list, fn: list, fp: list) -> str:
-    """Generate ASCII comparison table: CI tests run vs LLM selected."""
-    lines = []
-    w = 100
-
-    # Get build number and data source info
-    builds = ci_evidence.get('buildkite_builds', [])
-    build_number = builds[0].get('build_number', 'unknown') if builds else 'unknown'
-    data_source = "Buildkite API Logs" if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', [])) else "Buildkite Test Engine"
-
-    lines.append("=" * w)
-    title = f"PR #{pr_number} - TEST SELECTION COMPARISON"
-    subtitle = f"(Build {build_number} - {data_source})"
-    lines.append(title.center(w))
-    lines.append(subtitle.center(w))
-    lines.append("=" * w)
-    lines.append("")
-
-    # Summary metrics
-    lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  SUMMARY METRICS".ljust(w - 2) + "│")
-    lines.append("├" + "─" * (w - 2) + "┤")
-    lines.append(f"│  Coverage (Recall):  {metrics['coverage_rate']:.1%}".ljust(w - 2) + "│")
-    lines.append(f"│  Precision:          {metrics['precision_rate']:.1%}".ljust(w - 2) + "│")
-    lines.append(f"│  True Positives:     {len(tp)} (LLM selected + CI failed)".ljust(w - 2) + "│")
-    lines.append(f"│  False Negatives:    {len(fn)} (CI failed, LLM missed)".ljust(w - 2) + "│")
-    lines.append(f"│  False Positives:    {len(fp)} (LLM selected, CI passed)".ljust(w - 2) + "│")
-    lines.append("│".ljust(w - 2) + "│")
-    lines.append(f"│  Data Source:        {data_source}".ljust(w - 2) + "│")
-    if builds:
-        build_url = f"https://buildkite.com/{builds[0].get('pipeline', '')}/builds/{build_number}"
-        lines.append(f"│  Build URL:          {build_url[:70]}".ljust(w - 2) + "│")
-    lines.append("└" + "─" * (w - 2) + "┘")
-    lines.append("")
-
-    # CI Approach - Tests actually run by Buildkite
-    tests_run = ci_evidence.get('tests_run', [])
-    tests_run_count = ci_evidence.get('tests_run_count', len(tests_run))
-    failed_tests = ci_evidence.get('tests_failed', [])
-    failed_jobs = ci_evidence.get('jobs_failed', [])
-
-    lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  CI APPROACH (Buildkite - actual test failures from logs)".ljust(w - 2) + "│")
-    lines.append("├" + "─" * (w - 2) + "┤")
-    if failed_tests:
-        lines.append(f"│  Total Failed Tests: {len(failed_tests)}".ljust(w - 2) + "│")
-        lines.append(f"│  Failed Jobs: {len(failed_jobs)}".ljust(w - 2) + "│")
-        lines.append("│".ljust(w - 2) + "│")
-
-        # Group failures by job
-        tests_by_job = {}
-        for t in failed_tests:
-            job_name = t.get('job_name', 'Unknown Job')
-            if job_name not in tests_by_job:
-                tests_by_job[job_name] = []
-            test_name = t.get('test_name', t.get('identifier', ''))
-            tests_by_job[job_name].append(test_name)
-
-        for job_name, job_tests in tests_by_job.items():
-            lines.append(f"│  [FAIL] {job_name} - {len(job_tests)} test(s) failed".ljust(w - 2) + "│")
-            # Show first few tests from this job
-            for test in job_tests[:5]:
-                test_short = test[:80]
-                lines.append(f"│    ✗ {test_short}".ljust(w - 2) + "│")
-            if len(job_tests) > 5:
-                lines.append(f"│    + {len(job_tests) - 5} more tests in this job".ljust(w - 2) + "│")
-            lines.append("│".ljust(w - 2) + "│")
-
-    elif failed_jobs:
-        lines.append(f"│  Tests run: N/A (only job-level data available)".ljust(w - 2) + "│")
-        lines.append(f"│  Jobs failed: {len(failed_jobs)}".ljust(w - 2) + "│")
-        lines.append("│".ljust(w - 2) + "│")
-        for j in failed_jobs:
-            lines.append(f"│  [FAIL] {j.get('name', 'unknown')[:80]}".ljust(w - 2) + "│")
-    else:
-        lines.append("│  No CI test failures".ljust(w - 2) + "│")
-    lines.append("└" + "─" * (w - 2) + "┘")
-    lines.append("")
-
-    # LLM Approach - Tests selected by LLM
-    lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  LLM APPROACH (tests selected by LLM)".ljust(w - 2) + "│")
-    lines.append("├" + "─" * (w - 2) + "┤")
-    llm_selected = selector_replay.get('llm_selected_tests', [])
-    lines.append(f"│  Total selected: {len(llm_selected)}".ljust(w - 2) + "│")
-    lines.append("│".ljust(w - 2) + "│")
-
-    # Show LLM tests with status
-    if tp:
-        lines.append("│  WOULD HAVE CAUGHT FAILURES:".ljust(w - 2) + "│")
-        for t in tp:
-            test_short = t['selected_test'][:55]
-            lines.append(f"│  [✓] {test_short}".ljust(w - 2) + "│")
-    if fp:
-        lines.append("│  SELECTED (no failure in CI):".ljust(w - 2) + "│")
-        for t in fp:
-            test_short = t['selected_test'][:55]
-            lines.append(f"│  [ ] {test_short}".ljust(w - 2) + "│")
-    if not llm_selected:
-        lines.append("│  (No tests selected by LLM)".ljust(w - 2) + "│")
-    lines.append("└" + "─" * (w - 2) + "┘")
-    lines.append("")
-
-    # Comparison analysis
-    lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  COMPARISON: CI vs LLM".ljust(w - 2) + "│")
-    lines.append("├" + "─" * (w - 2) + "┤")
-    if failed_tests or failed_jobs:
-        if tp:
-            lines.append(f"│  ✓ LLM caught {len(tp)}/{len(failed_tests) + len(failed_jobs)} failures ({metrics['coverage_rate']:.0%} coverage)".ljust(w - 2) + "│")
-        if fn:
-            lines.append(f"│  ✗ LLM MISSED {len(fn)} failure(s):".ljust(w - 2) + "│")
-            for f in fn[:5]:
-                lines.append(f"│    - {f['failed_test'][:50]}".ljust(w - 2) + "│")
-        if not tp and not fn:
-            lines.append(f"│  ? No overlap between LLM selection and CI failures".ljust(w - 2) + "│")
-    else:
-        lines.append(f"│  PR passed CI - no failures to compare".ljust(w - 2) + "│")
-        lines.append(f"│  LLM selected {len(llm_selected)} tests (efficiency check only)".ljust(w - 2) + "│")
-    lines.append("└" + "─" * (w - 2) + "┘")
-    lines.append("")
-
-    # Buildkite CI Jobs summary
-    lines.append("┌" + "─" * (w - 2) + "┐")
-    lines.append("│  BUILDKITE CI JOBS SUMMARY".ljust(w - 2) + "│")
-    lines.append("├" + "─" * (w - 2) + "┤")
-    passed_count = sum(1 for j in buildkite_jobs if j.get('state') == 'passed')
-    failed_count = sum(1 for j in buildkite_jobs if j.get('state') == 'failed')
-    blocked_count = sum(1 for j in buildkite_jobs if j.get('state') == 'blocked')
-    lines.append(f"│  Passed: {passed_count} | Failed: {failed_count} | Blocked: {blocked_count}".ljust(w - 2) + "│")
-    if failed_jobs:
-        lines.append("│".ljust(w - 2) + "│")
-        lines.append("│  Failed jobs:".ljust(w - 2) + "│")
-        for j in failed_jobs:
-            lines.append(f"│    ! {j.get('name', 'unknown')[:50]}".ljust(w - 2) + "│")
-    lines.append("└" + "─" * (w - 2) + "┘")
-
-    return "\n".join(lines)
-
 
 def generate_excel(pr_number: str, ci_evidence: dict, selector_replay: dict, buildkite_jobs: list,
                    metrics: dict, tp: list, fn: list, fp: list) -> bytes:
@@ -358,104 +218,90 @@ def main():
     }
     (output_dir / "evaluation_report.json").write_text(json.dumps(report, indent=2))
 
-    # Write text table
-    buildkite_jobs = ci_evidence.get("jobs_run", []) + ci_evidence.get("jobs_failed", [])
-    text_table = generate_text_table(pr_number, ci_evidence, selector_replay, buildkite_jobs, metrics, tp, fn, fp)
-    (output_dir / "test_comparison_table.txt").write_text(text_table)
-
     # Write Excel
+    buildkite_jobs = ci_evidence.get("jobs_run", []) + ci_evidence.get("jobs_failed", [])
     if OPENPYXL_AVAILABLE:
         excel_data = generate_excel(pr_number, ci_evidence, selector_replay, buildkite_jobs, metrics, tp, fn, fp)
         if excel_data:
             (output_dir / f"PR{pr_number}_Comparison.xlsx").write_bytes(excel_data)
 
-    # Write simple summary
-    summary = f"# Evaluation for PR #{pr_number}\n\n"
-    summary += f"Coverage: {metrics['coverage_rate']:.1%}\n\n"
-    summary += f"## False Negatives ({len(fn)})\n"
-    for f in fn:
-        summary += f"- {f['failed_test']}\n"
-    summary += f"\n## False Positives ({len(fp)})\n"
-    for f in fp:
-        summary += f"- {f['selected_test']}\n"
-    (output_dir / "evaluation_summary.md").write_text(summary)
-
-    # Write comprehensive SUMMARY.md
+    # Write report.md (follows report.template.md structure)
     builds = ci_evidence.get('buildkite_builds', [])
     build_number = builds[0].get('build_number', 'unknown') if builds else 'unknown'
     build_url = f"https://buildkite.com/{builds[0].get('pipeline', '')}/builds/{build_number}" if builds else ""
+    data_source = ("Buildkite job logs"
+                   if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', []))
+                   else "Buildkite Test Engine")
 
-    comprehensive_summary = f"""# PR #{pr_number} Test Selection Evaluation - SUMMARY
+    report_md = f"# PR #{pr_number} — Test Selection Evaluation\n\n"
+    report_md += f"> **Build**: [{build_number}]({build_url}) · **Date**: {now.strftime('%Y-%m-%d')} · **Source**: {data_source}\n\n"
 
-## Quick Facts
+    report_md += "## Metrics\n\n"
+    report_md += "| Metric | Value |\n|--------|-------|\n"
+    report_md += f"| **Recall** | **{metrics['coverage_rate']:.1%}** |\n"
+    report_md += f"| **Precision** | **{metrics['precision_rate']:.1%}** |\n"
+    report_md += f"| True Positives | {len(tp)} |\n"
+    report_md += f"| False Negatives (CI failed, LLM missed) | {len(fn)} |\n"
+    report_md += f"| False Positives (LLM selected, passed) | {len(fp)} |\n\n"
 
-| Metric | Value |
-|--------|-------|
-| PR Number | #{pr_number} |
-| Buildkite Build | [{build_number}]({build_url}) |
-| **Coverage (Recall)** | **{metrics['coverage_rate']:.1%}** |
-| **Precision** | **{metrics['precision_rate']:.1%}** |
-| True Positives | {len(tp)} |
-| **False Negatives** | **{len(fn)}** (LLM missed) |
-| False Positives | {len(fp)} (LLM selected but passed) |
+    report_md += f"## CI Failures — {len(failed_tests)} test(s)\n\n"
+    if failed_tests:
+        tests_by_job: dict = {}
+        for t in failed_tests:
+            job_name = t.get('job_name', 'Unknown Job')
+            tests_by_job.setdefault(job_name, []).append(t.get('identifier', t.get('test_name', '')))
+        summary_stats = ci_evidence.get('summary_stats', {})
+        for job_name, job_tests in tests_by_job.items():
+            report_md += f"### ❌ {job_name}\n\n"
+            if summary_stats:
+                report_md += (f"*{summary_stats.get('failed', '?')} failed"
+                              f" · {summary_stats.get('passed', '?')} passed"
+                              f" · {summary_stats.get('skipped', '?')} skipped*\n\n")
+            for test in job_tests:
+                report_md += f"- `{test}`\n"
+            report_md += "\n"
+    else:
+        report_md += "No failures — build passed.\n\n"
 
-## What Actually Failed ({len(failed_tests)} tests)
-
-"""
-    # Group failures by job
-    tests_by_job = {}
-    for t in failed_tests:
-        job_name = t.get('job_name', 'Unknown Job')
-        if job_name not in tests_by_job:
-            tests_by_job[job_name] = []
-        test_name = t.get('test_name', t.get('identifier', ''))
-        tests_by_job[job_name].append(test_name)
-
-    for job_name, job_tests in tests_by_job.items():
-        comprehensive_summary += f"### ❌ {job_name}\n**{len(job_tests)} test(s) failed:**\n"
-        for test in job_tests[:20]:
-            comprehensive_summary += f"- `{test}`\n"
-        if len(job_tests) > 20:
-            comprehensive_summary += f"- ... and {len(job_tests) - 20} more\n"
-        comprehensive_summary += "\n"
-
-    comprehensive_summary += f"""## What LLM Selected ({len(selected_tests)} targets)
-
-"""
+    report_md += f"## LLM Selections — {len(selected_tests)} target(s)\n\n"
+    report_md += "| | Target | Reason |\n|--|--------|--------|\n"
     for t in selected_tests:
         caught = any(tp_item['selected_test'] == t.get('identifier') for tp_item in tp)
-        status = "✓" if caught else " "
-        comprehensive_summary += f"- [{status}] `{t.get('identifier', '')}` - {t.get('reason', '')}\n"
+        status = "✅" if caught else "➖"
+        report_md += f"| {status} | `{t.get('identifier', '')}` | {t.get('reason', '')} |\n"
+    report_md += "\n"
 
-    comprehensive_summary += f"""
-## Data Quality Note
+    report_md += "## Gap Analysis\n\n"
+    if fn:
+        report_md += "**Why the LLM missed:**\n"
+        seen_reasons: set = set()
+        for f in fn:
+            reason = f.get('why_missed', '').replace('_', ' ')
+            if reason and reason not in seen_reasons:
+                report_md += f"- {reason}\n"
+                seen_reasons.add(reason)
+        report_md += "\n**To improve coverage:**\n"
+        report_md += "- *(fill in after reviewing the failure patterns above)*\n\n"
+    else:
+        report_md += "LLM caught all CI failures.\n\n"
 
-✅ **{ci_evidence.get('status', 'unknown').upper()}** - Data extracted from Buildkite API
-- Source: Build {build_number}
-- Method: {"Parsed from job logs" if any(t.get('source') == 'buildkite_logs' for t in ci_evidence.get('tests_run', [])) else "Buildkite Test Engine"}
+    report_md += f"---\n*Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}*\n"
 
----
-Generated: {now.strftime('%Y-%m-%d %H:%M UTC')}
-"""
-
-    (output_dir / "SUMMARY.md").write_text(comprehensive_summary)
+    (output_dir / "report.md").write_text(report_md)
 
     # Write README.md
-    readme = f"""# PR #{pr_number} - Test Selection Evaluation
+    readme = f"""# PR #{pr_number} — Test Selection Evaluation
 
-## Files in This Directory
+## Files
 
-- **`SUMMARY.md`** - Executive summary ⭐ **START HERE**
-- **`test_comparison_table.txt`** - Visual comparison
-- **`evaluation_report.json`** - Machine-readable metrics
-- **`evaluation_summary.md`** - Legacy summary
+- **`report.md`** ⭐ start here
+- **`evaluation_report.json`** — machine-readable metrics
 
 ## Key Results
 
-- Coverage: {metrics['coverage_rate']:.1%}
-- Precision: {metrics['precision_rate']:.1%}
-- Failed Tests: {len(failed_tests)}
-- LLM Selections: {len(selected_tests)}
+| Recall | Precision | Failures | LLM Selections |
+|--------|-----------|----------|----------------|
+| {metrics['coverage_rate']:.1%} | {metrics['precision_rate']:.1%} | {len(failed_tests)} | {len(selected_tests)} |
 
 Generated: {now.strftime('%Y-%m-%d')}
 """

@@ -32,11 +32,11 @@ This skill evaluates how well the LLM-based test selector would have caught actu
 
 After completion, find results in `.buildkite/test_selection_skills/evaluation/pr_<number>/`:
 
-- `evaluation_report.json` - Structured metrics
-- `evaluation_summary.md` - Markdown summary
-- `test_comparison_table.txt` - ASCII table with full CI job list
+- `report.md` - Full evaluation report (see `report.template.md` for structure)
+- `evaluation_report.json` - Machine-readable metrics
 - `PR<number>_Comparison.xlsx` - Excel file (2 sheets)
-- `gap_analysis.txt` - Missed failures analysis
+
+The report format is defined in `.buildkite/test_selection_skills/report.template.md`.
 
 ## Implementation
 
