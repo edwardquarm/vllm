@@ -1,0 +1,6 @@
+This PR modifies the OpenAI chat completion and completion request protocols to add support for a `truncation_side` parameter that controls whether prompt truncation happens from the left or right. The changes include: adding the new `truncation_side` field to both protocol classes, adding validation logic in `vllm/renderers/params.py`, and threading the parameter through the tokenization pipeline. The diff also includes two new tests that explicitly verify truncation_side behavior for both endpoints. Since this adds a new optional parameter to core request protocols and updates parameter validation logic, I'm including the OpenAI endpoint test suites plus basic_correctness tests to ensure protocol changes don't break existing functionality.
+
+---
+tests/entrypoints/openai/chat_completion/ | directly tests modified chat completion protocol
+tests/entrypoints/openai/completion/ | directly tests modified completion protocol
+tests/basic_correctness/ | sanity check for protocol and parameter handling changes

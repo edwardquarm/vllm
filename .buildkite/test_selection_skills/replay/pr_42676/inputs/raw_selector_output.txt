@@ -1,0 +1,6 @@
+This PR reorders two method calls in `vllm/v1/worker/gpu/kv_connector.py` within the `pre_forward()` method, moving `handle_preemptions()` before `bind_connector_metadata()`. This is a minimal change to a critical code path that executes before every forward pass. Method call ordering in KV cache management can affect correctness, particularly around preemption handling and metadata binding. I'm including the KV connector unit tests (which directly test this component), v1 end-to-end tests (which exercise the full inference pipeline with KV connectors), and basic correctness tests as a safety check.
+
+---
+tests/v1/kv_connector/ | directly tests KV connector pre_forward logic
+tests/v1/e2e/ | exercises the changed pre_forward() code path end-to-end
+tests/basic_correctness/ | sanity check for basic model correctness

@@ -1,0 +1,63 @@
+{
+  "pr_number": "43543",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 4,
+    "false_positives": 6,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/tracing",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Language Models Tests (Hybrid) 2 (mi300_1)",
+      "job_name": "AMD: Language Models Tests (Hybrid) 2 (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/worker/test_gpu_model_runner.py",
+      "reason": "directly tests the modified gpu_model_runner file"
+    },
+    {
+      "selected_test": "tests/v1/spec_decode/",
+      "reason": "spec-decode is the primary use case for num_heads_q deduplication"
+    },
+    {
+      "selected_test": "tests/v1/e2e/spec_decode/",
+      "reason": "e2e spec-decode tests exercise the full inference path"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "tests attention backend selection logic"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends_selection.py",
+      "reason": "tests backend selection and grouping"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "basic sanity check for inference"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.089161+00:00"
+  ]
+}

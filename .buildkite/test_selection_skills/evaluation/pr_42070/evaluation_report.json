@@ -1,0 +1,36 @@
+{
+  "pr_number": "42070",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/test_regression.py",
+      "job_name": "Regression",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/mamba/test_mamba_ssm.py",
+      "reason": "directly tests Mamba SSM kernel using gdn_linear_attn"
+    },
+    {
+      "selected_test": "tests/compile/fullgraph/test_full_graph.py",
+      "reason": "tests full-graph compilation mode (decorator removed)"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "regression testing for core functionality"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.116033+00:00"
+  ]
+}

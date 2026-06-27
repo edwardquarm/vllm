@@ -1,0 +1,2414 @@
+{
+  "pr_number": "44036",
+  "repo": "vllm-project/vllm",
+  "status": "partial",
+  "buildkite_builds": [
+    {
+      "build_id": "019e8a6b-4e77-4fe9-8b24-b9d5fa9d50fb",
+      "build_number": "69606",
+      "pipeline": "/ci",
+      "url": "https://api.buildkite.com/v2/organizations/vllm/pipelines/ci/builds/69606",
+      "commit": "",
+      "branch": "",
+      "state": "failed",
+      "started_at": "2026-06-02T22:19:49.823Z",
+      "finished_at": "2026-06-03T02:49:57.971Z"
+    },
+    {
+      "build_id": "019e8a6b-4f7e-43c7-bee8-3e6672c84b05",
+      "build_number": "2233",
+      "pipeline": "/release-v2",
+      "url": "https://api.buildkite.com/v2/organizations/vllm/pipelines/release-v2/builds/2233",
+      "commit": "",
+      "branch": "",
+      "state": "passed",
+      "started_at": "2026-06-02T22:20:26.735Z",
+      "finished_at": "2026-06-02T23:00:25.887Z"
+    }
+  ],
+  "buildkite_jobs_from_statuses": [
+    {
+      "build_url": "https://buildkite.com/vllm/ci/builds/69606#019e8a6b-4eb7-4b6a-be81-4cdd9b27ade3",
+      "org": "vllm",
+      "pipeline": "ci",
+      "build_number": "69606",
+      "job_name": "ci/bootstrap",
+      "state": "success"
+    },
+    {
+      "build_url": "https://buildkite.com/vllm/release-v2/builds/2233",
+      "org": "vllm",
+      "pipeline": "release-v2",
+      "build_number": "2233",
+      "job_name": "release-v2",
+      "state": "success"
+    }
+  ],
+  "jobs_run": [
+    {
+      "job_id": "019e8a6b-4eb7-4b6a-be81-4cdd9b27ade3",
+      "name": "bootstrap",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83b8-42ed-925d-3dffae7bbccd",
+      "name": ":docker: :smoking: Non-root smoke tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83be-47a1-b63b-5221093afe12",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83bf-44c7-bc0a-a9164c3769dd",
+      "name": ":docker: Build CPU arm64 image",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83c2-4dc1-b471-11fff23047b6",
+      "name": ":docker: Build CPU image",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83c2-4200-b94f-c2a26db5941d",
+      "name": ":docker: Build HPU image",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83c3-44a3-983a-40f01f858ff6",
+      "name": ":docker: Build arm64 image",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83c4-48e4-a1b7-20ffaada3145",
+      "name": ":docker: Build image",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83c8-4962-8216-62c15a77a7cd",
+      "name": "V1 attention (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83cb-496e-ad63-48be2d62c72a",
+      "name": "V1 attention (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83d2-4ff0-90d7-cc0e6ba6d0e7",
+      "name": "Basic Correctness",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83da-4dbd-a714-1f474f5d1f39",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83db-4fe2-83ea-d0c6cb8d7eee",
+      "name": "Attention Benchmarks Smoke Test (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83dc-400e-bbc2-f4745728ed01",
+      "name": "Benchmarks CLI Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83e1-4b3d-8e30-bc7922fd63d6",
+      "name": "Arm CPU Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83e5-4441-bf65-c47e8e574654",
+      "name": "CPU-Compatibility Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ea-4c5f-ac8f-aebdfcc1cb47",
+      "name": "CPU-Distributed Tests (DP+TP)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ea-498f-a204-1f4cdeb33fb7",
+      "name": "CPU-Distributed Tests (PP+TP)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ec-4f68-a1db-150a8079fdbd",
+      "name": "CPU-Kernel Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ec-4356-9173-6246535441a5",
+      "name": "CPU-Language Generation and Pooling Model Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ed-4257-b842-4bfb9152aa43",
+      "name": "CPU-ModelRunnerV2 Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ee-4497-ba41-8bdf0836817d",
+      "name": "CPU-Multi-Modal Model Tests 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ee-48c1-882d-d87d522bfe9f",
+      "name": "CPU-Multi-Modal Model Tests 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ef-4e7f-999c-a0d9db75b497",
+      "name": "CPU-Multi-Modal Model Tests 3",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ef-4470-8ab1-396d85af2eae",
+      "name": "CPU-Quantization Model Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83f4-452e-bbcf-00f921857dc8",
+      "name": "Cudagraph",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83f9-4c1c-92f6-0a65a2e0eb3c",
+      "name": "Platform Tests (CUDA)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83fd-4248-9db5-8e37d0abe41c",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83fe-4934-95b0-52705660c160",
+      "name": "AsyncTP Correctness Tests (2xH100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ff-43ee-ac1e-02de489f7bc9",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-83ff-42a1-89c1-964ad6d26398",
+      "name": "AsyncTP Correctness Tests (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8400-40fa-97a1-01f75cf531fb",
+      "name": "Distributed Compile Unit Tests (2xH100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8402-4ffc-94cd-29f6f4b1378a",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8402-472a-a36a-95ce78c39ff9",
+      "name": "Fusion E2E Config Sweep (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8403-45a6-80b0-aeaaa419826a",
+      "name": "Fusion E2E Config Sweep (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8404-4639-99e5-865df44ee59b",
+      "name": "Fusion E2E Quick (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8405-406d-ad32-4257286be45d",
+      "name": "Fusion E2E TP2 (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8405-4853-82ac-dd8e99842edb",
+      "name": "Fusion E2E TP2 AR-RMS Config Sweep (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8406-4b74-8b50-59fae0870111",
+      "name": "Fusion E2E TP2 AsyncTP Config Sweep (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8407-49a2-be11-aac1104b718d",
+      "name": "Fusion E2E TP2 Quick (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8407-4742-bbed-fac5ca9c1885",
+      "name": "Fusion and Compile Unit Tests (2xB200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8408-4195-bd28-904b0a728259",
+      "name": "Sequence Parallel Correctness Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-840d-4193-99ca-4cc321f588f5",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-840e-4141-9738-61834738d68d",
+      "name": "Sequence Parallel Correctness Tests (2xH100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8414-40a1-912b-7ccd0dde9bed",
+      "name": "CrossLayer KV layout Distributed NixlConnector PD accuracy tests (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8415-4643-a1c6-a9721f4fae56",
+      "name": "DP EP Distributed NixlConnector PD accuracy tests (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8416-4592-a25e-f62e365af249",
+      "name": "Distributed FlashInfer NixlConnector PD accuracy (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8416-4d76-be54-fa8c7002a66d",
+      "name": "Distributed NixlConnector PD accuracy (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8417-4208-a319-0413a47eb5b0",
+      "name": "Hybrid SSM NixlConnector PD accuracy tests (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8418-4ea8-82b0-d60b5905189b",
+      "name": "MultiConnector (Nixl+Offloading) PD accuracy (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8418-4233-be50-1854d7a03045",
+      "name": "MultiConnector (Nixl+Offloading) PD edge cases (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8419-4e4e-af86-982875582728",
+      "name": "NixlConnector PD + Spec Decode acceptance (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-841f-4089-8135-23c20a2424ba",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-841f-4012-b228-4983bb2b5f17",
+      "name": "2 Node Test (4 GPUs)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8420-415f-9568-83359b7356db",
+      "name": "Distributed Comm Ops",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8420-4eb1-9071-bc27e264a96d",
+      "name": "Distributed Compile + Comm (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8421-4e63-b42e-07e2945e1032",
+      "name": "Distributed Compile + RPC Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8422-475b-9823-d4e4163af7ba",
+      "name": "Distributed DP Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8422-497c-a1f2-e2ead25b51eb",
+      "name": "Distributed DP Tests (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8423-49ec-92fc-59d47537129e",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8423-4ad8-a996-898cc021ee4d",
+      "name": "Distributed Tests (2 GPUs)(B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8424-451b-a37a-d88a84676528",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8424-4c2c-bf55-a0c7bd7b7784",
+      "name": "Distributed Tests (2 GPUs)(H100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8425-422d-a5d0-f250d762b7aa",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8425-4e36-8534-e8ab211fcf65",
+      "name": "Distributed Tests (4 GPUs)(A100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8426-465a-99c8-d1d4c2c24dc3",
+      "name": "Distributed Tests (8 GPUs)(H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8427-40ee-a431-e789555d68ba",
+      "name": "Distributed Torchrun + Examples (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8427-4af9-826b-b69a9c8ba4a5",
+      "name": "Distributed Torchrun + Shutdown Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8428-4c14-83d8-06b8067ae26d",
+      "name": "Pipeline + Context Parallelism (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8428-42e4-ad30-63cb460f37aa",
+      "name": "RayExecutorV2 (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-842c-4a24-b81d-ba0d7b5a81f6",
+      "name": "Docker Build Metadata",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8432-45e1-929d-f4f1ae032e4d",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8433-4dfa-a758-2ef19b2134f6",
+      "name": "DeepSeek V2-Lite Prefetch Offload Accuracy (H100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8433-4c08-8a05-4a17cd118b3d",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8434-4e13-b47c-6056534d1d22",
+      "name": "DeepSeek V2-Lite Sync EPLB Accuracy",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8434-4019-a9db-549ffe6592e7",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8435-46fb-8117-bd7949462d2d",
+      "name": "Qwen3-30B-A3B-FP8 DP4 Async EPLB Accuracy",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8435-46c7-ae72-341cc4ae962f",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8436-4d76-9780-dd81a26fe9bc",
+      "name": "Qwen3-30B-A3B-FP8-block Sync EPLB Accuracy",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8437-46d3-9918-23fa1cc13586",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8437-414c-be08-8816d2c01359",
+      "name": "Qwen3-30B-A3B-FP8-block Sync EPLB Accuracy (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843b-4785-a11f-ed90137f8f10",
+      "name": "Engine",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843c-4856-8bce-c4443af9076a",
+      "name": "Engine (1 GPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843c-4a82-9c4b-2718314bd72d",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843d-428a-9504-1c9efa7f5884",
+      "name": "V1 e2e (2 GPUs)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843e-480f-a8c4-2dc0bf414493",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843e-4b58-b2e7-df1bd9acff8b",
+      "name": "V1 e2e (4 GPUs)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843f-4b93-b246-291e52ff5957",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-843f-46be-b67f-6bf47a9fb26c",
+      "name": "V1 e2e (4xH100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8440-4f77-9d96-17b697340048",
+      "name": "e2e Core (1 GPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8444-4bfb-b071-ecf6cb479388",
+      "name": "e2e Scheduling (1 GPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8448-42f8-8dac-9a9717873281",
+      "name": "Entrypoints Integration (API Server 2)",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8449-4051-9b09-d4c29857f4da",
+      "name": "Entrypoints Integration (API Server openai - Part 1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844a-408d-a095-8c10f3ed8c8f",
+      "name": "Entrypoints Integration (API Server openai - Part 2)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844b-4606-8eb5-97af20f589bd",
+      "name": "Entrypoints Integration (API Server openai - Part 3)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844b-40e8-b703-46bd27d07db6",
+      "name": "Entrypoints Integration (LLM)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844c-4af6-a44b-8169b4eace56",
+      "name": "Entrypoints Integration (Pooling)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844d-428a-8dfd-e062038dc19b",
+      "name": "Entrypoints Integration (Responses API)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844e-45d5-80b1-519a5817d8da",
+      "name": "Entrypoints Integration (Speech to Text)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844e-4ff7-9a4c-31558db99c97",
+      "name": "Entrypoints Unit Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-844f-4f74-8586-111e71df488e",
+      "name": "OpenAI API Correctness",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8453-4b1f-9bf5-5e9376fe7a94",
+      "name": "EPLB Algorithm",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8454-4cd9-bc89-e46defbc111a",
+      "name": "EPLB Execution",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8454-461e-8052-8b26a46d8a38",
+      "name": "Elastic EP Scaling Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8458-4716-b62c-b430ac711ce7",
+      "name": "Ascend NPU Test",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-845b-43b8-902d-c061415de592",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-845c-4a3d-aa9f-9b3f7731761f",
+      "name": "GH200 Test",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-845f-4b29-bffd-a830f678042c",
+      "name": "Intel HPU Test",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8467-4758-847a-a344cf8dd6c6",
+      "name": "AMD: :docker: build image",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-846e-4676-96e5-8c921c43b383",
+      "name": "AMD: Engine (1 GPU) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8472-4146-af67-341d738bd95b",
+      "name": "AMD: e2e Scheduling (1 GPU) (mi250_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8476-486c-bae5-832b768b8d09",
+      "name": "AMD: Entrypoints Integration (API Server 2) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8477-4746-afb8-42a15a940ce6",
+      "name": "AMD: Entrypoints Integration (API Server openai - Part 1) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8478-4c3f-960b-0e8f4293b988",
+      "name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8479-416a-9c55-821683d5b11a",
+      "name": "AMD: Entrypoints Integration (API Server openai - Part 3) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8479-4429-9267-3c63a4326793",
+      "name": "AMD: Entrypoints Integration (LLM) (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847a-4baa-94ac-0f4dc5eaba17",
+      "name": "AMD: Kernels Quantization Test 1 (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847a-4e66-b924-cb44c890bd1f",
+      "name": "AMD: Kernels Quantization Test 2 (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847b-4042-abd4-1f623100c001",
+      "name": "AMD: V1 Sample + Logits (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847c-466d-a3b2-3b0468cc6b5c",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847c-4572-a438-0ac87a8bfe82",
+      "name": "AMD: Language Models Test (Extended Pooling) (mi325_1)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847d-4b14-b9e4-b68788730ba3",
+      "name": "AMD: Language Models Tests (Hybrid) 1 (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847d-41a3-a1ea-9c35909049e5",
+      "name": "AMD: Language Models Tests (Hybrid) 2 (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847e-4d79-9904-90a26acdf6cc",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847f-44b3-ae3e-69aaaf93833b",
+      "name": "AMD: Multi-Modal Models (Extended Generation 1) (mi325_1)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-847f-4baf-a8f4-df54c75b2d47",
+      "name": "AMD: Multi-Modal Models (Standard) 1: qwen2 (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8480-4e46-8413-bfea187fe9b2",
+      "name": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8480-4604-b013-c35beea1d4bd",
+      "name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi325_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8481-4569-87df-dc84f5b89c52",
+      "name": "AMD: Samplers Test (mi250_1)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8485-4dfe-9527-666cb82d9ac8",
+      "name": "Deepseek V4 Kernel Test (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8485-4d81-a584-49cd4dc49972",
+      "name": "Deepseek V4 Kernel Test (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8486-40a3-b58b-d138d9db2f7c",
+      "name": "Kernels (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8486-4e5a-bbf5-24fe35e23c00",
+      "name": "Kernels Attention Test 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8487-4337-b9f2-82bde8c9c2e6",
+      "name": "Kernels Attention Test 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8488-400f-9dd7-3f4d07f170f4",
+      "name": "Kernels Core Operation Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8488-427b-9214-e45213fb4a8a",
+      "name": "Kernels DeepGEMM Test (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8489-45de-89f7-806fe8ebdbc5",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848a-4514-bfad-70d56e5970c9",
+      "name": "Kernels FP8 MoE Test (1 H100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848b-4aee-ab64-06dcf43fb96f",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848b-4480-9ff5-7fd4d2b0ea68",
+      "name": "Kernels FP8 MoE Test (2 H100s)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848c-4a4a-bee2-a43f04399e98",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848c-475f-b138-d7b2439dbcb1",
+      "name": "Kernels Fp4 MoE Test (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848d-4e36-9dc4-56301096b860",
+      "name": "Kernels FusedMoE Layer Test (2 B200s)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848e-4375-9db0-dc159aae4995",
+      "name": "Kernels FusedMoE Layer Test (2 H100s)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848f-44b6-ab49-962be2e8920e",
+      "name": "Kernels Helion Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-848f-46f9-8272-7597f1bd8c91",
+      "name": "Kernels KDA Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8490-4dd1-900f-7b7949548084",
+      "name": "Kernels Mamba Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8490-4372-ab8d-117e12bb3c79",
+      "name": "Kernels MiniMax Reduce RMS Test (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8491-4cd8-8b15-71eda0588e1b",
+      "name": "Kernels MoE Test 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8491-4edd-a8c2-1e5bea93b598",
+      "name": "Kernels MoE Test 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8491-4ee0-8f6c-36b24cfd7ca0",
+      "name": "Kernels MoE Test 3",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8492-4a53-ab38-673c6f232a09",
+      "name": "Kernels MoE Test 4",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8492-4fae-83c5-9f92b9500e5f",
+      "name": "Kernels MoE Test 5",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8493-44b2-8b4e-04e6fdb251c9",
+      "name": "Kernels Quantization Test 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8493-4341-bb65-5ec8210f10b1",
+      "name": "Kernels Quantization Test 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8494-4e9e-a780-3dd42beae90f",
+      "name": "vLLM IR Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8498-4e8b-8f6d-5bcc579497a1",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8498-47c0-8c43-544bc5cfd3a7",
+      "name": "GPQA Eval (GPT-OSS) (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8499-45a9-938e-21a28219ace6",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8499-4cc7-a8af-cd4556ef696f",
+      "name": "GPQA Eval (GPT-OSS) (H100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849a-4c7a-9f93-73b06a787daf",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849a-45f3-bb52-67289da1585c",
+      "name": "LM Eval Large Models (4 GPUs)(H100)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849b-44b6-9df3-5076ed121212",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849b-46e2-b0d7-01ee759bf7af",
+      "name": "LM Eval Large Models (B200, EP)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849c-4fc7-baea-f088d58cc063",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-849c-4b46-9363-8950f6e712aa",
+      "name": "LM Eval Large Models (H200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a0-483d-bef2-f33e73d77b00",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a0-4c38-8c20-31988dd1447d",
+      "name": "LM Eval Qwen3.5 Models (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a1-4355-8dc5-138cf53eb99a",
+      "name": "LM Eval Small Models",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a1-42d3-afc5-e9063e7a1b58",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a2-48c6-8cf7-bd84d9ff19e6",
+      "name": "LM Eval Small Models (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a3-462e-b745-e1f23529fffb",
+      "name": "LM Eval TurboQuant KV Cache",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a3-45c6-a474-d91de546247f",
+      "name": "MRCR Eval Small Models",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a4-4d2d-ac4e-d520617775cc",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a4-4f4a-b4c9-7af3a0baddc7",
+      "name": "MoE Refactor Integration Test (B200 - TEMPORARY)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a5-449e-b2e5-3cd39d20b512",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a5-4881-83b2-e6cfccc8da6d",
+      "name": "MoE Refactor Integration Test (B200 DP - TEMPORARY)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a6-4cd4-8131-6fb1ab872d32",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84a6-4ee4-93d0-5b2ab1ef14c1",
+      "name": "MoE Refactor Integration Test (H100 - TEMPORARY)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84aa-4eb3-bd43-2d6c54841c0b",
+      "name": "LoRA 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ab-4468-a4df-44d64e3385e5",
+      "name": "LoRA 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ab-429d-839f-69912b8918a9",
+      "name": "LoRA 3",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ab-4f3f-9bd9-e645d134e5f1",
+      "name": "LoRA 4",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ac-4312-a814-cb7efda47f44",
+      "name": "LoRA TP (Distributed)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84af-44bb-b236-c86ccf49a119",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b0-4a2b-b771-0cea0367ea59",
+      "name": "Acceptance Length Test (Large Models)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b1-42b5-a399-b379f5c9059d",
+      "name": "Async Engine, Inputs, Utils, Worker",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b1-40d9-ac61-7bb572324722",
+      "name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "state": "failed",
+      "exit_status": 2,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b2-4a49-b743-635fad2e9443",
+      "name": "Batch Invariance (A100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b2-4640-8811-4ff41a97cd19",
+      "name": "Batch Invariance (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b3-423d-ba78-4cab89e4b1f9",
+      "name": "Batch Invariance (H100)",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b3-4c6a-9e81-53172782f629",
+      "name": "Examples",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b4-4696-a241-3e403642e2da",
+      "name": "Extract Hidden States Integration",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b4-44fd-859c-9b827f0827cc",
+      "name": "Metrics, Tracing (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b5-400a-900d-64757864cc0a",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b5-4a4a-a6ce-10f2e1fe2051",
+      "name": "Python-only Installation",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b6-45ed-8014-752ca43bfd56",
+      "name": "Regression",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b6-4169-90c1-6a4c261c71b0",
+      "name": "V1 Core + KV + Metrics",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b7-43cc-8c22-fd03ef3736f4",
+      "name": "V1 Others (CPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b7-40fd-aa6f-392cc050577c",
+      "name": "V1 Sample + Logits",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b8-456f-85f7-476a7e0b7ec6",
+      "name": "V1 Spec Decode",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84bc-4831-b8ee-0da3d00b938d",
+      "name": "Model Executor",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84bf-452a-a5d8-3623a3988a4a",
+      "name": "Model Runner V2 Core Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c0-4837-bf6e-f78d66f90f54",
+      "name": "Model Runner V2 Distributed (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c0-4adb-b676-744110e4d635",
+      "name": "Model Runner V2 Examples",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c1-4a5c-82ff-2a9ba5f829e5",
+      "name": "Model Runner V2 Pipeline Parallelism (4 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c1-41ca-8c22-784f38474746",
+      "name": "Model Runner V2 Spec Decode",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c5-4d12-b5fa-e5b55372b4ec",
+      "name": "Basic Models Test (Other CPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c5-4f95-879e-ce583b660502",
+      "name": "Basic Models Tests (Extra Initialization) 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c6-47b3-ab16-a386bf8d49ee",
+      "name": "Basic Models Tests (Extra Initialization) 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c6-417b-bc6b-d5b59d041d90",
+      "name": "Basic Models Tests (Initialization)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84c7-4ef9-894b-4b57a351db98",
+      "name": "Basic Models Tests (Other)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84cb-4229-a042-ffbb13b900c3",
+      "name": "Distributed Model Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ce-4ca2-b446-698636aa37cd",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84cf-4ec7-9e3e-caee6a195521",
+      "name": "Language Models Test (Extended Generation)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d0-48cb-87ee-e79d6a07feb3",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d0-48c5-a2b3-d5dd6bdc8a0a",
+      "name": "Language Models Test (Extended Pooling)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d1-4c56-8c1b-32e8985a50ba",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d1-48f4-ac61-c982bbe635d1",
+      "name": "Language Models Test (MTEB)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d2-4f2e-b01c-8035ec3bfcbf",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d2-4918-b35f-416552c95965",
+      "name": "Language Models Test (PPL)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d3-4075-abc2-f95cd548c165",
+      "name": "Language Models Tests (Extra Standard) 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d3-4e12-bf96-20a88c019963",
+      "name": "Language Models Tests (Extra Standard) 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d4-4fdb-ae00-5604c8310a85",
+      "name": "Language Models Tests (Hybrid) 1",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d4-42ec-8591-cc9ce31e98eb",
+      "name": "Language Models Tests (Hybrid) 2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d4-459d-bb6f-960957f2099f",
+      "name": "Language Models Tests (Standard)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d8-4b50-a61b-43e765a370b1",
+      "name": "Multi-Modal Accuracy Eval (Small Models)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d9-4491-9c10-4307bf533fef",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84d9-4c3d-a539-40ffcc3ba73f",
+      "name": "Multi-Modal Models (Extended Generation 1)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84da-442b-8b83-2f294fb7252d",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84da-42ee-88cf-ce655ffb320a",
+      "name": "Multi-Modal Models (Extended Generation 2)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84db-439e-90d5-6b91cfaeb127",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84dc-4dda-b462-6de64bd50a59",
+      "name": "Multi-Modal Models (Extended Generation 3)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84dc-4240-b16c-f6b34b911383",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84dd-418d-af8c-ebd44d9367ab",
+      "name": "Multi-Modal Models (Extended Pooling)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84dd-4fe3-aced-45f9ac9ec0dd",
+      "name": "Multi-Modal Models (Standard) 1: qwen2",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84de-4520-975e-f8cddaee3e53",
+      "name": "Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84de-49e0-b2ec-88c28903c049",
+      "name": "Multi-Modal Models (Standard) 3: llava + qwen2_vl",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84df-47e5-a93b-737d76851121",
+      "name": "Multi-Modal Models (Standard) 4: other + whisper",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84df-43e5-aa38-48ecae7f751a",
+      "name": "Multi-Modal Processor",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84e0-43a7-aa33-38a0343dfc87",
+      "name": "Multi-Modal Processor (CPU)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84e6-4dd9-8b86-284debe7cd02",
+      "name": "Plugin Tests (2 GPUs)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ea-49f6-a30f-6040addec381",
+      "name": "PyTorch Compilation Passes Unit Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ea-4adf-b579-afce59f65ae7",
+      "name": "PyTorch Compilation Unit Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84eb-45e1-ba82-32a34264e925",
+      "name": "PyTorch Compilation Unit Tests (H100)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84eb-488e-8987-2a1414ea5d0e",
+      "name": "PyTorch Fullgraph",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ec-4f81-97a1-018a82f68320",
+      "name": "PyTorch Fullgraph Smoke Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ed-4789-bb98-3ed5fe5e690f",
+      "name": "Pytorch Nightly Dependency Override Check",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84f1-4e84-ad66-7f32e1ca54de",
+      "name": "Quantization",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84f1-47e5-92f3-d8a36c0fe3c7",
+      "name": "Quantized MoE Test (B200)",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84f2-42bc-b50f-6af08c5ebf9b",
+      "name": "Quantized Models Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84f5-4cb6-bbf0-987d334e9277",
+      "name": "Ray Dependency Compatibility Check",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84f9-4669-8935-e4bd3adbbb1c",
+      "name": "Rust Frontend Cargo Style + Clippy",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84fa-4700-9c6e-8f5f02ee64ec",
+      "name": "Rust Frontend Cargo Tests",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84fd-4d47-a23c-e86f744dd75e",
+      "name": "Rust Frontend Core Correctness",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84fe-45d8-a7f2-d214c84895ac",
+      "name": "Rust Frontend Distributed",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84fe-4244-8157-ac9f0fa4570c",
+      "name": "Rust Frontend OpenAI Coverage",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ff-4481-bd32-52acefc77366",
+      "name": "Rust Frontend Serve/Admin Coverage",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84ff-4ecb-a141-338ad114e965",
+      "name": "Rust Frontend Tool Use",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8503-4164-af9c-6f000c80427a",
+      "name": "Samplers Test",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8507-4692-8d61-557dbeb177a9",
+      "name": "Spec Decode Draft Model",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8508-4c84-a93d-44d712b8e1be",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8508-46ee-b424-2943c12cdffb",
+      "name": "Spec Decode Draft Model Nightly B200",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8509-46a9-ac57-ac3e918ed2fc",
+      "name": "Spec Decode Eagle",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8509-4727-8891-401eae51946e",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850a-44c9-b2b7-7816a4f5b246",
+      "name": "Spec Decode Eagle Nightly B200",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850a-4454-b945-e188c8b1e0e6",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850b-4d0b-ba2d-efc369e166f0",
+      "name": "Spec Decode MTP hybrid (B200)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850b-4d6b-a259-b01952183165",
+      "name": "Spec Decode Ngram + Suffix",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850c-49e5-bd91-842b39e83db8",
+      "name": "Spec Decode Speculators + MTP",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850c-4aab-bb11-416a06665825",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850d-4892-8f9a-732d90958b87",
+      "name": "Spec Decode Speculators + MTP Nightly B200",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850e-4e9f-9a80-7cfead8d6995",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-850e-43e9-ac38-14d14ebf137d",
+      "name": "Speculators Correctness",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8513-4656-bdfb-bdfa692736b1",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8513-43a9-bafb-938a848830c6",
+      "name": "Weight Loading Multiple GPU",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8517-479c-b163-a8cfb2fc02f9",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8517-4874-87ba-3410b232004b",
+      "name": ":docker: build image torch nightly",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8518-41c0-8fa8-83fa1c86f072",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8519-45c1-bf6a-58bff819b6b2",
+      "name": "Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8519-46a9-a146-0d9c3f2202fb",
+      "name": "Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851a-4212-8a77-b91f87f7d32a",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851a-4994-b32e-04be661e31c6",
+      "name": "Torch Nightly Basic Models Tests (Initialization)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851b-43e1-a7b0-f528553daeac",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851c-4ba6-b3c4-eefa49872e1a",
+      "name": "Torch Nightly Language Models Tests (Extra Standard) 1",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851c-49fe-a03f-3c0e69cc376b",
+      "name": "Torch Nightly Language Models Tests (Extra Standard) 2",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851c-483e-84a3-5e9b4f3fb55b",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851d-42cd-a38d-db488d8b438d",
+      "name": "Torch Nightly Language Models Tests (Hybrid) 1",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851d-44f8-8ae9-694fc576c085",
+      "name": "Torch Nightly Language Models Tests (Hybrid) 2",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851e-4cff-97ac-6f2994e53752",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-851f-4b63-af04-1477cea48e6b",
+      "name": "Torch Nightly Language Models Tests (Standard)",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6b-4f81-4513-89d4-2712c6dd69ed",
+      "name": "Bootstrap",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-ef93-4148-b882-c721166c205c",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-ef9b-480b-81af-3dcfa142ff09",
+      "name": "Build wheel - aarch64 - CUDA 12.9",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-ef9f-4356-a538-63015b8e0f84",
+      "name": "Build wheel - aarch64 - CUDA 13.0",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-ef9f-4288-bbef-0d53310edad9",
+      "name": "Build wheel - aarch64 - CPU",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efa0-497f-b1f1-861f0c1242fe",
+      "name": "Build wheel - x86_64 - CUDA 12.9",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efa3-477c-9a07-8c246674c214",
+      "name": "Build wheel - x86_64 - CUDA 13.0",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efa4-4020-90f5-f8c63b153fc5",
+      "name": "Build wheel - x86_64 - CPU",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efa5-48ad-b746-94713fccac2d",
+      "name": "Generate and upload wheel indices",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efa6-4fda-ba11-98218b78f17c",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efaa-46c5-9793-fa5f64187eb7",
+      "name": "Build release image - x86_64 - CUDA 13.0",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efab-4b8a-8cf8-b100e27af5fe",
+      "name": "Build release image - aarch64 - CUDA 13.0",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efac-4c82-bb9a-6ad98557b767",
+      "name": "Build release image - x86_64 - CUDA 12.9",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efac-433a-a058-f4da8e641d9b",
+      "name": "Build release image - aarch64 - CUDA 12.9",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efad-4a4a-9974-6574a38d159d",
+      "name": "Build release image - x86_64 - CUDA 13.0 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efad-43f2-995f-1e78066260c0",
+      "name": "Build release image - aarch64 - CUDA 13.0 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efae-48cc-a426-e8d8571cac73",
+      "name": "Build release image - x86_64 - CUDA 12.9 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efae-4fb7-b9e7-3baf2e0fcd38",
+      "name": "Build release image - aarch64 - CUDA 12.9 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efaf-40a6-9db1-e18ec895464a",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb0-4397-adf9-3e89c66a81b9",
+      "name": "Build release image - x86_64 - CPU",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb0-47e6-8591-34d363870504",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb1-4a33-a595-889e9f0dcbec",
+      "name": "Build release image - arm64 - CPU",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb5-4235-84f2-9f2b2acd92a7",
+      "name": "Create multi-arch manifest - CUDA 13.0",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb9-40ca-a5a0-00b4c13a0834",
+      "name": "Create multi-arch manifest - CUDA 12.9",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efb9-42c4-b2da-1131b645e8e6",
+      "name": "Create multi-arch manifest - CUDA 13.0 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efba-494a-baac-48ec214357b9",
+      "name": "Create multi-arch manifest - CUDA 12.9 - Ubuntu 24.04",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbb-46c2-8503-d5589f7144da",
+      "name": "Publish nightly multi-arch image to DockerHub",
+      "state": "broken",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbc-4ffd-b104-a62acf76d5b3",
+      "name": "Publish nightly multi-arch image to DockerHub - CUDA 12.9",
+      "state": "broken",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbd-4bb8-a90f-d54ab49750d8",
+      "name": ":rocm: Build ROCm Base Image & Wheels",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbe-41c4-aa21-8d0b91631de7",
+      "name": ":python: Build vLLM ROCm Wheel - x86_64",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbe-4a43-8dde-926ee1dad366",
+      "name": ":s3: Upload ROCm Wheels to S3",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbf-43ee-90aa-e49bf90d3e17",
+      "name": ":memo: Annotate ROCm wheel release",
+      "state": "passed",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efbf-4bd9-8907-33d6d973fbdf",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc0-402f-b69b-968038f11056",
+      "name": ":package: Generate Root Index for ROCm Wheels for Release",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc1-4cc2-a704-890d5b251d8b",
+      "name": ":docker: Build release image - x86_64 - ROCm",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc2-4f37-a33c-5018ccbe71db",
+      "name": "Publish nightly ROCm image to DockerHub",
+      "state": "broken",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc3-4cda-bdfa-ab2ac7487c79",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc4-4b14-966d-e6207d0d2ebe",
+      "name": "Publish release images to DockerHub",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc8-487a-b87e-87fc6344a1df",
+      "name": "",
+      "state": "blocked",
+      "exit_status": 0,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-efc9-4dd0-a8e8-7a414cee3ff7",
+      "name": "Upload release wheels to PyPI",
+      "state": "blocked",
+      "exit_status": null,
+      "url": ""
+    }
+  ],
+  "jobs_failed": [
+    {
+      "job_id": "019e8a6c-8448-42f8-8dac-9a9717873281",
+      "name": "Entrypoints Integration (API Server 2)",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-8458-4716-b62c-b430ac711ce7",
+      "name": "Ascend NPU Test",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b1-40d9-ac61-7bb572324722",
+      "name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "state": "failed",
+      "exit_status": 2,
+      "url": ""
+    },
+    {
+      "job_id": "019e8a6c-84b3-423d-ba78-4cab89e4b1f9",
+      "name": "Batch Invariance (H100)",
+      "state": "failed",
+      "exit_status": 1,
+      "url": ""
+    }
+  ],
+  "tests_run": [],
+  "tests_failed": [],
+  "failed_test_list": [],
+  "tests_run_count": 0,
+  "summary_stats": {
+    "failed": 0,
+    "passed": 0,
+    "skipped": 0,
+    "error": 0
+  },
+  "artifacts": [],
+  "notes": [
+    "Buildkite build(s) found, but no test run data from Buildkite Test Engine",
+    "Evidence collected on 2026-06-26T18:32:58.908150+00:00",
+    "Buildkite builds found: 2",
+    "Total tests run: 0",
+    "Failed tests: 0"
+  ]
+}

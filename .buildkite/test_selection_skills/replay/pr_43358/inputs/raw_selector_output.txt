@@ -1,0 +1,14 @@
+This PR removes deprecated code and documentation:
+1. **vllm/config/pooler.py** — Removes deprecated `logit_bias` and `logit_scale` fields from PoolerConfig and their __post_init__ conversion logic (scheduled removal from v0.21)
+2. **vllm/utils/profiling.py** — Deletes entire deprecated profiling utility file (cprofile/cprofile_context decorators)
+3. **docs/** files — Only documentation updates reflecting the deprecation removals
+
+The code changes affect PoolerConfig, which is used by pooling endpoints. The deprecated fields are being removed, so tests using PoolerConfig should verify the config still validates correctly. The profiling utility deletion won't break tests since it's deprecated code. The large candidate list for pooler.py exists because it's widely imported, but actual test impact is limited to pooling-related functionality and config validation.
+
+---
+tests/config/test_model_arch_config.py | Tests PoolerConfig validation and initialization
+tests/test_pooling_params.py | Directly tests PoolingParams/PoolerConfig functionality
+tests/entrypoints/pooling/embed/test_offline.py | Tests embedding pooling with PoolerConfig
+tests/entrypoints/pooling/classify/test_offline.py | Tests classification pooling with PoolerConfig
+tests/entrypoints/pooling/scoring/test_cross_encoder_offline.py | Tests cross-encoder pooling with PoolerConfig
+tests/basic_correctness/ | Core correctness check for config changes

@@ -1,0 +1,23 @@
+Looking at the diff and applying the test selection rules:
+
+**Analysis:**
+- Two source files changed (`vllm/v1/worker/gpu_model_runner.py`, `vllm/v1/worker/mamba_utils.py`)
+- Two test files directly modified (`tests/v1/e2e/general/test_mamba_prefix_cache.py`, `tests/v1/worker/test_mamba_utils.py`)
+- The diff shows: removal of CPU mock `fake_post_process_mamba_fn` from prefix cache test, and massive expansion of `test_mamba_utils.py` with new GPU kernel tests
+- Changes are focused on mamba state postprocessing with a new fused GPU kernel implementation
+
+**Applying the rules:**
+- **Rule 1**: Start from candidates, narrow with diff. The diff shows Mamba-specific changes to worker utilities.
+- **Rule 2**: Both modified test files are in the candidate set and test the changed sources directly.
+- The candidates list is large because these are core worker utilities, but the actual changes are narrowly scoped to mamba postprocessing.
+
+---
+
+This PR refactors mamba state postprocessing to use a new GPU fused kernel, removing CPU-side mocking from the e2e test and adding comprehensive GPU kernel golden tests. The candidates list includes all tests that import the modified worker modules, but the diff is narrowly focused on mamba postprocessing semantics.
+
+---
+
+tests/v1/worker/test_mamba_utils.py | unit tests for mamba utilities (directly modified)
+tests/v1/e2e/general/test_mamba_prefix_cache.py | e2e test for mamba prefix cache (directly modified)
+tests/v1/worker/test_gpu_model_runner.py | tests GPU model runner that uses mamba utils
+tests/kernels/mamba/test_mamba_ssm.py | mamba kernel tests that may exercise postprocessing paths

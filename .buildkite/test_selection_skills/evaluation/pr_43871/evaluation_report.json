@@ -1,0 +1,22 @@
+{
+  "pr_number": "43871",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py",
+      "reason": "New test file validates MultiConnector kv connector behavior"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.376297+00:00"
+  ]
+}

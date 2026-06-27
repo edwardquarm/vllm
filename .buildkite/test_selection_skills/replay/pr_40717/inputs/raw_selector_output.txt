@@ -1,0 +1,10 @@
+This PR modifies mamba GDN linear attention kernel selection logic and adds a CUDA runtime version detection method. The changes extract backend-selection logic into helper functions, enhance support for Blackwell (SM100) GPUs with specific constraints, improve logging, and pass `head_k_dim` to `ChunkGatedDeltaRule`. The changes are backward-compatible—`head_k_dim` defaults to `None`, and the new CUDA method returns `0` if undetermined.
+
+The candidate set is large because these files are imported transitively by many tests, but the actual scope of change is narrow: mamba GDN attention kernel selection and CUDA version detection. I'm keeping tests that directly exercise mamba attention, basic correctness, and compilation paths that include these layers.
+
+---
+tests/kernels/mamba/test_mamba_ssm.py | directly tests mamba kernels including GDN
+tests/basic_correctness/test_basic_correctness.py | core functionality regression check
+tests/compile/fullgraph/test_full_cudagraph.py | exercises mamba layer compilation
+tests/compile/passes/test_fusion_attn.py | exercises attention fusion with mamba layers
+tests/models/language/generation/test_common.py | model-level generation tests using mamba

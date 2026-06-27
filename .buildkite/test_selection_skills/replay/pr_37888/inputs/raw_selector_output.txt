@@ -1,0 +1,9 @@
+This PR adds wrapper functions in `_custom_ops.py` for top-k sparse attention operations, adds XPU-specific FP8 logits operations in `_xpu_ops.py`, and refactors `sparse_attn_indexer.py` to use a unified custom ops interface instead of platform-specific implementations. The changes move sparse attention logic from Python to custom C++ ops and add XPU-specific code paths. These are targeted changes to core sparse attention indexing that affect how attention backends handle MLA (Multi-head Latent Attention) operations.
+
+---
+
+tests/v1/attention/test_sparse_mla_backends.py | sparse attention indexing directly tested
+tests/v1/attention/test_mla_backends.py | MLA attention backends affected by refactoring
+tests/v1/attention/test_attention_backends.py | attention backend selection and routing
+tests/kernels/attention/test_attention.py | core attention kernel operations
+tests/basic_correctness/test_basic_correctness.py | verify core attention paths still work

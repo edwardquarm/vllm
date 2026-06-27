@@ -1,0 +1,38 @@
+{
+  "pr_number": "37888",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/attention/test_sparse_mla_backends.py",
+      "reason": "sparse attention indexing directly tested"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla_backends.py",
+      "reason": "MLA attention backends affected by refactoring"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "attention backend selection and routing"
+    },
+    {
+      "selected_test": "tests/kernels/attention/test_attention.py",
+      "reason": "core attention kernel operations"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "verify core attention paths still work"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.515295+00:00"
+  ]
+}

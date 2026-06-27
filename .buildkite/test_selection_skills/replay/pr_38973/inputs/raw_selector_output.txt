@@ -1,0 +1,5 @@
+This PR modifies the Qwen3CoderToolParser to refactor type conversion logic and add support for anyOf/oneOf schemas (Pydantic v2). The change delegates type conversion to shared utility functions (`coerce_to_schema_type`, `extract_types_from_schema`) and is localized to the qwen3coder parser implementation. Two new test functions verify the anyOf/oneOf type conversion in both normal and streaming modes. The refactoring maintains the same external behavior while improving code reuse.
+
+---
+
+tests/tool_parsers/test_qwen3coder_tool_parser.py | Direct tests for Qwen3CoderToolParser type conversion refactoring and anyOf/oneOf support

@@ -1,0 +1,194 @@
+{
+  "pr_number": "42767",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 3,
+    "false_negatives": 31,
+    "false_positives": 1,
+    "coverage_rate": 0.088,
+    "precision_rate": 0.75
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/kernels/attention/",
+      "matched_failure": "tests/kernels/attention/test_flashinfer_trtllm_attention.py",
+      "reason": "vertical_slash_index.cu deleted, test attention kernels"
+    },
+    {
+      "selected_test": "tests/kernels/moe/",
+      "matched_failure": "tests/kernels/moe",
+      "reason": "marlin_gemm_moe binding removed, test MOE kernels"
+    },
+    {
+      "selected_test": "tests/kernels/quantization/",
+      "matched_failure": "tests/kernels/quantization/test_flashinfer_scaled_mm.py",
+      "reason": "marlin quantization methods affected by removal"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] CPU-Multi-Modal Model Tests 3",
+      "job_name": "CPU-Multi-Modal Model Tests 3",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Ascend NPU Test",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Hybrid SSM NixlConnector PD accuracy tests (4 GPUs)",
+      "job_name": "Hybrid SSM NixlConnector PD accuracy tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 1) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 1) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_cutedsl_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_ocp_mx_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_mxfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_nvfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_flashinfer_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_mxfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_silu_mul_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization/test_nvfp4.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/test_top_k_per_row.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_attention_selector.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_cutlass_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_cutlass_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/spec_decode",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "core model execution after operation removal"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.454371+00:00"
+  ]
+}

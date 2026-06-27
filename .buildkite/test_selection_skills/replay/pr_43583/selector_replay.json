@@ -1,0 +1,20 @@
+{
+  "pr_number": "43583",
+  "repo": "vllm-project/vllm",
+  "status": "partial",
+  "changed_files": [
+    "tests/v1/kv_connector/nixl_integration/test_accuracy.py"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "b88c3262896236eb2b2b5666bb411ed9ae05e287",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [],
+  "selection_reasons": [],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-26T18:29:40.496815+00:00"
+  ]
+}

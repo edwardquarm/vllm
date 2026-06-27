@@ -1,0 +1,99 @@
+{
+  "pr_number": "40717",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 12,
+    "false_positives": 5,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: :docker: build image",
+      "job_name": "AMD: :docker: build image",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile",
+      "job_name": "Fusion E2E TP2 (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fusions_e2e/test_tp2_ar_rms.py",
+      "job_name": "Fusion E2E TP2 (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fusions_e2e",
+      "job_name": "Fusion E2E TP2 (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fusions_e2e/test_tp2_async_tp.py",
+      "job_name": "Fusion E2E TP2 (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_rms_norm_batch_invariant.py",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py::test_v1_generation_is_deterministic_across_batch_sizes_with_needle[FLASH_ATTN]",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_nvfp4_batch_invariant.py",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py::test_v1_generation_is_deterministic_across_batch_sizes_with_needle[TRITON_MLA]",
+      "job_name": "Batch Invariance (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/mamba/test_mamba_ssm.py",
+      "reason": "directly tests mamba kernels including GDN"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "core functionality regression check"
+    },
+    {
+      "selected_test": "tests/compile/fullgraph/test_full_cudagraph.py",
+      "reason": "exercises mamba layer compilation"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_fusion_attn.py",
+      "reason": "exercises attention fusion with mamba layers"
+    },
+    {
+      "selected_test": "tests/models/language/generation/test_common.py",
+      "reason": "model-level generation tests using mamba"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.810709+00:00"
+  ]
+}

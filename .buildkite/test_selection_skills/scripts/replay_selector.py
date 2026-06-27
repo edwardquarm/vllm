@@ -217,7 +217,9 @@ def main():
     if args.output_dir:
         output_dir = Path(args.output_dir)
     else:
-        output_dir = Path(f".buildkite/test_selection_skills/replay/pr_{pr_number}")
+        # Use absolute path based on script location
+        script_dir = Path(__file__).parent
+        output_dir = script_dir.parent / "replay" / f"pr_{pr_number}"
 
     output_dir.mkdir(parents=True, exist_ok=True)
 

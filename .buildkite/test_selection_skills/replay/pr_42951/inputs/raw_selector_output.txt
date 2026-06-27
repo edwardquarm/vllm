@@ -1,0 +1,8 @@
+This PR adds XPU (Intel GPU) support to MOE backend selection and router operations. The changes modify MXFP4 backend initialization to recognize XPU platforms and add a pure PyTorch fallback implementation for the topk softplus sqrt router function. These are conditional, platform-specific additions that don't modify core logic for other platforms. The modifications are contained to MOE-specific code paths within the fused MOE layers.
+
+---
+tests/kernels/moe/test_mxfp4_moe.py | Directly tests MXFP4 MOE backend selection logic
+tests/kernels/moe/test_topk_softplus_sqrt.py | Directly tests modified topk softplus sqrt function
+tests/kernels/moe/test_fused_topk.py | Tests fused topk operations that use the router
+tests/models/quantization/test_mxfp4.py | End-to-end tests for MXFP4 quantization
+tests/basic_correctness/ | Regression testing to ensure non-XPU paths still work

@@ -1,0 +1,7 @@
+This PR renames class attributes in the Nemotron VL model from `weight_mapper` to `hf_to_vllm_mapper` in two classes: `LlamaNemotronVLForEmbedding` and `LlamaNemotronVLForSequenceClassification`. This is purely a refactoring (attribute rename) with no functional changes to the weight loading logic or model behavior. The candidate set includes many tests that transitively depend on this module, but per Rule 1, I narrow to tests that directly exercise the modified classes.
+
+---
+
+tests/models/multimodal/processing/test_nemotron_vl.py | Tests Nemotron VL model initialization and processing
+tests/models/multimodal/pooling/test_llama_nemotron_vl.py | Tests Nemotron VL embedding and sequence classification models
+tests/basic_correctness/ | Broad safety check for model loading with renamed attribute

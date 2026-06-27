@@ -1,0 +1,15 @@
+Looking at this test selection task, I need to analyze the three changed files and their diffs to determine which tests should run.
+
+**Analysis:**
+
+The changes are minimal and focused on logging level reductions:
+- `vllm/model_executor/layers/quantization/__init__.py`: `logger.warning()` → `logger.debug()`
+- `vllm/model_executor/models/registry.py`: `logger.warning()` → `logger.debug()`
+- `tests/quantization/test_register_quantization_config.py`: Updated test to expect DEBUG level instead of WARNING
+
+Per Rule 1, "log message changes" are low risk and typically only require `tests/basic_correctness/`. However, the test file itself is being modified to validate this logging behavior change, so it must be run.
+
+---
+
+tests/quantization/test_register_quantization_config.py | Test file directly validates the logging level change
+tests/basic_correctness/ | Log-level changes are low risk, include basic_correctness per Rule 1

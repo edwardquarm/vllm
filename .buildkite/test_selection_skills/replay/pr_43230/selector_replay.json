@@ -1,0 +1,32 @@
+{
+  "pr_number": "43230",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "requirements/cuda.txt"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "72a4470210d5ac5d04eab8304452c77fc1a5a29b",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/basic_correctness/",
+      "granularity": "unknown",
+      "reason": "requirements file changed (Rule 3: run basic_correctness for requirements changes)",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/basic_correctness/",
+      "reason": "requirements file changed (Rule 3: run basic_correctness for requirements changes)"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-26T18:23:25.339102+00:00"
+  ]
+}

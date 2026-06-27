@@ -1,0 +1,58 @@
+{
+  "pr_number": "42083",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 8,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (API Server openai - Part 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Entrypoints Integration (API Server openai - Part 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/sample",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_request.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_outputs.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/logits_processors",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_oracle.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.152935+00:00"
+  ]
+}

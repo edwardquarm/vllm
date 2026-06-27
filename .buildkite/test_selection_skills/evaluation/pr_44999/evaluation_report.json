@@ -1,0 +1,48 @@
+{
+  "pr_number": "44999",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 5,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "job_name": "Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server OpenAI - Part 1) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server OpenAI - Part 1) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "job_name": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] bootstrap",
+      "job_name": "bootstrap",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/models/language/pooling/test_colbert.py",
+      "reason": "directly tests ColBERT weight loading"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.555143+00:00"
+  ]
+}

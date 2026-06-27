@@ -1,0 +1,4 @@
+This PR refactors weight loading in three ColBERT model classes (ColBERTModel, ColBERTEmbeddingModel, ColBERTRoForMarginRanking), replacing inline weight stripping logic with reusable utility functions (AutoWeightsLoader, WeightsMapper). The refactoring maintains functional equivalence but improves code maintainability and clarifies comments about ST projector loading. Since this is a weight-loading refactoring that affects model initialization, tests that load and use ColBERT models need to run.
+
+---
+tests/models/language/pooling/test_colbert.py | directly tests ColBERT weight loading

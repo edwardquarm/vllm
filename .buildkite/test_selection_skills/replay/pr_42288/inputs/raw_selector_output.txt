@@ -1,0 +1,6 @@
+I see you've referenced a file path, but I need clarification on what you'd like me to do. Could you tell me:
+
+1. What's in `/tmp/tmpwcxg491d.txt` or what you'd like me to do with it?
+2. What's your immediate goal — are you looking to review code, run tests, debug something, or implement a feature?
+
+Once I understand your task, I'll use the appropriate skills to help you work through it.

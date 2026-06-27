@@ -1,0 +1,32 @@
+{
+  "pr_number": "41802",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "csrc/quantization/gptq/compat.cuh"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "0051dff67f4eb41d896af44bfa303871d169882b",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/kernels/",
+      "granularity": "unknown",
+      "reason": "csrc/ C/CUDA source change affecting quantization kernel compilation (Rule 3)",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/kernels/",
+      "reason": "csrc/ C/CUDA source change affecting quantization kernel compilation (Rule 3)"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-26T18:08:19.599822+00:00"
+  ]
+}

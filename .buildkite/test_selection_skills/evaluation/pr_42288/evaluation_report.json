@@ -1,0 +1,28 @@
+{
+  "pr_number": "42288",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 2,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/tracing",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.272847+00:00"
+  ]
+}

@@ -1,0 +1,4 @@
+This PR modifies a C/C++/CUDA source file `csrc/quantization/gptq/compat.cuh`, specifically a preprocessor conditional that controls code compilation for ROCm/HIP systems. The change adds a version check `(HIP_VERSION_MAJOR * 100 + HIP_VERSION_MINOR) < 713` to prevent specific code from compiling on older HIP versions. No Python source files in vllm/ were changed, so there are no candidates from import analysis. Per Rule 3, C/C++/CUDA source files in csrc/ require testing via tests/kernels/.
+
+---
+tests/kernels/ | csrc/ C/CUDA source change affecting quantization kernel compilation (Rule 3)

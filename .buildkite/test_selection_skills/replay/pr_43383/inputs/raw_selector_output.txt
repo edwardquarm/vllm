@@ -1,0 +1,4 @@
+This PR adds return type annotations to functions in the pooler modules and includes one assertion for type safety. All changes are type-related — no behavioral changes to core logic. The assertion in `special.py` adds a defensive check that makes an existing assumption explicit, but doesn't change the code path. Per Rule 1, type hint additions are low risk and only require `tests/basic_correctness/` if anything.
+
+---
+tests/basic_correctness/ | low-risk type annotation and assertion additions

@@ -1,0 +1,11 @@
+I'm ready to help with vLLM development. I've loaded your project context and understand the requirements from AGENTS.md:
+
+- Using `uv` for all Python/pip commands (never bare `pip` or system `python3`)
+- `.venv/bin/python` for test runs
+- Pre-commit hooks installed for linting
+- PR descriptions must include: duplicate checks, test results, AI-assistance statement
+- Co-authored-by trailers for commits
+
+I notice you're on the `auto-test-target-determination-v2-local` branch with changes to test selection evaluation scripts. 
+
+What would you like to work on?

@@ -1,0 +1,4 @@
+This PR modifies only the test file `tests/models/quantization/test_gpt_oss.py`, adding a conditional import guard for `on_gfx950` from `vllm.platforms.rocm` to make it compatible with non-ROCm platforms. No vllm source files changed, so the candidate table is empty. However, since the test file itself was modified to add a platform compatibility shim, we should run this test to verify the import guard and stub function work correctly on both ROCm and non-ROCm environments.
+
+---
+tests/models/quantization/test_gpt_oss.py | verify conditional import guard works on non-ROCm platforms

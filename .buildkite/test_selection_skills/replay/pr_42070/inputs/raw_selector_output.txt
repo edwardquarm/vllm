@@ -1,0 +1,7 @@
+This PR removes the `@torch.compile(fullgraph=True)` decorator from the `rearrange_mixed_qkv()` method in the GDN linear attention implementation for Mamba models. The change is minimal and specific—no actual computation logic changes, just the removal of a compilation optimization directive. The most critical tests are those that exercise Mamba models with GDN attention and torch.compile functionality to ensure correctness is maintained without the decorator.
+
+---
+
+tests/kernels/mamba/test_mamba_ssm.py | directly tests Mamba SSM kernel using gdn_linear_attn
+tests/compile/fullgraph/test_full_graph.py | tests full-graph compilation mode (decorator removed)
+tests/basic_correctness/test_basic_correctness.py | regression testing for core functionality

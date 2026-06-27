@@ -1,0 +1,12 @@
+csrc/cache_kernels_fused.cu
+tests/compile/passes/test_mla_rope_kvcache_cat_fusion.py
+tests/compile/passes/test_rope_kvcache_fusion.py
+vllm/compilation/passes/fusion/matcher_utils.py
+vllm/compilation/passes/fusion/mla_rope_kvcache_cat_fusion.py
+vllm/compilation/passes/pass_manager.py
+vllm/compilation/passes/utility/fix_functionalization.py
+vllm/config/compilation.py
+vllm/config/vllm.py
+vllm/model_executor/layers/attention/mla_attention.py
+vllm/model_executor/layers/rotary_embedding/deepseek_scaling_rope.py
+vllm/model_executor/layers/rotary_embedding/dual_chunk_rope.py

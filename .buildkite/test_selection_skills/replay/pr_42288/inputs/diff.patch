@@ -1,0 +1,663 @@
+diff --git a/tests/v1/cudagraph/test_encoder_cudagraph.py b/tests/v1/cudagraph/test_encoder_cudagraph.py
+index 2ba140707ea1..9c315f293da6 100644
+--- a/tests/v1/cudagraph/test_encoder_cudagraph.py
++++ b/tests/v1/cudagraph/test_encoder_cudagraph.py
+@@ -87,8 +87,10 @@ def __init__(self, min_budget: int = 4, max_budget: int = 128):
+     def get_encoder_cudagraph_config(self) -> EncoderCudaGraphConfig:
+         return EncoderCudaGraphConfig(
+             modalities=["image"],
+-            input_key_by_modality={"image": "pixel_values"},
+-            buffer_keys=["dummy_buf"],
++            buffer_keys=[
++                "pixel_values",
++                "dummy_buf",
++            ],
+             out_hidden_size=32,
+         )
+ 
+@@ -269,9 +271,6 @@ def __init__(self):
+     def get_encoder_cudagraph_config(self) -> EncoderCudaGraphConfig:
+         return EncoderCudaGraphConfig(
+             modalities=["image"],
+-            input_key_by_modality={
+-                "image": "pixel_values",
+-            },
+             buffer_keys=["dummy_buf"],
+             out_hidden_size=_HIDDEN,
+         )
+@@ -350,11 +349,10 @@ def prepare_encoder_cudagraph_capture_inputs(
+         n_out = _count_output_tokens(grid_config, _SPATIAL_MERGE)
+         dummy_buf = torch.zeros(n_out, _HIDDEN, device=device, dtype=dtype)
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs={
++            values={
+                 "pixel_values": dummy_pixel_values,
+-                "image_grid_thw": grid_config,
++                "dummy_buf": dummy_buf,
+             },
+-            buffers={"dummy_buf": dummy_buf},
+         )
+ 
+     def prepare_encoder_cudagraph_replay_buffers(
+@@ -367,14 +365,18 @@ def prepare_encoder_cudagraph_replay_buffers(
+         n_out = _count_output_tokens(grid_thw, _SPATIAL_MERGE)
+         p = next(self.parameters())
+         dummy_buf = torch.zeros(n_out, _HIDDEN, device=p.device, dtype=p.dtype)
+-        return EncoderCudaGraphReplayBuffers(buffers={"dummy_buf": dummy_buf})
++        return EncoderCudaGraphReplayBuffers(
++            values={
++                "pixel_values": mm_kwargs["pixel_values"],
++                "dummy_buf": dummy_buf,
++            }
++        )
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+-        return self._forward(mm_kwargs["pixel_values"])
++        return self._forward(values["pixel_values"])
+ 
+     def encoder_eager_forward(
+         self,
+@@ -551,10 +553,6 @@ class SimpleMockViTVideoModel(SimpleMockViTModel):
+     def get_encoder_cudagraph_config(self) -> EncoderCudaGraphConfig:
+         return EncoderCudaGraphConfig(
+             modalities=["image", "video"],
+-            input_key_by_modality={
+-                "image": "pixel_values",
+-                "video": "pixel_values_videos",
+-            },
+             buffer_keys=["dummy_buf"],
+             out_hidden_size=_HIDDEN,
+         )
+@@ -654,11 +652,10 @@ def prepare_encoder_cudagraph_capture_inputs(
+         n_out = _count_output_tokens(grid_config, _SPATIAL_MERGE)
+         dummy_buf = torch.zeros(n_out, _HIDDEN, device=device, dtype=dtype)
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs={
++            values={
+                 "pixel_values": dummy_pixel_values,
+-                "image_grid_thw": grid_config,
++                "dummy_buf": dummy_buf,
+             },
+-            buffers={"dummy_buf": dummy_buf},
+         )
+ 
+     def prepare_encoder_cudagraph_replay_buffers(
+@@ -670,14 +667,18 @@ def prepare_encoder_cudagraph_replay_buffers(
+         n_out = _count_output_tokens(self._get_grid_thw(mm_kwargs), _SPATIAL_MERGE)
+         p = next(self.parameters())
+         dummy_buf = torch.zeros(n_out, _HIDDEN, device=p.device, dtype=p.dtype)
+-        return EncoderCudaGraphReplayBuffers(buffers={"dummy_buf": dummy_buf})
++        return EncoderCudaGraphReplayBuffers(
++            values={
++                "pixel_values": self._get_pixel_values(mm_kwargs),
++                "dummy_buf": dummy_buf,
++            }
++        )
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+-        return self._forward(self._get_pixel_values(mm_kwargs))
++        return self._forward(values["pixel_values"])
+ 
+     def encoder_eager_forward(
+         self,
+@@ -718,14 +719,6 @@ def test_video_model_returns_video_for_video_kwargs(self):
+         }
+         assert model.get_input_modality(mm_kwargs) == "video"
+ 
+-    def test_video_model_config_has_both_modalities(self):
+-        model = SimpleMockViTVideoModel()
+-        cfg = model.get_encoder_cudagraph_config()
+-        assert "image" in cfg.modalities
+-        assert "video" in cfg.modalities
+-        assert cfg.input_key_by_modality["image"] == "pixel_values"
+-        assert cfg.input_key_by_modality["video"] == "pixel_values_videos"
+-
+ 
+ # ---------------------------------------------------------------------------
+ # GPU tests — video capture, replay, fallback, and mixed image+video
+diff --git a/vllm/model_executor/models/interfaces.py b/vllm/model_executor/models/interfaces.py
+index 3d46bda7ffb9..749222b08470 100644
+--- a/vllm/model_executor/models/interfaces.py
++++ b/vllm/model_executor/models/interfaces.py
+@@ -1623,8 +1623,7 @@ def prepare_encoder_cudagraph_replay_buffers(
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        inputs: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+         """Run the encoder forward pass with precomputed buffers.
+ 
+diff --git a/vllm/model_executor/models/qwen2_5_vl.py b/vllm/model_executor/models/qwen2_5_vl.py
+index 8f9c4fafe804..d4b6984afea6 100644
+--- a/vllm/model_executor/models/qwen2_5_vl.py
++++ b/vllm/model_executor/models/qwen2_5_vl.py
+@@ -1057,7 +1057,7 @@ def prepare_encoder_metadata(
+     def forward(
+         self,
+         x: torch.Tensor,
+-        grid_thw: list[list[int]],
++        grid_thw: list[list[int]] | None,
+         *,
+         encoder_metadata: dict[str, torch.Tensor] | None = None,
+     ) -> torch.Tensor:
+@@ -1712,11 +1712,8 @@ def get_encoder_cudagraph_config(self):
+         )
+         return EncoderCudaGraphConfig(
+             modalities=modalities,
+-            input_key_by_modality={
+-                "image": "pixel_values",
+-                "video": "pixel_values_videos",
+-            },
+             buffer_keys=[
++                "pixel_values",
+                 "rotary_pos_emb_cos",
+                 "rotary_pos_emb_sin",
+                 "window_index",
+@@ -1930,7 +1927,7 @@ def prepare_encoder_cudagraph_capture_inputs(
+             // self.visual.patch_size
+         )
+         max_seqlen_window_override = vit_merger_window_size**2 * (spatial_merge_size**2)
+-        buffers = self.visual.prepare_encoder_metadata(
++        metadata = self.visual.prepare_encoder_metadata(
+             grid_config,
+             max_batch_size=max_batch_size,
+             max_frames_per_batch=max_frames_per_batch,
+@@ -1942,14 +1939,12 @@ def prepare_encoder_cudagraph_capture_inputs(
+ 
+         # Just use image-modality dummy input_buffer for capturing, since it's also
+         # compatible for video inputs (has the same shape: [num_patches, C*T*P*P]).
+-        mm_kwargs = {
++        values = metadata | {
+             "pixel_values": dummy_pixel_values,
+-            "image_grid_thw": grid_config,
+         }
+ 
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs=mm_kwargs,
+-            buffers=buffers,
++            values=values,
+         )
+ 
+     def prepare_encoder_cudagraph_replay_buffers(
+@@ -1968,28 +1963,30 @@ def prepare_encoder_cudagraph_replay_buffers(
+         # bound and can over-pad window attention into many empty FlashAttention
+         # CTAs.
+         if modality == "image":
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_batch_size=max_batch_size,
+             )
+         elif modality == "video":
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_frames_per_batch=max_frames_per_batch,
+             )
+         else:
+             raise AssertionError("This line should be unreachable.")
+ 
+-        return EncoderCudaGraphReplayBuffers(buffers=buffers)
++        values = metadata | {
++            "pixel_values": self._get_pixel_values_by_modality(mm_kwargs),
++        }
++        return EncoderCudaGraphReplayBuffers(values=values)
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+-        pixel_values = self._get_pixel_values_by_modality(mm_kwargs)
+-        grid_thw = self._get_grid_thw_by_modality(mm_kwargs)
+-        return self.visual(pixel_values, grid_thw, encoder_metadata=buffers)
++        pixel_values = values.pop("pixel_values")
++        metadata = values
++        return self.visual(pixel_values, None, encoder_metadata=metadata)
+ 
+     def encoder_eager_forward(
+         self,
+diff --git a/vllm/model_executor/models/qwen2_vl.py b/vllm/model_executor/models/qwen2_vl.py
+index 869e044c2d4c..1fb5587cb3f8 100644
+--- a/vllm/model_executor/models/qwen2_vl.py
++++ b/vllm/model_executor/models/qwen2_vl.py
+@@ -707,7 +707,7 @@ def prepare_encoder_metadata(
+     def forward(
+         self,
+         x: torch.Tensor,
+-        grid_thw: torch.Tensor | list[list[int]],
++        grid_thw: torch.Tensor | list[list[int]] | None,
+         *,
+         encoder_metadata: dict[str, torch.Tensor] | None = None,
+     ) -> torch.Tensor:
+@@ -715,9 +715,11 @@ def forward(
+         x = x.to(device=self.device, dtype=self.dtype)
+         x = self.patch_embed(x)
+ 
+-        grid_thw_list = grid_thw if isinstance(grid_thw, list) else grid_thw.tolist()
+-
+         if encoder_metadata is None:
++            assert grid_thw is not None
++            grid_thw_list = (
++                grid_thw if isinstance(grid_thw, list) else grid_thw.tolist()
++            )
+             encoder_metadata = self.prepare_encoder_metadata(grid_thw_list)
+ 
+         rotary_pos_emb_cos = encoder_metadata["rotary_pos_emb_cos"]
+@@ -1460,11 +1462,8 @@ def get_encoder_cudagraph_config(self):
+         max_frames = self.get_max_frames_per_video()
+         return EncoderCudaGraphConfig(
+             modalities=["image", "video"],
+-            input_key_by_modality={
+-                "image": "pixel_values",
+-                "video": "pixel_values_videos",
+-            },
+             buffer_keys=[
++                "pixel_values",
+                 "rotary_pos_emb_cos",
+                 "rotary_pos_emb_sin",
+                 "cu_seqlens",
+@@ -1622,7 +1621,7 @@ def prepare_encoder_cudagraph_capture_inputs(
+         )
+ 
+         # max_seqlen.item() gets baked into the CUDA graph at capture time.
+-        buffers = self.visual.prepare_encoder_metadata(
++        metadata = self.visual.prepare_encoder_metadata(
+             grid_config,
+             max_batch_size=max_batch_size,
+             max_frames_per_batch=max_frames_per_batch,
+@@ -1632,14 +1631,12 @@ def prepare_encoder_cudagraph_capture_inputs(
+ 
+         # Capture with image-format kwargs; pixel_values shape is compatible with
+         # both image and video replay paths.
+-        mm_kwargs = {
++        values = metadata | {
+             "pixel_values": dummy_pixel_values,
+-            "image_grid_thw": grid_config,
+         }
+ 
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs=mm_kwargs,
+-            buffers=buffers,
++            values=values,
+         )
+ 
+     def prepare_encoder_cudagraph_replay_buffers(
+@@ -1652,24 +1649,28 @@ def prepare_encoder_cudagraph_replay_buffers(
+         grid_thw_list = self._get_grid_thw_by_modality(mm_kwargs)
+ 
+         if modality == "image":
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_batch_size=max_batch_size,
+             )
+         else:
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_frames_per_batch=max_frames_per_batch,
+             )
+ 
+-        return EncoderCudaGraphReplayBuffers(buffers=buffers)
++        values = metadata | {
++            "pixel_values": self._get_pixel_values_by_modality(mm_kwargs),
++        }
++        return EncoderCudaGraphReplayBuffers(values=values)
+ 
+     def encoder_cudagraph_forward(
+-        self, mm_kwargs: dict[str, Any], buffers: dict[str, torch.Tensor]
++        self,
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+-        pixel_values = self._get_pixel_values_by_modality(mm_kwargs)
+-        grid_thw = self._get_grid_thw_by_modality(mm_kwargs)
+-        return self.visual(pixel_values, grid_thw, encoder_metadata=buffers)
++        pixel_values = values.pop("pixel_values")
++        metadata = values
++        return self.visual(pixel_values, None, encoder_metadata=metadata)
+ 
+     def encoder_eager_forward(
+         self,
+diff --git a/vllm/model_executor/models/qwen3_vl.py b/vllm/model_executor/models/qwen3_vl.py
+index a474649cc93e..28c62e59bd18 100644
+--- a/vllm/model_executor/models/qwen3_vl.py
++++ b/vllm/model_executor/models/qwen3_vl.py
+@@ -1784,11 +1784,8 @@ def get_encoder_cudagraph_config(self):
+ 
+         return EncoderCudaGraphConfig(
+             modalities=modalities,
+-            input_key_by_modality={
+-                "image": "pixel_values",
+-                "video": "pixel_values_videos",
+-            },
+             buffer_keys=[
++                "pixel_values",
+                 "pos_embeds",
+                 "rotary_pos_emb_cos",
+                 "rotary_pos_emb_sin",
+@@ -1978,7 +1975,7 @@ def prepare_encoder_cudagraph_capture_inputs(
+         # so the capture value must cover any replay scenario.
+         # Worst case: 1 item consuming the full budget ->
+         # seq_len = token_budget * spatial_merge_size^2.
+-        buffers = self.visual.prepare_encoder_metadata(
++        metadata = self.visual.prepare_encoder_metadata(
+             grid_config,
+             max_batch_size=max_batch_size,
+             max_frames_per_batch=max_frames_per_batch,
+@@ -1988,14 +1985,12 @@ def prepare_encoder_cudagraph_capture_inputs(
+ 
+         # Just use image-modality dummy input_buffer for capturing, since it's also
+         # compatible for video inputs (has the same shape: [num_patches, C*T*P*P]).
+-        mm_kwargs = {
++        values = metadata | {
+             "pixel_values": dummy_pixel_values,
+-            "image_grid_thw": grid_config,
+         }
+ 
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs=mm_kwargs,
+-            buffers=buffers,
++            values=values,
+         )
+ 
+     def prepare_encoder_cudagraph_replay_buffers(
+@@ -2008,28 +2003,30 @@ def prepare_encoder_cudagraph_replay_buffers(
+         grid_thw_list = self._get_grid_thw_by_modality(mm_kwargs)
+ 
+         if modality == "image":
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_batch_size=max_batch_size,
+             )
+         elif modality == "video":
+-            buffers = self.visual.prepare_encoder_metadata(
++            metadata = self.visual.prepare_encoder_metadata(
+                 grid_thw_list,
+                 max_frames_per_batch=max_frames_per_batch,
+             )
+         else:
+             raise AssertionError("This line should be unreachable.")
+ 
+-        return EncoderCudaGraphReplayBuffers(buffers=buffers)
++        values = metadata | {
++            "pixel_values": self._get_pixel_values_by_modality(mm_kwargs),
++        }
++        return EncoderCudaGraphReplayBuffers(values=values)
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+-        pixel_values = self._get_pixel_values_by_modality(mm_kwargs)
+-        grid_thw = self._get_grid_thw_by_modality(mm_kwargs)
+-        return self.visual(pixel_values, grid_thw, encoder_metadata=buffers)
++        pixel_values = values.pop("pixel_values")
++        metadata = values
++        return self.visual(pixel_values, None, encoder_metadata=metadata)
+ 
+     def encoder_eager_forward(
+         self,
+diff --git a/vllm/model_executor/models/step3_vl.py b/vllm/model_executor/models/step3_vl.py
+index efe552f55491..5a28ce3d004c 100644
+--- a/vllm/model_executor/models/step3_vl.py
++++ b/vllm/model_executor/models/step3_vl.py
+@@ -702,8 +702,10 @@ def get_encoder_cudagraph_config(self):
+ 
+         return EncoderCudaGraphConfig(
+             modalities=["image"],
+-            input_key_by_modality={"image": "pixel_values"},
+-            buffer_keys=["patch_pixel_values"],
++            buffer_keys=[
++                "pixel_values",
++                "patch_pixel_values",
++            ],
+             out_hidden_size=self.config.hidden_size,
+         )
+ 
+@@ -846,33 +848,27 @@ def prepare_encoder_cudagraph_capture_inputs(
+             device=device,
+             dtype=dtype,
+         )
+-        # num_patches is NOT in buffers -- the per-item merge is done
++        # num_patches is NOT in values -- the per-item merge is done
+         # CPU-side by finalize_encoder_cudagraph_output using the actual
+         # batch's num_patches from mm_kwargs.
+-        mm_kwargs = {
++        values = {
+             "pixel_values": dummy_pixel_values,
+             "patch_pixel_values": dummy_patch_pixel_values,
+         }
+ 
+-        buffers = {
+-            "patch_pixel_values": dummy_patch_pixel_values,
+-        }
+-
+         return EncoderCudaGraphCaptureInputs(
+-            mm_kwargs=mm_kwargs,
+-            buffers=buffers,
++            values=values,
+         )
+ 
+     def encoder_cudagraph_forward(
+         self,
+-        mm_kwargs: dict[str, Any],
+-        buffers: dict[str, torch.Tensor],
++        values: dict[str, torch.Tensor],
+     ) -> torch.Tensor:
+         # Graph captures only the compute (vision model + conv projector).
+         # Per-item merge happens CPU-side in finalize_encoder_cudagraph_output
+         # using actual num_patches from the batch data.
+-        pixel_values = mm_kwargs["pixel_values"]
+-        patch_pixel_values = buffers["patch_pixel_values"]
++        pixel_values = values["pixel_values"]
++        patch_pixel_values = values["patch_pixel_values"]
+ 
+         image_features = self._process_image_features(
+             self._get_vision_model_output(pixel_values)
+@@ -974,10 +970,11 @@ def prepare_encoder_cudagraph_replay_buffers(
+             EncoderCudaGraphReplayBuffers,
+         )
+ 
+-        # Only patch_pixel_values lives in the buffers dict; num_patches is
++        # Only patch_pixel_values lives in the values dict; num_patches is
+         # processed CPU-side by finalize_encoder_cudagraph_output.
+         return EncoderCudaGraphReplayBuffers(
+-            buffers={
++            values={
++                "pixel_values": mm_kwargs["pixel_values"],
+                 "patch_pixel_values": mm_kwargs["patch_pixel_values"],
+             },
+         )
+diff --git a/vllm/v1/worker/encoder_cudagraph.py b/vllm/v1/worker/encoder_cudagraph.py
+index e39db0f23bf8..ae9e8d58b8b4 100644
+--- a/vllm/v1/worker/encoder_cudagraph.py
++++ b/vllm/v1/worker/encoder_cudagraph.py
+@@ -32,23 +32,20 @@ class BudgetGraphMetadata:
+     """Metadata for a single budget graph.
+ 
+     CUDA graph replay pattern:
+-    1. Copy new batch data into input_buffer (e.g. pixel_values)
+-    2. Copy precomputed values into metadata_buffers
+-    3. Replay graph
+-    4. Read encoder outputs from output_buffer
++    * Copy precomputed values into input_buffers
++    * Replay graph
++    * Read encoder outputs from output_buffer
+     """
+ 
+     token_budget: int
+     max_batch_size: int  # Max number of images/videos per batch
+     max_frames_per_batch: int  # Max total frames per batch (for video)
+     graph: torch.cuda.CUDAGraph
+-    # The input tensor updated before replay (e.g. pixel_values)
+-    input_buffer: torch.Tensor
+     # Buffers recorded into the CUDA graph (e.g. embeddings, sequence metadata).
+     # Before replay the manager updates these in-place. By default buffers are
+     # zeroed before slice-copying the actual values; model-specific padding
+     # behavior is provided by EncoderCudaGraphConfig.padding_logics.
+-    metadata_buffers: dict[str, torch.Tensor]
++    input_buffers: dict[str, torch.Tensor]
+     # Output written by graph, read after replay
+     output_buffer: torch.Tensor
+ 
+@@ -214,29 +211,23 @@ def _capture_budget_graph(self, token_budget: int):
+             self.dtype,
+         )
+ 
+-        mm_kwargs = capture_inputs.mm_kwargs
+-        buffers = capture_inputs.buffers
++        values = capture_inputs.values
+ 
+         with torch.inference_mode():
+-            output = self.model.encoder_cudagraph_forward(mm_kwargs, buffers)
++            output = self.model.encoder_cudagraph_forward({**values})
+             output_buffer = torch.empty_like(output)
+ 
+         graph = torch.cuda.CUDAGraph()
+         with torch.inference_mode(), torch.cuda.graph(graph):
+-            output = self.model.encoder_cudagraph_forward(mm_kwargs, buffers)
++            output = self.model.encoder_cudagraph_forward({**values})
+             output_buffer.copy_(output)
+ 
+-        # Since the image and video modalities share the same per-patch shape,
+-        # so we can use the image dummy inputs to capture CUDA graph for both
+-        # image and video.
+-        input_key = self.config.input_key_by_modality["image"]
+         self.budget_graphs[token_budget] = BudgetGraphMetadata(
+             token_budget=token_budget,
+             max_batch_size=self.max_batch_size,
+             max_frames_per_batch=self.max_frames_per_batch,
+             graph=graph,
+-            input_buffer=mm_kwargs[input_key],
+-            metadata_buffers=buffers,
++            input_buffers=values,
+             output_buffer=output_buffer,
+         )
+ 
+@@ -273,15 +264,12 @@ def _run_budget_graph(
+         self,
+         mm_kwargs: dict[str, Any],
+         token_budget: int,
+-        replay_buffers: dict[str, torch.Tensor | None],
+     ) -> torch.Tensor | None:
+         """Execute budget graph.
+ 
+         Args:
+             mm_kwargs: Multimodal inputs for the batch.
+             token_budget: Token budget to use.
+-            replay_buffers: Buffer values to copy into captured buffers.
+-                None values leave the corresponding buffer unchanged.
+ 
+         Returns:
+             Encoder outputs, or None if graph not captured.
+@@ -293,22 +281,18 @@ def _run_budget_graph(
+ 
+         graph_meta = self.budget_graphs[token_budget]
+ 
+-        # Copy the input tensor. Buffers are sized for the full budget;
+-        # actual inputs may be smaller. Zero then slice-copy so padded
+-        # positions are invisible to attention (cu_seqlens masks them out).
+-        input_key = self.config.input_key_by_modality[
+-            self.model.get_input_modality(mm_kwargs)
+-        ]
+-        src = mm_kwargs[input_key]
+-        n = src.shape[0]
+-        graph_meta.input_buffer[:n].copy_(src)
++        replay = self.model.prepare_encoder_cudagraph_replay_buffers(
++            mm_kwargs,
++            self.max_batch_size,
++            self.max_frames_per_batch,
++        )
+ 
+         # Copy metadata buffers using keys from config.buffer_keys.
+         for key in self.config.buffer_keys:
+-            src = replay_buffers.get(key)
++            src = replay.values.get(key)
+             if src is None:
+                 continue
+-            buf = graph_meta.metadata_buffers[key]
++            buf = graph_meta.input_buffers[key]
+             if src.ndim == 0:
+                 buf.copy_(src)
+             else:
+@@ -430,16 +414,9 @@ def _execute_local(
+                     token_budget,
+                     (token_budget - batch_out_tokens) / token_budget * 100,
+                 )
+-                replay = self.model.prepare_encoder_cudagraph_replay_buffers(
+-                    batch_mm_kwargs,
+-                    self.max_batch_size,
+-                    self.max_frames_per_batch,
+-                )
+ 
+                 # graph_hits counted inside _run_budget_graph after replay.
+-                output = self._run_budget_graph(
+-                    batch_mm_kwargs, token_budget, replay.buffers
+-                )
++                output = self._run_budget_graph(batch_mm_kwargs, token_budget)
+                 assert output is not None
+                 self.model.postprocess_encoder_output(
+                     output,
+diff --git a/vllm/v1/worker/encoder_cudagraph_defs.py b/vllm/v1/worker/encoder_cudagraph_defs.py
+index 20f1d7c33d41..7fb08f63aafd 100644
+--- a/vllm/v1/worker/encoder_cudagraph_defs.py
++++ b/vllm/v1/worker/encoder_cudagraph_defs.py
+@@ -4,7 +4,6 @@
+ 
+ from collections.abc import Callable
+ from dataclasses import dataclass, field
+-from typing import Any
+ 
+ import torch
+ 
+@@ -40,11 +39,6 @@ class EncoderCudaGraphConfig:
+     modalities: list[str]
+     """Supported modalities (e.g. ["image"])."""
+ 
+-    input_key_by_modality: dict[str, str]
+-    """Per-modality input tensor key mapping, e.g.
+-    {"image": "pixel_values", "video": "pixel_values_videos"}.
+-    """
+-
+     buffer_keys: list[str]
+     """Keys for the tensor buffers recorded into the CUDA graph.
+     Before replay the manager zeros then slice-copies new data
+@@ -74,11 +68,7 @@ class EncoderCudaGraphCaptureInputs:
+     Returned by ``prepare_encoder_cudagraph_capture_inputs()``.
+     """
+ 
+-    mm_kwargs: dict[str, Any]
+-    """Dummy forward inputs (model-specific keys).
+-    For Qwen3-VL this contains pixel_values and grid_thw."""
+-
+-    buffers: dict[str, torch.Tensor]
++    values: dict[str, torch.Tensor]
+     """Precomputed tensor buffers that will be recorded into the
+     CUDA graph.  The manager stores references to these exact
+     tensor objects and copies new data into them before each
+@@ -94,7 +84,7 @@ class EncoderCudaGraphReplayBuffers:
+     Keys match ``EncoderCudaGraphConfig.buffer_keys``.
+     """
+ 
+-    buffers: dict[str, torch.Tensor | None]
++    values: dict[str, torch.Tensor | None]
+     """Data to copy into the captured buffers before replay.
+     ``None`` values leave the corresponding captured buffer
+     unchanged."""

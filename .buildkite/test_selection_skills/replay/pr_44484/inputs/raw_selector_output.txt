@@ -1,0 +1,8 @@
+This PR refactors the `get_input_modality()` method by moving its default implementation from the Step3VL concrete class to the base interface in interfaces.py. Both files' implementations return "image", so this is a pure refactoring with identical behavior. The change affects model initialization and any code path that calls `get_input_modality()` on models that don't override it.
+
+From the massive candidate set, I'm narrowing to the most relevant tests: model initialization (which exercises the base class), basic correctness (safety net for core changes), and multimodal generation tests (since Step3VL is a multimodal model and the method relates to input modality detection).
+
+---
+tests/basic_correctness/test_basic_correctness.py | Core model initialization and inference tests
+tests/models/test_initialization.py | Model loading, registration, and interface tests
+tests/models/multimodal/generation/test_common.py | Multimodal model generation and initialization

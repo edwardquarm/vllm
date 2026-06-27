@@ -3,55 +3,31 @@
   "evaluation_status": "success",
   "summary": {
     "true_positives": 0,
-    "false_negatives": 2,
-    "false_positives": 7,
+    "false_negatives": 3,
+    "false_positives": 0,
     "coverage_rate": 0.0,
-    "precision_rate": 0.0
+    "precision_rate": 1.0
   },
   "true_positive_details": [],
   "false_negative_details": [
     {
-      "failed_test": "entrypoints/openai/chat_completion/test_chat.py::test_invocations",
-      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "failed_test": "[job] Multi-Modal Models (Standard) 3: llava + qwen2_vl",
+      "job_name": "Multi-Modal Models (Standard) 3: llava + qwen2_vl",
       "why_missed": "not_in_candidate_mapping"
     },
     {
-      "failed_test": "tokenizers_/test_mistral.py::TestMistralTokenizer::test_apply_chat_template[openai_request4-False-True-expected_output4-decoded_expected_output4-mistralai/Magistral-Small-2509]",
-      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "failed_test": "[job] bootstrap",
+      "job_name": "bootstrap",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] CPU-Language Generation and Pooling Model Tests",
+      "job_name": "CPU-Language Generation and Pooling Model Tests",
       "why_missed": "not_in_candidate_mapping"
     }
   ],
-  "false_positive_details": [
-    {
-      "selected_test": "tests/model_executor/test_eagle_quantization.py",
-      "reason": "Modified test file - verifies quantization for EAGLE models after test removal"
-    },
-    {
-      "selected_test": "tests/model_executor/test_weight_utils.py",
-      "reason": "Tests weight loading utilities including maybe_remap_kv_scale_name which was modified"
-    },
-    {
-      "selected_test": "tests/quantization/test_per_token_kv_cache.py",
-      "reason": "Tests KV cache quantization - directly affected by kv_cache.py changes"
-    },
-    {
-      "selected_test": "tests/quantization/test_compressed_tensors.py",
-      "reason": "Tests compressed-tensors quantization which uses get_cache_scale_mapper"
-    },
-    {
-      "selected_test": "tests/quantization/test_fp8.py",
-      "reason": "Tests FP8 quantization config which had get_cache_scale method replaced"
-    },
-    {
-      "selected_test": "tests/quantization/test_configs.py",
-      "reason": "Tests quantization config base classes modified in this PR"
-    },
-    {
-      "selected_test": "tests/basic_correctness/",
-      "reason": "Large PR (31 files, 4+ directories) affecting core quantization infrastructure per Rule 5"
-    }
-  ],
+  "false_positive_details": [],
   "notes": [
-    "Generated on 2026-06-16T04:55:33.252190+00:00"
+    "Generated on 2026-06-27T02:48:05.786754+00:00"
   ]
 }

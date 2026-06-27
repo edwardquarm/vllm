@@ -102,7 +102,7 @@ def extract_buildkite_jobs_from_statuses(statuses: list) -> list[dict]:
     return jobs
 
 
-def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict], github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None, summary_stats: dict = None) -> dict:
+def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict], github_statuses: dict, test_run_data: dict = None, all_tests_run: list = None, summary_stats: dict = None, buildkite_jobs_from_statuses: list = None) -> dict:
     """Normalize collected evidence into standard format."""
     builds = []
     jobs_failed = []
@@ -203,6 +203,7 @@ def normalize_ci_evidence(pr_number: int, repo: str, buildkite_builds: list[dict
         "repo": repo,
         "status": status,
         "buildkite_builds": builds,
+        "buildkite_jobs_from_statuses": buildkite_jobs_from_statuses or [],
         "jobs_run": jobs_run,
         "jobs_failed": jobs_failed,
         "tests_run": tests_run,
@@ -393,13 +394,16 @@ def main():
     print("  Normalizing evidence...", file=sys.stderr)
     evidence = normalize_ci_evidence(
         pr_number, repo, buildkite_builds, statuses, test_run_data, all_tests_run,
-        summary_stats=aggregate_summary_stats or None)
+        summary_stats=aggregate_summary_stats or None,
+        buildkite_jobs_from_statuses=buildkite_jobs)
 
     # Write output
     if args.output_dir:
         output_dir = Path(args.output_dir)
     else:
-        output_dir = Path(f".buildkite/test_selection_skills/evidence/pr_{pr_number}")
+        # Use absolute path based on script location
+        script_dir = Path(__file__).parent
+        output_dir = script_dir.parent / "evidence" / f"pr_{pr_number}"
 
     output_dir.mkdir(parents=True, exist_ok=True)
 

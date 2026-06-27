@@ -1,0 +1,13 @@
+diff --git a/requirements/cuda.txt b/requirements/cuda.txt
+index 247b4dcb01e5..20fec60f27d3 100644
+--- a/requirements/cuda.txt
++++ b/requirements/cuda.txt
+@@ -21,7 +21,7 @@ nvidia-cudnn-frontend>=1.13.0,<1.19.0
+ fastsafetensors >= 0.2.2
+ 
+ # QuACK and Cutlass DSL for FA4 (cute-DSL implementation)
+-nvidia-cutlass-dsl[cu13]==4.5.1
++nvidia-cutlass-dsl[cu13]==4.5.0
+ quack-kernels>=0.3.3
+ 
+ # Tokenspeed_MLA for faster mla with spec decode

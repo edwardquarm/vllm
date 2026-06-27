@@ -1,0 +1,4 @@
+This PR refactors internal logic in the Seed OSS tool parser by extracting parameter type coercion and tool property lookup into utility functions. The changes remove the nested functions `get_arguments_config()` and `convert_param_value()` from `_parse_xml_function_call()` and replace them with calls to `find_tool_properties()`, `extract_types_from_schema()`, and `coerce_to_schema_type()` from a new utils module. The functional behavior should remain identical—this is pure refactoring. The candidate set includes many unrelated tests due to broad import analysis, but the actual diff scope is narrow: only the Seed OSS tool parser implementation changed, with no public API modifications.
+
+---
+tests/tool_parsers/test_seed_oss_tool_parser.py | directly tests the refactored _parse_xml_function_call method

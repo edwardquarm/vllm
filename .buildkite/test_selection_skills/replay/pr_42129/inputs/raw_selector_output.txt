@@ -1,0 +1,8 @@
+This PR adds a new test file and patches the Inductor FALLBACK_ALLOW_LIST to optimize compilation for vllm custom ops. The changes consist of: a new test file that directly tests the patch functionality, and new code in `vllm/env_override.py` that adds an idempotent patching function called at module load time.
+
+The diff shows pure additions with no modifications to existing code paths. The new `_VllmFallbackAllowList` proxy class and `_patch_inductor_fallback_allow_list()` function are designed to be transparent—they only affect performance of the first Inductor encounter with vllm custom ops, not behavior. The test file explicitly verifies the patch is applied at startup (via `test_patch_applied_to_lowering`) and thoroughly tests the proxy's semantics.
+
+Since this is a new feature with no changes to existing functions or classes in `env_override.py`, only the tests that directly exercise the new code are needed.
+
+---
+tests/compile/test_inductor_fallback_allow_list_patch.py | New test file, directly tests the patch functionality

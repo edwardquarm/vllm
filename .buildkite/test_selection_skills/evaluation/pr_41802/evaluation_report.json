@@ -1,0 +1,128 @@
+{
+  "pr_number": "41802",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 21,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/general",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/general/test_async_scheduling.py",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/so",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_whisper.py",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/test_transformers.py",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/basic_correctness",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor/model_loader",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/language",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor/model_loader/test_sharded_state_loader.py",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_phi4siglip.py",
+      "job_name": "Distributed Model Tests (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Ascend NPU Test",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Intel GPU Test",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Basic Models Tests (Extra Initialization) 2",
+      "job_name": "Basic Models Tests (Extra Initialization) 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: V1 Sample + Logits (mi300_1)",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "csrc/ C/CUDA source change affecting quantization kernel compilation (Rule 3)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.969686+00:00"
+  ]
+}

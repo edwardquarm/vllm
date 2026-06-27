@@ -1,0 +1,30 @@
+{
+  "pr_number": "42849",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/test_fused_inv_rope_fp8_quant.py",
+      "reason": "directly tests the modified kernel function"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "ensures no correctness regressions from compiler optimization"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "verifies attention backend functionality still works"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.492189+00:00"
+  ]
+}

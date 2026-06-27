@@ -1,0 +1,213 @@
+{
+  "pr_number": "42129",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 38,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/kernels/moe",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_triton_moe_no_act_mul.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_block_fp8.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_triton_moe_ptpc_fp8.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_gpt_oss_triton_kernels.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_cutlass_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_modular_oai_triton_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_block_int8.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 12.9",
+      "job_name": "Build wheel - aarch64 - CUDA 12.9",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CPU",
+      "job_name": "Build wheel - aarch64 - CPU",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CUDA 13.0",
+      "job_name": "Build wheel - x86_64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/test_mapping.py",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Ascend NPU Test",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] CPU-ModelRunnerV2 Tests",
+      "job_name": "CPU-ModelRunnerV2 Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Python-only Installation",
+      "job_name": "Python-only Installation",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] :python: Build vLLM ROCm Wheel - x86_64",
+      "job_name": ":python: Build vLLM ROCm Wheel - x86_64",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/quantization/test_blackwell_moe.py",
+      "job_name": "Quantized MoE Test (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/quantization",
+      "job_name": "Quantized MoE Test (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/spec_decode",
+      "job_name": "Spec Decode Draft Model Nightly B200",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "Spec Decode Draft Model Nightly B200",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Spec Decode Draft Model Nightly B200",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CPU",
+      "job_name": "Build wheel - x86_64 - CPU",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 13.0",
+      "job_name": "Build wheel - aarch64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CUDA 12.9",
+      "job_name": "Build wheel - x86_64 - CUDA 12.9",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion/test_tensorizer_entrypoint.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Generate and upload wheel indices",
+      "job_name": "Generate and upload wheel indices",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/test_inductor_fallback_allow_list_patch.py",
+      "reason": "New test file, directly tests the patch functionality"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.188028+00:00"
+  ]
+}

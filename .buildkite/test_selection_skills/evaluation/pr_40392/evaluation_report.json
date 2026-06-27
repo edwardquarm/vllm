@@ -1,0 +1,23 @@
+{
+  "pr_number": "40392",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] Intel GPU Test",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.737027+00:00"
+  ]
+}

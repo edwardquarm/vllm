@@ -1,0 +1,1 @@
+I need permission to read that file. Can you allow the read operation, or would you like to paste the content directly?

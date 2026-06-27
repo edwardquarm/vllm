@@ -1,0 +1,30 @@
+{
+  "pr_number": "43286",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/model_executor/layers/test_pooler_activations.py",
+      "reason": "Test file updated; must run to verify exception type change"
+    },
+    {
+      "selected_test": "tests/test_pooling_params.py",
+      "reason": "Validates PoolingParams error handling paths"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Safety net for pooling-related integration tests"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.896082+00:00"
+  ]
+}

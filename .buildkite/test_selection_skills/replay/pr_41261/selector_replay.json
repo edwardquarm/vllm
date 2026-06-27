@@ -1,0 +1,42 @@
+{
+  "pr_number": "41261",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "csrc/moe/topk_softplus_sqrt_kernels.cu"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "4cad6f5f189d5743b786d97c72b83709484bfc5d",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/kernels/",
+      "granularity": "unknown",
+      "reason": "CUDA kernel changes require kernel test suite",
+      "source": "llm_selector"
+    },
+    {
+      "identifier": "tests/basic_correctness/",
+      "granularity": "unknown",
+      "reason": "Large structural change to core MOE kernel warrants basic correctness check",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/kernels/",
+      "reason": "CUDA kernel changes require kernel test suite"
+    },
+    {
+      "identifier": "tests/basic_correctness/",
+      "reason": "Large structural change to core MOE kernel warrants basic correctness check"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-26T18:06:51.774195+00:00"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "pr_number": "44244",
+  "repo": "vllm-project/vllm",
+  "status": "no_build",
+  "buildkite_builds": [],
+  "buildkite_jobs_from_statuses": [
+    {
+      "build_url": "https://buildkite.com/vllm/ci/builds/69683#019e8c11-5d67-4894-99e5-68c6fbe6f4e8",
+      "org": "vllm",
+      "pipeline": "ci",
+      "build_number": "69683",
+      "job_name": "ci/bootstrap",
+      "state": "success"
+    }
+  ],
+  "jobs_run": [],
+  "jobs_failed": [],
+  "tests_run": [],
+  "tests_failed": [],
+  "failed_test_list": [],
+  "tests_run_count": 0,
+  "summary_stats": {},
+  "artifacts": [],
+  "notes": [
+    "GitHub statuses found, but no Buildkite build data was fetched",
+    "Evidence collected on 2026-06-26T18:33:15.827061+00:00",
+    "Buildkite builds found: 0",
+    "Total tests run: 0",
+    "Failed tests: 0"
+  ]
+}

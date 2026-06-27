@@ -1,0 +1,51 @@
+{
+  "pr_number": "41972",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 4,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] Multi-Modal Models (Standard) 1: qwen2",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/so",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_elastic_ep.py",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/fusions_e2e/test_tp2_ar_rms.py",
+      "reason": "directly tests AllReduce + RMSNorm fusion"
+    },
+    {
+      "selected_test": "tests/compile/passes/distributed/test_fusion_all_reduce.py",
+      "reason": "tests AllReduce fusion pass"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "catches numerical correctness regressions"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.006013+00:00"
+  ]
+}

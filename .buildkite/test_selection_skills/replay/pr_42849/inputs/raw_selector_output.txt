@@ -1,0 +1,7 @@
+This PR modifies a single Triton kernel decorator in the Deepseek V4 attention operations, adding the `do_not_specialize=["num_tokens"]` parameter to optimize Triton's JIT compilation. The change tells Triton to compile a single version of the kernel instead of specializing for different token counts—a compilation optimization that shouldn't alter the kernel's behavior. The most critical tests are those that directly exercise this kernel and basic sanity checks for regressions.
+
+---
+
+tests/kernels/test_fused_inv_rope_fp8_quant.py | directly tests the modified kernel function
+tests/basic_correctness/test_basic_correctness.py | ensures no correctness regressions from compiler optimization
+tests/v1/attention/test_attention_backends.py | verifies attention backend functionality still works

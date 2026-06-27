@@ -1,0 +1,9 @@
+This PR modifies the authentication middleware in the OpenAI API server to respect the `args.root_path` configuration when checking request paths. The change is a single-line fix to the condition that determines whether a request path starts with `/v1`. The middleware now prepends the configured root path before checking, which allows the API server to work correctly when a custom root path is deployed. This affects all requests to the OpenAI API endpoints, making authentication-critical tests and basic API functionality tests the priority.
+
+---
+
+tests/basic_correctness/test_basic_correctness.py | baseline correctness test, uses API server
+tests/entrypoints/openai/test_cli_args.py | tests CLI arguments including root_path configuration
+tests/entrypoints/openai/responses/ | tests OpenAI response handling and authentication
+tests/entrypoints/openai/chat_completion/test_default_mm_loras.py | exercises chat completion endpoint
+tests/entrypoints/openai/chat_completion/test_oot_registration.py | verifies chat completion API still works

@@ -1,0 +1,5 @@
+This PR modifies `vllm/model_executor/models/gemma3n_mm.py`, adding a single parameter `input_is_parallel=False` to a component initialization in the Gemma 3N multimodal model. This parameter controls how input data is scattered/processed internally in the model. Since the change is highly localized to this specific model variant and only affects a parameter default, tests that directly exercise the Gemma 3N model should catch any behavioral changes. The Gemma 3 multimodal processing test is the most relevant; basic_correctness is included as a safety net for model initialization paths.
+
+---
+tests/models/multimodal/processing/test_gemma3.py | directly tests Gemma 3 model processing
+tests/basic_correctness/test_basic_correctness.py | exercises model initialization and inference

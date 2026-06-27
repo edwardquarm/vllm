@@ -1,0 +1,8 @@
+This PR removes specialized attention and MOE operations: the `convert_vertical_slash_indexes` functions (for MInference sparse attention) and the `marlin_gemm_moe` binding are deleted entirely from Python, C++, and CUDA implementations. The deletion of `csrc/attention/vertical_slash_index.cu` and modifications to build configuration (CMakeLists.txt) trigger kernel test coverage per Rule 3. Since these are core operations that may be used by other tests indirectly, I'm including attention, MOE, and basic correctness tests to verify the system remains functional after removing these operations.
+
+---
+
+tests/basic_correctness/ | core model execution after operation removal
+tests/kernels/attention/ | vertical_slash_index.cu deleted, test attention kernels
+tests/kernels/moe/ | marlin_gemm_moe binding removed, test MOE kernels
+tests/kernels/quantization/ | marlin quantization methods affected by removal

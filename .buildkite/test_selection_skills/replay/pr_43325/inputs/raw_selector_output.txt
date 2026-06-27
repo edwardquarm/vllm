@@ -1,0 +1,7 @@
+This PR adds a backend registration system for MLA prefill backends, allowing third-party or custom backends to be registered and existing backends to be overridden. The changes add a new `register_mla_prefill_backend()` function, a `CUSTOM` enum member, override tracking, and methods to check/clear overrides. The diff includes functional enhancements to `get_path()` and `get_class()` methods to respect registered overrides, plus a comprehensive new test file that directly exercises this registry functionality.
+
+---
+tests/v1/attention/test_mla_prefill_registry.py | directly tests new backend registration functionality
+tests/v1/attention/test_mla_backends.py | tests MLA backend selection which depends on registry
+tests/v1/attention/test_attention_backends.py | tests attention backend selection using registry
+tests/v1/attention/test_attention_backends_selection.py | directly tests backend selection logic

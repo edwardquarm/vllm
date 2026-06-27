@@ -1,0 +1,17 @@
+{
+  "pr_number": "40269",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 0,
+    "coverage_rate": 1.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.700092+00:00"
+  ]
+}

@@ -1,0 +1,4 @@
+This PR modifies the Gemma4 tool parser to add defensive checks for malformed input and improve string delimiter handling in the `_parse_gemma4_args` and `_parse_gemma4_array` functions. The changes only add safety checks and logging for invalid input—they don't alter the function signatures, return types, or behavior for valid inputs. The test file has been updated with new test cases for these edge cases.
+
+---
+tests/tool_parsers/test_gemma4_tool_parser.py | directly tests the changed parser functions

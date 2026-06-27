@@ -1,0 +1,33 @@
+{
+  "pr_number": "39337",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 3,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1/e2e/spec_decode",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.589307+00:00"
+  ]
+}

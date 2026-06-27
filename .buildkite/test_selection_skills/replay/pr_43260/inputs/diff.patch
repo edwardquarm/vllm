@@ -1,0 +1,257 @@
+diff --git a/tests/entrypoints/openai/chat_completion/test_serving_chat.py b/tests/entrypoints/openai/chat_completion/test_serving_chat.py
+index c44e07a4c10d..45fae821af3b 100644
+--- a/tests/entrypoints/openai/chat_completion/test_serving_chat.py
++++ b/tests/entrypoints/openai/chat_completion/test_serving_chat.py
+@@ -600,6 +600,7 @@ class MockEngine:
+     model_config: MockModelConfig = field(default_factory=MockModelConfig)
+     input_processor: MagicMock = field(default_factory=MagicMock)
+     renderer: MagicMock = field(default_factory=MagicMock)
++    errored: bool = False
+ 
+ 
+ async def _async_serving_chat_init():
+@@ -858,6 +859,50 @@ async def test_serving_chat_truncate_prompt_tokens_max_token_accounting():
+     assert mock_engine.generate.call_args.args[1].max_tokens == 93
+ 
+ 
++@pytest.mark.asyncio
++async def test_serving_chat_truncation_side_controls_prompt_truncation():
++    model_config = MockModelConfig()
++    model_config.model = MODEL_NAME_SHORT
++    model_config.tokenizer = MODEL_NAME_SHORT
++    mock_engine = MockEngine(
++        model_config=model_config,
++        renderer=_build_renderer(model_config),
++    )
++
++    serving_chat = _build_serving_chat(mock_engine)
++    messages = [
++        {
++            "role": "user",
++            "content": "Summarize how prompt truncation works in one sentence.",
++        }
++    ]
++
++    full_token_ids = await _render_chat_prompt_token_ids(
++        serving_chat,
++        messages,
++        model_name=MODEL_NAME_SHORT,
++    )
++    assert len(full_token_ids) > 4
++
++    right_token_ids = await _render_chat_prompt_token_ids(
++        serving_chat,
++        messages,
++        model_name=MODEL_NAME_SHORT,
++        truncate_prompt_tokens=4,
++        truncation_side="right",
++    )
++    assert right_token_ids == full_token_ids[:4]
++
++    left_token_ids = await _render_chat_prompt_token_ids(
++        serving_chat,
++        messages,
++        model_name=MODEL_NAME_SHORT,
++        truncate_prompt_tokens=4,
++        truncation_side="left",
++    )
++    assert left_token_ids == full_token_ids[-4:]
++
++
+ @pytest.mark.asyncio
+ async def test_serving_chat_mistral_token_ids_prompt_is_validated():
+     """Regression test: when the Mistral tokenizer path returns token IDs
+@@ -1111,6 +1156,37 @@ async def mock_generate(*args, **kwargs):
+     assert mock_engine.generate.call_args.kwargs["data_parallel_rank"] is None
+ 
+ 
++async def _render_chat_prompt_token_ids(
++    serving_chat: OpenAIServingChat,
++    messages: list[dict[str, str]],
++    *,
++    model_name: str = MODEL_NAME,
++    truncate_prompt_tokens: int | None = None,
++    truncation_side: str | None = None,
++) -> list[int]:
++    request = ChatCompletionRequest(
++        model=model_name,
++        messages=messages,
++        max_tokens=1,
++        temperature=0.0,
++        return_token_ids=True,
++        truncate_prompt_tokens=truncate_prompt_tokens,
++        truncation_side=truncation_side,
++    )
++
++    result = await serving_chat.render_chat_request(request)
++    assert not isinstance(result, ErrorResponse)
++
++    _, engine_inputs = result
++    assert len(engine_inputs) == 1
++
++    prompt_token_ids = serving_chat._extract_prompt_components(
++        engine_inputs[0]
++    ).token_ids
++    assert prompt_token_ids is not None
++    return prompt_token_ids
++
++
+ class TestServingChatWithHarmony:
+     """
+     These tests ensure Chat Completion requests are being properly converted into
+diff --git a/tests/entrypoints/openai/completion/test_completion.py b/tests/entrypoints/openai/completion/test_completion.py
+index bbb8c104f446..8ca0d1604b14 100644
+--- a/tests/entrypoints/openai/completion/test_completion.py
++++ b/tests/entrypoints/openai/completion/test_completion.py
+@@ -73,6 +73,43 @@ async def test_single_completion(client: openai.AsyncOpenAI, model_name: str) ->
+     assert completion.choices[0].prompt_logprobs is None
+ 
+ 
++@pytest.mark.asyncio
++@pytest.mark.parametrize(
++    "model_name",
++    [MODEL_NAME],
++)
++async def test_completion_truncation_side_controls_prompt_truncation(
++    client: openai.AsyncOpenAI, model_name: str
++) -> None:
++    prompt_token_ids = list(range(8))
++
++    right_completion = await client.completions.create(
++        model=model_name,
++        prompt=prompt_token_ids,
++        max_tokens=1,
++        temperature=0.0,
++        extra_body={
++            "return_token_ids": True,
++            "truncate_prompt_tokens": 4,
++            "truncation_side": "right",
++        },
++    )
++    assert right_completion.choices[0].prompt_token_ids == prompt_token_ids[:4]
++
++    left_completion = await client.completions.create(
++        model=model_name,
++        prompt=prompt_token_ids,
++        max_tokens=1,
++        temperature=0.0,
++        extra_body={
++            "return_token_ids": True,
++            "truncate_prompt_tokens": 4,
++            "truncation_side": "left",
++        },
++    )
++    assert left_completion.choices[0].prompt_token_ids == prompt_token_ids[-4:]
++
++
+ @pytest.mark.asyncio
+ @pytest.mark.parametrize(
+     "model_name",
+diff --git a/vllm/entrypoints/openai/chat_completion/protocol.py b/vllm/entrypoints/openai/chat_completion/protocol.py
+index 3e4baa6cb74c..eb5697442ca4 100644
+--- a/vllm/entrypoints/openai/chat_completion/protocol.py
++++ b/vllm/entrypoints/openai/chat_completion/protocol.py
+@@ -245,6 +245,14 @@ class ChatCompletionRequest(OpenAIBaseModel):
+     skip_special_tokens: bool = True
+     spaces_between_special_tokens: bool = True
+     truncate_prompt_tokens: Annotated[int, Field(ge=-1, le=_INT64_MAX)] | None = None
++    truncation_side: Literal["left", "right"] | None = Field(
++        default=None,
++        description=(
++            "Which side to truncate from when truncate_prompt_tokens is active. "
++            "'right' keeps the first N tokens. "
++            "'left' keeps the last N tokens."
++        ),
++    )
+     prompt_logprobs: int | None = None
+     allowed_token_ids: list[int] | None = None
+     bad_words: list[str] = Field(default_factory=list)
+@@ -491,6 +499,7 @@ def build_tok_params(self, model_config: ModelConfig) -> TokenizeParams:
+             max_total_tokens=model_config.max_model_len,
+             max_output_tokens=max_output_tokens or 0,
+             truncate_prompt_tokens=self.truncate_prompt_tokens,
++            truncation_side=self.truncation_side,
+             add_special_tokens=self.add_special_tokens,
+             needs_detokenization=bool(self.echo and not self.return_token_ids),
+             max_total_tokens_param="max_model_len",
+diff --git a/vllm/entrypoints/openai/completion/protocol.py b/vllm/entrypoints/openai/completion/protocol.py
+index f05cebc9c7cc..cd8d9b89dfcc 100644
+--- a/vllm/entrypoints/openai/completion/protocol.py
++++ b/vllm/entrypoints/openai/completion/protocol.py
+@@ -79,6 +79,14 @@ class CompletionRequest(OpenAIBaseModel):
+     skip_special_tokens: bool = True
+     spaces_between_special_tokens: bool = True
+     truncate_prompt_tokens: Annotated[int, Field(ge=-1, le=_INT64_MAX)] | None = None
++    truncation_side: Literal["left", "right"] | None = Field(
++        default=None,
++        description=(
++            "Which side to truncate from when truncate_prompt_tokens is active. "
++            "'right' keeps the first N tokens. "
++            "'left' keeps the last N tokens."
++        ),
++    )
+     allowed_token_ids: list[int] | None = None
+     prompt_logprobs: int | None = None
+     # --8<-- [end:completion-sampling-params]
+@@ -192,6 +200,7 @@ def build_tok_params(self, model_config: ModelConfig) -> TokenizeParams:
+             max_total_tokens=model_config.max_model_len,
+             max_output_tokens=self.max_tokens or 0,
+             truncate_prompt_tokens=self.truncate_prompt_tokens,
++            truncation_side=self.truncation_side,
+             add_special_tokens=self.add_special_tokens,
+             needs_detokenization=bool(self.echo and not self.return_token_ids),
+             max_total_tokens_param="max_model_len",
+diff --git a/vllm/renderers/params.py b/vllm/renderers/params.py
+index 10bc01043f71..d5c89abc043b 100644
+--- a/vllm/renderers/params.py
++++ b/vllm/renderers/params.py
+@@ -198,6 +198,13 @@ def __post_init__(self) -> None:
+         max_input_tokens = self.max_input_tokens
+         truncate_prompt_tokens = self.truncate_prompt_tokens
+ 
++        if self.truncation_side not in (None, "left", "right"):
++            raise VLLMValidationError(
++                "`truncation_side` must be either 'left' or 'right'.",
++                parameter="truncation_side",
++                value=self.truncation_side,
++            )
++
+         if (
+             max_output_tokens is not None
+             and max_total_tokens is not None
+@@ -234,6 +241,9 @@ def with_kwargs(self, **tokenization_kwargs: Any):
+         truncate_prompt_tokens = tokenization_kwargs.pop(
+             "truncate_prompt_tokens", self.truncate_prompt_tokens
+         )
++        truncation_side = tokenization_kwargs.pop(
++            "truncation_side", self.truncation_side
++        )
+         do_lower_case = tokenization_kwargs.pop("do_lower_case", self.do_lower_case)
+         add_special_tokens = tokenization_kwargs.pop(
+             "add_special_tokens", self.add_special_tokens
+@@ -279,7 +289,7 @@ def with_kwargs(self, **tokenization_kwargs: Any):
+             ),
+             pad_prompt_tokens=pad_prompt_tokens,
+             truncate_prompt_tokens=truncate_prompt_tokens,
+-            truncation_side=self.truncation_side,
++            truncation_side=truncation_side,
+             do_lower_case=do_lower_case,
+             add_special_tokens=add_special_tokens,
+             needs_detokenization=needs_detokenization,
+@@ -295,11 +305,11 @@ def get_encode_kwargs(self) -> dict[str, Any]:
+             # while still failing `self._token_len_check` as expected by users
+             max_length = self.max_input_tokens + 1
+ 
+-        # Left-side truncation requires the full token sequence so we can
+-        # slice from the end in _token_truncation.  Disable HF-level
+-        # truncation (which would incorrectly truncate from the right for
+-        # pooling models) and let _token_truncation handle it.
+-        if self.truncation_side == "left":
++        # Explicit truncation-side overrides require the full token sequence so
++        # we can slice from the requested side in _token_truncation. Disable
++        # tokenizer-level truncation because generation tokenizers default to
++        # left truncation while callers may request right truncation.
++        if self.truncation_side is not None and self.truncate_prompt_tokens is not None:
+             return dict(
+                 truncation=False,
+                 add_special_tokens=self.add_special_tokens,

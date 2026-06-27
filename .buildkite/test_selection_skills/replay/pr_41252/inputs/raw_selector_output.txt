@@ -1,0 +1,13 @@
+This PR adds configurable block sizes for flex attention with batch invariance support. The changes are localized to flex attention configuration and implementation, with a new test parametrization to validate the feature.
+
+This PR modifies `vllm/config/attention.py` to add four new optional config fields for flex attention (flex_attn_block_m, flex_attn_block_n, flex_attn_q_block_size, flex_attn_kv_block_size), updates `vllm/model_executor/layers/attention/attention.py` to validate these values when batch invariant mode is enabled, and refactors `vllm/v1/attention/backends/flex_attention.py` to support configurable block sizes with defaults for batch invariance. The test file `tests/v1/determinism/test_batch_invariance.py` is updated to parametrize the batch invariance test with different block_m and block_n values to exercise the new configuration paths.
+
+The changes are narrowly scoped to flex attention backend behavior and batch invariance handling. Configuration field additions are low-risk (just schema expansion). The functional changes are limited to FlexAttentionImpl and get_kernel_options to support per-instance block size configuration. Tests unaffected by attention backend configuration (LoRA, quantization, pooling, etc.) can be safely excluded.
+
+---
+tests/v1/determinism/test_batch_invariance.py | modified test parametrizes new block size config
+tests/v1/attention/test_attention_backends.py | tests flex attention backend with config
+tests/v1/attention/test_attention_backends_selection.py | tests backend selection logic
+tests/kernels/test_flex_attention.py | directly tests flex attention kernel changes
+tests/kernels/attention/test_attention.py | general attention kernel validation
+tests/basic_correctness/test_basic_correctness.py | sanity check for core attention path

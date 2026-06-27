@@ -1,0 +1,398 @@
+{
+  "pr_number": "39601",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 75,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1/e2e/spec_decode",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "Spec Decode Draft Model",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_common.py",
+      "job_name": "Multi-Modal Models (Extended Generation 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Multi-Modal Models (Extended Generation 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Multi-Modal Models (Extended Generation 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Models (Extended Generation 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/processing",
+      "job_name": "Transformers Backward Compatibility Models Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/test_transformers.py",
+      "job_name": "Transformers Backward Compatibility Models Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/test_initialization.py",
+      "job_name": "Transformers Backward Compatibility Models Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/test_mapping.py",
+      "job_name": "Transformers Backward Compatibility Models Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization",
+      "job_name": "Quantized Models Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/quantization",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/spec_decode",
+      "job_name": "V1 Spec Decode",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Python-only Installation",
+      "job_name": "Python-only Installation",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] XPU example Test",
+      "job_name": "XPU example Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Kernels Quantization Test 2",
+      "job_name": "Kernels Quantization Test 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] :docker: Build XPU image",
+      "job_name": ":docker: Build XPU image",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] XPU V1 test",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/test_top_k_per_row.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_attention_selector.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_mxfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_ocp_mx_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_nvfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_cutedsl_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization/test_nvfp4.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_cutlass_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_cutlass_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_flashinfer_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_flashinfer_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_mxfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_silu_mul_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer_trtllm_attention.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_outputs.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/logits_processors",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/sample",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_oracle.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_request.py",
+      "job_name": "V1 Sample + Logits",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Distributed Torchrun + Examples (4 GPUs)",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Kernels Quantization Test 1",
+      "job_name": "Kernels Quantization Test 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/kv_connector/unit",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/correctness",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/executor",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/metrics",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/worker",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/kv_offload",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/kv_connector",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/correctness/test_lmeval.py::test_lm_eval_accuracy_v1_engine",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/core",
+      "job_name": "V1 Core + KV + Metrics",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/distributed/test_fusion_all_reduce.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fullgraph/test_full_graph.py::test_fp8_kv_scale_compile",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/distributed",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_fusion_attn.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_mla_attn_quant_fusion.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fullgraph",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_silu_mul_quant_fusion.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Ascend NPU Test",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] XPU server test",
+      "job_name": "XPU server test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_glm4_moe_tool_parser.py",
+      "reason": "direct test file for the parser, new tests added"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.626138+00:00"
+  ]
+}

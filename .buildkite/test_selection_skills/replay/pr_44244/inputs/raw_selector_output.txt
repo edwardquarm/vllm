@@ -1,0 +1,9 @@
+This PR adds support for passing `chat_template_kwargs` through the benchmark infrastructure to tokenizers. It threads a new optional parameter through the dataset handling code, adds a new CLI argument to serve.py, and includes a new test to validate the feature. The changes are backward-compatible (the parameter defaults to None) and limited to benchmark/dataset code paths. I'm selecting the new test file, the direct dataset tests that exercise the modified functions, and the CLI benchmark tests that validate the serve.py changes.
+
+---
+tests/benchmarks/test_custom_dataset_chat_template_kwargs.py | new test, validates chat_template_kwargs propagation
+tests/benchmarks/test_random_dataset.py | tests modified datasets.py get_samples() function
+tests/benchmarks/test_random_multimodal_dataset_video.py | tests modified datasets.py get_samples() function
+tests/benchmarks/test_txt_slices_dataset.py | tests modified datasets.py get_samples() function
+tests/benchmarks/test_latency_cli.py | validates --chat-template-kwargs CLI argument
+tests/benchmarks/test_throughput_cli.py | validates --chat-template-kwargs CLI argument

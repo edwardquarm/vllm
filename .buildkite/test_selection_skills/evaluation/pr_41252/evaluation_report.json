@@ -1,0 +1,48 @@
+{
+  "pr_number": "41252",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 6,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] XPU V1 test",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/determinism/test_batch_invariance.py",
+      "reason": "modified test parametrizes new block size config"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "tests flex attention backend with config"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends_selection.py",
+      "reason": "tests backend selection logic"
+    },
+    {
+      "selected_test": "tests/kernels/test_flex_attention.py",
+      "reason": "directly tests flex attention kernel changes"
+    },
+    {
+      "selected_test": "tests/kernels/attention/test_attention.py",
+      "reason": "general attention kernel validation"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "sanity check for core attention path"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.849816+00:00"
+  ]
+}

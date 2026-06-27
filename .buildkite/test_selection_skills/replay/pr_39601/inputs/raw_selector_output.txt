@@ -1,0 +1,4 @@
+This PR modifies `vllm/tool_parsers/glm4_moe_tool_parser.py` to refactor the `_is_string_type()` method from a static method to an instance method, extracting logic to utility functions `extract_types_from_schema()` and `find_tool_properties()`. The method behavior is unchanged, just reorganized. The test file adds new tests for `FunctionTool` support. Since this is internal refactoring of a private method with no public API changes, I'm selecting the direct test file that exercises this code path.
+
+---
+tests/tool_parsers/test_glm4_moe_tool_parser.py | direct test file for the parser, new tests added

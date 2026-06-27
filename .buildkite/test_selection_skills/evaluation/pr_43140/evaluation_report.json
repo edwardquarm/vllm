@@ -1,0 +1,22 @@
+{
+  "pr_number": "43140",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_seed_oss_tool_parser.py",
+      "reason": "directly tests the refactored _parse_xml_function_call method"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.749945+00:00"
+  ]
+}

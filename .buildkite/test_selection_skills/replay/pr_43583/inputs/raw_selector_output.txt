@@ -1,0 +1,5 @@
+This PR modifies only a test file (`tests/v1/kv_connector/nixl_integration/test_accuracy.py`) with cosmetic changes to print statement positioning and text. The candidate table shows no vllm source files were changed — only test infrastructure was modified. Since no vllm source code was altered, there are no affected source-to-test mappings to apply. The print statement changes do not affect test logic or assertions.
+
+---
+
+NONE | No vllm source files changed; only test file print statements modified (Rule 1)

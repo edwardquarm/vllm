@@ -1,0 +1,66 @@
+{
+  "pr_number": "44484",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 7,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/utils_",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/multimodal",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/detokenizer",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 13.0",
+      "job_name": "Build wheel - aarch64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "Core model initialization and inference tests"
+    },
+    {
+      "selected_test": "tests/models/test_initialization.py",
+      "reason": "Model loading, registration, and interface tests"
+    },
+    {
+      "selected_test": "tests/models/multimodal/generation/test_common.py",
+      "reason": "Multimodal model generation and initialization"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.519161+00:00"
+  ]
+}

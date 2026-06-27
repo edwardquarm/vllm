@@ -1,0 +1,5 @@
+This PR adds a new unit test file `tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py` that tests the MultiConnector wrapping NixlConnector with SimpleCPUOffloadConnector. No vllm source files were modified—only the test file was added. The newly added test file should be run to validate that the tests execute correctly with the current vllm codebase. Per Rule 4 (when in doubt, include it), the test file should be included since it's a new test that needs validation.
+
+---
+
+tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py | New test file validates MultiConnector kv connector behavior

@@ -1,0 +1,32 @@
+{
+  "pr_number": "42343",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 2,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 3) (mi325_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 3) (mi325_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/distributed/test_async_llm_dp.py",
+      "reason": "DP Coordinator startup timeout change"
+    },
+    {
+      "selected_test": "tests/v1/distributed/test_eagle_dp.py",
+      "reason": "DP Coordinator used in Eagle distributed scenario"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.308707+00:00"
+  ]
+}

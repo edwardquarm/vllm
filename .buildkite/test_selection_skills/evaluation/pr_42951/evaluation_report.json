@@ -1,0 +1,38 @@
+{
+  "pr_number": "42951",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/moe/test_mxfp4_moe.py",
+      "reason": "Directly tests MXFP4 MOE backend selection logic"
+    },
+    {
+      "selected_test": "tests/kernels/moe/test_topk_softplus_sqrt.py",
+      "reason": "Directly tests modified topk softplus sqrt function"
+    },
+    {
+      "selected_test": "tests/kernels/moe/test_fused_topk.py",
+      "reason": "Tests fused topk operations that use the router"
+    },
+    {
+      "selected_test": "tests/models/quantization/test_mxfp4.py",
+      "reason": "End-to-end tests for MXFP4 quantization"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Regression testing to ensure non-XPU paths still work"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.599772+00:00"
+  ]
+}

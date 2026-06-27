@@ -1,0 +1,13 @@
+This PR modifies the `initialize_attn_backend()` function in `vllm/v1/worker/gpu_model_runner.py` to add `num_heads_q` (per-rank number of attention heads) as a key component of attention group deduplication. This change allows layers with different Q-head counts to be placed in separate groups, which is critical for spec-decode where draft and target models may have different attention configurations. The change is purely structural in the attention group keying logic, with the main consumer being spec-decode inference paths.
+
+The diff shows that the change is focused and targeted: adding a field to `AttentionGroupKey`, extracting `num_heads_q` from layer attributes (with a fallback to 0 for non-Attention layers), and using the new key structure in group creation. The `.buildkite/test_areas/spec_decode.yaml` file was also updated to reflect attention backend dependencies.
+
+I'm selecting tests that directly exercise the modified functionality: spec-decode tests (primary focus), worker tests (direct file), attention backend selection tests (related logic), and basic correctness (sanity check). I'm excluding the massive transitive candidate list since those tests don't directly test the changed attention group keying logic.
+
+---
+tests/v1/worker/test_gpu_model_runner.py | directly tests the modified gpu_model_runner file
+tests/v1/spec_decode/ | spec-decode is the primary use case for num_heads_q deduplication
+tests/v1/e2e/spec_decode/ | e2e spec-decode tests exercise the full inference path
+tests/v1/attention/test_attention_backends.py | tests attention backend selection logic
+tests/v1/attention/test_attention_backends_selection.py | tests backend selection and grouping
+tests/basic_correctness/test_basic_correctness.py | basic sanity check for inference

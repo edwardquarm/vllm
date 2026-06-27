@@ -1,0 +1,75 @@
+{
+  "pr_number": "41471",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 8,
+    "false_positives": 4,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 12.9",
+      "job_name": "Build wheel - aarch64 - CUDA 12.9",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CPU",
+      "job_name": "Build wheel - aarch64 - CPU",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CUDA 12.9",
+      "job_name": "Build wheel - x86_64 - CUDA 12.9",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CPU",
+      "job_name": "Build wheel - x86_64 - CPU",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Generate and upload wheel indices",
+      "job_name": "Generate and upload wheel indices",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] :python: Build vLLM ROCm Wheel - x86_64",
+      "job_name": ":python: Build vLLM ROCm Wheel - x86_64",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 13.0",
+      "job_name": "Build wheel - aarch64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - x86_64 - CUDA 13.0",
+      "job_name": "Build wheel - x86_64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_bidirectional_kv_transfer.py",
+      "reason": "Modified test file, tests KV connector infrastructure"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_nixl_connector.py",
+      "reason": "Modified test file, tests removed FakeNixlWrapper method"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/",
+      "reason": "KV connector unit tests exercise utils.py aggregation logic"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Safety net for distributed parallelism changes in parallel_state.py"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.930993+00:00"
+  ]
+}

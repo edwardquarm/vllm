@@ -1,0 +1,6 @@
+This PR refactors the CPU attention backend's KV cache update logic, moving it from the `forward()` method into a separate `do_kv_cache_update()` method. The `CPUAttentionMetadata` dataclass no longer stores `isa` (instruction set architecture), which is now calculated locally in the new method. A new class variable `forward_includes_kv_cache_update` is added to track this architectural change. Since this touches the core forward pass and KV cache handling in CPU attention, tests that exercise these code paths are critical to catch regressions.
+
+---
+tests/kernels/attention/test_cpu_attn.py | directly tests CPU attention backend implementation
+tests/v1/attention/test_attention_backends.py | tests attention backend behavior and KV cache flow
+tests/basic_correctness/test_basic_correctness.py | regression test for core attention path changes

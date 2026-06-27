@@ -1,0 +1,5 @@
+This PR only modifies documentation build configuration files (`.readthedocs.yaml` and `docs/pre_run_check.sh`). The candidate table confirms no Python files in `vllm/` were changed. The modifications reorder build steps and refactor a shell script that checks whether to build docs based on which files changed—these are CI/build concerns that don't affect the vLLM package itself or require test validation.
+
+---
+
+NONE | only .readthedocs.yaml and docs/pre_run_check.sh changed (docs build config, Rule 3)

@@ -1,0 +1,150 @@
+diff --git a/.buildkite/test_areas/engine.yaml b/.buildkite/test_areas/engine.yaml
+index 67af8881f094..f3862789eee2 100644
+--- a/.buildkite/test_areas/engine.yaml
++++ b/.buildkite/test_areas/engine.yaml
+@@ -38,7 +38,7 @@ steps:
+     - pytest -v -s v1/engine --ignore v1/engine/test_preprocess_error_handling.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       timeout_in_minutes: 40
+       depends_on:
+       - image-build-amd
+diff --git a/.buildkite/test_areas/entrypoints.yaml b/.buildkite/test_areas/entrypoints.yaml
+index c2ff96424f5b..57bde22194a8 100644
+--- a/.buildkite/test_areas/entrypoints.yaml
++++ b/.buildkite/test_areas/entrypoints.yaml
+@@ -28,7 +28,7 @@ steps:
+   - pytest -v -s entrypoints/offline_mode # Needs to avoid interference with other tests
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       soft_fail: true
+       depends_on:
+       - image-build-amd
+@@ -46,7 +46,7 @@ steps:
+   - pytest -v -s entrypoints/openai/chat_completion --ignore=entrypoints/openai/chat_completion/test_chat_with_tool_reasoning.py --ignore=entrypoints/openai/chat_completion/test_oot_registration.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       soft_fail: true
+       timeout_in_minutes: 80
+       depends_on:
+@@ -65,7 +65,7 @@ steps:
+   - pytest -v -s entrypoints/test_chat_utils.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       soft_fail: true
+       timeout_in_minutes: 60
+       depends_on:
+@@ -85,7 +85,7 @@ steps:
+   - pytest -v -s entrypoints/openai --ignore=entrypoints/openai/chat_completion --ignore=entrypoints/openai/completion --ignore=entrypoints/openai/correctness/ --ignore=entrypoints/openai/tool_parsers/ --ignore=entrypoints/openai/responses --ignore=entrypoints/openai/test_multi_api_servers.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       soft_fail: true
+       timeout_in_minutes: 60
+       depends_on:
+@@ -108,7 +108,7 @@ steps:
+   - pytest -v -s tool_use
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       soft_fail: true
+       depends_on:
+       - image-build-amd
+diff --git a/.buildkite/test_areas/kernels.yaml b/.buildkite/test_areas/kernels.yaml
+index fc7fc25ff29c..68e6a5762ef1 100644
+--- a/.buildkite/test_areas/kernels.yaml
++++ b/.buildkite/test_areas/kernels.yaml
+@@ -86,7 +86,7 @@ steps:
+   parallelism: 2
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       source_file_dependencies:
+       - csrc/quantization/
+       - vllm/model_executor/layers/quantization
+diff --git a/.buildkite/test_areas/misc.yaml b/.buildkite/test_areas/misc.yaml
+index 72660bc6b0fc..ddeb692d831c 100644
+--- a/.buildkite/test_areas/misc.yaml
++++ b/.buildkite/test_areas/misc.yaml
+@@ -52,7 +52,7 @@ steps:
+     - pytest -v -s v1/test_outputs.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+ 
+diff --git a/.buildkite/test_areas/models_language.yaml b/.buildkite/test_areas/models_language.yaml
+index 5d357d60f8ae..b9f7861d117c 100644
+--- a/.buildkite/test_areas/models_language.yaml
++++ b/.buildkite/test_areas/models_language.yaml
+@@ -50,7 +50,7 @@ steps:
+   mirror:
+     torch_nightly: {}
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+       commands:
+@@ -96,7 +96,7 @@ steps:
+     - pytest -v -s models/language/pooling -m 'not core_model'
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       timeout_in_minutes: 100
+       depends_on:
+       - image-build-amd
+diff --git a/.buildkite/test_areas/models_multimodal.yaml b/.buildkite/test_areas/models_multimodal.yaml
+index 9540a540a2f6..06cfe11f08cf 100644
+--- a/.buildkite/test_areas/models_multimodal.yaml
++++ b/.buildkite/test_areas/models_multimodal.yaml
+@@ -15,7 +15,7 @@ steps:
+     - pytest -v -s models/multimodal/generation/test_ultravox.py -m core_model
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+ 
+@@ -33,7 +33,7 @@ steps:
+     - pytest -v -s models/multimodal/generation/test_vit_cudagraph.py -m core_model
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+ 
+@@ -50,7 +50,7 @@ steps:
+     - pytest -v -s models/multimodal/generation/test_qwen2_vl.py -m core_model
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+ 
+@@ -118,7 +118,7 @@ steps:
+     - pytest -v -s models/multimodal/test_mapping.py
+   mirror:
+     amd:
+-      device: mi300_1
++      device: mi325_1
+       depends_on:
+       - image-build-amd
+ 

@@ -1,0 +1,33 @@
+{
+  "pr_number": "41991",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 2,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: V1 Sample + Logits (mi300_1)",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/so",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_gemma4_tool_parser.py",
+      "reason": "directly tests the changed parser functions"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.079098+00:00"
+  ]
+}

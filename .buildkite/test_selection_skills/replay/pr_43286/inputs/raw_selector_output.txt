@@ -1,0 +1,13 @@
+This PR converts assert statements to proper exception raises in error-handling paths across pooling-related modules. The changes are purely defensive — no functional logic changes, just improved exception types and error messages.
+
+The diff shows only:
+- `assert` → `raise ValueError/TypeError/RuntimeError` conversions in error paths
+- Updated test expectation in `test_pooler_activations.py` to match new exception type
+- Better error messages for debugging
+
+Since these are low-risk error-path-only changes with no logic changes, most tests won't be affected. I'm dropping the massive candidate lists and focusing on tests that directly validate these functions.
+
+---
+tests/model_executor/layers/test_pooler_activations.py | Test file updated; must run to verify exception type change
+tests/test_pooling_params.py | Validates PoolingParams error handling paths
+tests/basic_correctness/ | Safety net for pooling-related integration tests

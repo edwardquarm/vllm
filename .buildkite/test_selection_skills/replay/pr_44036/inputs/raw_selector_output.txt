@@ -1,0 +1,4 @@
+This PR bumps FlashInfer from 0.6.11.post2 to 0.6.12 across Docker files and the Python requirements. The changed files are: docker/Dockerfile, docker/Dockerfile.nightly_torch, docker/versions.json, and requirements/cuda.txt. According to Rule 3, changes to `requirements/*.txt` files trigger `tests/basic_correctness/`. Since FlashInfer is a core dependency for attention operations, running basic correctness tests ensures the version bump doesn't break fundamental vLLM functionality.
+
+---
+tests/basic_correctness/ | requirements/cuda.txt dependency version bump (Rule 3)

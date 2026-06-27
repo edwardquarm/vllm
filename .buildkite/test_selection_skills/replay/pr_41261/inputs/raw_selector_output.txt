@@ -1,0 +1,5 @@
+This PR modifies `csrc/moe/topk_softplus_sqrt_kernels.cu`, a CUDA kernel for Mixture of Experts routing. The changes are purely structural and indentation-related — the code block computing softplus and top-k selection is now wrapped in an else clause with consistent indentation, but the logic is identical. Per Rule 3, C/C++/CUDA source changes require running kernel tests. Since this is a MOE-specific kernel, I'm selecting the kernel tests directory to verify the structural change doesn't affect compilation or kernel behavior.
+
+---
+tests/kernels/ | CUDA kernel changes require kernel test suite
+tests/basic_correctness/ | Large structural change to core MOE kernel warrants basic correctness check

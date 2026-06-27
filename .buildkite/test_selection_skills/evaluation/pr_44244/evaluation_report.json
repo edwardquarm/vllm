@@ -1,0 +1,42 @@
+{
+  "pr_number": "44244",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/benchmarks/test_custom_dataset_chat_template_kwargs.py",
+      "reason": "new test, validates chat_template_kwargs propagation"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_random_dataset.py",
+      "reason": "tests modified datasets.py get_samples() function"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_random_multimodal_dataset_video.py",
+      "reason": "tests modified datasets.py get_samples() function"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_txt_slices_dataset.py",
+      "reason": "tests modified datasets.py get_samples() function"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_latency_cli.py",
+      "reason": "validates --chat-template-kwargs CLI argument"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_throughput_cli.py",
+      "reason": "validates --chat-template-kwargs CLI argument"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.486554+00:00"
+  ]
+}

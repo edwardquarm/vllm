@@ -1,0 +1,32 @@
+{
+  "pr_number": "43871",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "702a7aa62e067729be6116d10b528ac3f030b4af",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model haiku",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py",
+      "granularity": "unknown",
+      "reason": "New test file validates MultiConnector kv connector behavior",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py",
+      "reason": "New test file validates MultiConnector kv connector behavior"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-26T18:32:22.705913+00:00"
+  ]
+}

@@ -18,7 +18,17 @@
 |--------|--------|---------|-------|
 | {{FAILED}} | {{PASSED}} | {{SKIPPED}} | {{TOTAL}} |
 
-**CI jobs:** {{N_PASSED_JOBS}} passed · {{N_FAILED_JOBS}} failed · {{N_BLOCKED_JOBS}} blocked
+**CI jobs:** {{N_PASSED_JOBS}} passed · {{N_FAILED_JOBS}} failed · {{N_BLOCKED_JOBS}} blocked · **{{N_TEST_FILES}} test files**
+
+## LLM vs CI Comparison Table
+
+```
+Test File                                                                                                                      LLM Selected  CI Result
+======================================================================================================================================================
+{{TEST_FILE_ROW}}
+```
+
+**Summary:** {{N_TOTAL_TESTS}} total tests, {{N_LLM_SELECTED}} LLM selected, {{N_CI_FAILED}} CI failed
 
 ### Failed jobs
 

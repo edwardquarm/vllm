@@ -1,0 +1,5 @@
+This PR removes the `_patch_should_realize_on_reuse()` function from `vllm/env_override.py`, which was a workaround patch for PyTorch 2.11's Inductor compilation. The patch is only applied when running torch 2.11 (fixed in 2.12+). Since this removes code that affects Inductor's materialization heuristic, tests that exercise Inductor compilation could be affected if the environment runs on torch 2.11. However, most vLLM testing likely uses torch 2.12+, where the patch was never active. I'm including basic_correctness tests for sanity checking and compile tests which directly exercise Inductor, while dropping other candidates that don't explicitly test compilation.
+
+---
+tests/basic_correctness/ | sanity check for core functionality after code removal
+tests/compile/ | directly affected by Inductor materialization heuristic patch removal

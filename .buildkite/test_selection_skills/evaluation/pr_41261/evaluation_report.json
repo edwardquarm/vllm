@@ -1,0 +1,107 @@
+{
+  "pr_number": "41261",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 16,
+    "false_positives": 2,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed/test_hybrid_lb_dp.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed/test_eagle_dp.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/engine",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed/test_external_lb_dp.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed/test_async_llm_dp.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/distributed/test_internal_lb_dp.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_utils.py",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/engine/test_engine_core_client.py::test_kv_cache_events_dp",
+      "job_name": "Distributed DP Tests (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Language Models Tests (Standard)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/language",
+      "job_name": "Language Models Tests (Standard)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Ascend NPU Test",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Intel GPU Test",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "CUDA kernel changes require kernel test suite"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Large structural change to core MOE kernel warrants basic correctness check"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.890981+00:00"
+  ]
+}

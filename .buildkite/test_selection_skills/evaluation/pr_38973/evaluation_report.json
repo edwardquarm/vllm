@@ -1,0 +1,22 @@
+{
+  "pr_number": "38973",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_qwen3coder_tool_parser.py",
+      "reason": "Direct tests for Qwen3CoderToolParser type conversion refactoring and anyOf/oneOf support"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.551459+00:00"
+  ]
+}

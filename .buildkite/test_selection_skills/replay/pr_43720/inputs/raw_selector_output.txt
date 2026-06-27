@@ -1,0 +1,8 @@
+I see you've provided project context and system reminders, but I don't see a specific question or task yet. The message ends with a reference to `/tmp/tmppc6chb49.txt` without a clear request.
+
+What would you like help with? For example:
+- Are you trying to analyze test selection data from your evaluation reports?
+- Do you need help with the vLLM codebase changes?
+- Should I review or verify something in your current branch?
+
+Let me know what you're working on and I'll get started.

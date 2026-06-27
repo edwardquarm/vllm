@@ -1,0 +1,981 @@
+diff --git a/tests/v1/core/utils.py b/tests/v1/core/utils.py
+index 2d9834d2e3a6..7213a669c53e 100644
+--- a/tests/v1/core/utils.py
++++ b/tests/v1/core/utils.py
+@@ -24,6 +24,7 @@
+ from vllm.v1.core.kv_cache_utils import get_request_block_hasher, init_none_hash
+ from vllm.v1.core.sched.async_scheduler import AsyncScheduler
+ from vllm.v1.core.sched.scheduler import Scheduler
++from vllm.v1.core.single_type_kv_cache_manager import register_all_kvcache_specs
+ from vllm.v1.kv_cache_interface import (
+     FullAttentionSpec,
+     KVCacheConfig,
+@@ -160,6 +161,7 @@ def create_scheduler(
+         ],
+     )
+     cache_config.num_gpu_blocks = num_blocks
++    register_all_kvcache_specs(vllm_config)
+     scheduler_cls = AsyncScheduler if async_scheduling else Scheduler
+     return scheduler_cls(
+         vllm_config=vllm_config,
+diff --git a/tests/v1/simple_kv_offload/test_scheduler.py b/tests/v1/simple_kv_offload/test_scheduler.py
+index 970e16e52798..e59905f504af 100644
+--- a/tests/v1/simple_kv_offload/test_scheduler.py
++++ b/tests/v1/simple_kv_offload/test_scheduler.py
+@@ -30,6 +30,9 @@
+     NewRequestData,
+     SchedulerOutput,
+ )
++from vllm.v1.core.single_type_kv_cache_manager import (
++    register_all_kvcache_specs,
++)
+ from vllm.v1.kv_cache_interface import (
+     FullAttentionSpec,
+     KVCacheConfig,
+@@ -68,6 +71,9 @@ def _make_kv_cache_config(
+     """Build a KVCacheConfig with non-empty kv_cache_tensors."""
+     groups = []
+     tensors = []
++    register_all_kvcache_specs(
++        vllm_config=None
++    )  # Ensure specs are registered for tests
+     for g in range(num_groups):
+         layer_names = [f"layer_{g}"]
+         groups.append(
+diff --git a/tests/v1/test_kv_cache_spec_registry.py b/tests/v1/test_kv_cache_spec_registry.py
+new file mode 100644
+index 000000000000..c84c3ef1c8a4
+--- /dev/null
++++ b/tests/v1/test_kv_cache_spec_registry.py
+@@ -0,0 +1,322 @@
++# SPDX-License-Identifier: Apache-2.0
++# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++
++from dataclasses import dataclass, replace
++from typing import Any
++
++import pytest
++import torch
++
++from vllm.config import (
++    CacheConfig,
++    DeviceConfig,
++    VllmConfig,
++)
++from vllm.v1.core.single_type_kv_cache_manager import (
++    ChunkedLocalAttentionManager,
++    CrossAttentionManager,
++    FullAttentionManager,
++    MambaManager,
++    SingleTypeKVCacheManager,
++    SinkFullAttentionManager,
++    SlidingWindowManager,
++    register_all_kvcache_specs,
++)
++from vllm.v1.kv_cache_interface import (
++    ChunkedLocalAttentionSpec,
++    CrossAttentionSpec,
++    FullAttentionSpec,
++    HiddenStateCacheSpec,
++    KVCacheSpec,
++    MambaSpec,
++    MLAAttentionSpec,
++    SinkFullAttentionSpec,
++    SlidingWindowMLASpec,
++    SlidingWindowSpec,
++    TQFullAttentionSpec,
++    UniformTypeKVCacheSpecs,
++)
++from vllm.v1.kv_cache_spec_registry import (
++    _REGISTRY_KVCACHESPEC_LIST,
++    KVCacheSpecRegistry,
++    register_kv_cache_spec,
++)
++
++
++def make_vllm_config() -> VllmConfig:
++    return VllmConfig(
++        cache_config=CacheConfig(
++            block_size=64,
++            cache_dtype="bfloat16",
++        ),
++        device_config=DeviceConfig(device="cpu"),
++    )
++
++
++vllm_config = make_vllm_config()
++register_all_kvcache_specs(vllm_config)
++
++
++@pytest.fixture(autouse=True)
++def restore_kv_cache_spec_registry():
++    registry = _REGISTRY_KVCACHESPEC_LIST.copy()
++    yield
++    _REGISTRY_KVCACHESPEC_LIST.clear()
++    _REGISTRY_KVCACHESPEC_LIST.update(registry)
++
++
++@dataclass(frozen=True)
++class _TrulyUnregisteredSpec(KVCacheSpec):
++    """
++    A spec that inherits directly from KVCacheSpec with no registered
++    ancestor in the MRO.  Used to test that the registry correctly raises
++    when no entry can be found.
++    """
++
++    @property
++    def page_size_bytes(self) -> int:
++        return self.block_size * 128
++
++    def max_memory_usage_bytes(self, _) -> int:
++        return 0
++
++
++spec_manager_map: dict[type[KVCacheSpec], type[SingleTypeKVCacheManager]] = {
++    FullAttentionSpec: FullAttentionManager,
++    TQFullAttentionSpec: FullAttentionManager,
++    MLAAttentionSpec: FullAttentionManager,
++    HiddenStateCacheSpec: FullAttentionManager,
++    SlidingWindowSpec: SlidingWindowManager,
++    SlidingWindowMLASpec: SlidingWindowManager,
++    ChunkedLocalAttentionSpec: ChunkedLocalAttentionManager,
++    MambaSpec: MambaManager,
++    CrossAttentionSpec: CrossAttentionManager,
++    SinkFullAttentionSpec: SinkFullAttentionManager,
++}
++
++spec_uniform_base_map: dict[type[KVCacheSpec], type[KVCacheSpec]] = {
++    FullAttentionSpec: FullAttentionSpec,
++    TQFullAttentionSpec: FullAttentionSpec,
++    MLAAttentionSpec: FullAttentionSpec,
++    HiddenStateCacheSpec: FullAttentionSpec,
++    SlidingWindowSpec: SlidingWindowSpec,
++    SlidingWindowMLASpec: SlidingWindowMLASpec,
++    ChunkedLocalAttentionSpec: ChunkedLocalAttentionSpec,
++    MambaSpec: MambaSpec,
++    CrossAttentionSpec: CrossAttentionSpec,
++    SinkFullAttentionSpec: FullAttentionSpec,
++}
++
++spec_args_map: dict[type[KVCacheSpec], dict[str, Any]] = {
++    FullAttentionSpec: dict(
++        block_size=64, num_kv_heads=8, head_size=128, dtype=torch.bfloat16
++    ),
++    TQFullAttentionSpec: dict(
++        block_size=64,
++        num_kv_heads=8,
++        head_size=128,
++        dtype=torch.bfloat16,
++        tq_slot_size=256,
++    ),
++    MLAAttentionSpec: dict(
++        block_size=64, num_kv_heads=1, head_size=128, dtype=torch.bfloat16
++    ),
++    HiddenStateCacheSpec: dict(
++        block_size=64, num_kv_heads=1, head_size=128, dtype=torch.bfloat16
++    ),
++    SlidingWindowSpec: dict(
++        block_size=64,
++        num_kv_heads=8,
++        head_size=128,
++        dtype=torch.bfloat16,
++        sliding_window=128,
++    ),
++    SlidingWindowMLASpec: dict(
++        block_size=64,
++        num_kv_heads=1,
++        head_size=128,
++        dtype=torch.bfloat16,
++        sliding_window=128,
++    ),
++    ChunkedLocalAttentionSpec: dict(
++        block_size=64,
++        num_kv_heads=8,
++        head_size=128,
++        dtype=torch.bfloat16,
++        attention_chunk_size=4,
++    ),
++    MambaSpec: dict(
++        block_size=64,
++        shapes=((2, 512), (3, 32, 32)),
++        dtypes=(torch.float32, torch.float32),
++        mamba_cache_mode="align",
++        num_speculative_blocks=2,
++    ),
++    CrossAttentionSpec: dict(
++        block_size=64, num_kv_heads=8, head_size=128, dtype=torch.bfloat16
++    ),
++    SinkFullAttentionSpec: dict(
++        block_size=64, num_kv_heads=8, head_size=128, dtype=torch.bfloat16, sink_len=16
++    ),
++}
++
++
++def make_spec(spec_cls: type[KVCacheSpec]) -> KVCacheSpec:
++    return spec_cls(**spec_args_map[spec_cls])
++
++
++def are_uniform_specs(*specs: KVCacheSpec) -> bool:
++    return UniformTypeKVCacheSpecs.is_uniform_type(
++        {f"layer_{i}": spec for i, spec in enumerate(specs)}
++    )
++
++
++class TestKVCacheSpecRegistry:
++    """Test the core registry functionality."""
++
++    def test_builtin_kvcache_specs_registered(self):
++        assert set(spec_manager_map) <= set(_REGISTRY_KVCACHESPEC_LIST)
++        for spec_cls, manager in spec_manager_map.items():
++            spec = make_spec(spec_cls)
++            assert KVCacheSpecRegistry.get_manager_class(spec) is manager
++            assert (
++                KVCacheSpecRegistry.get_uniform_type_base_spec(spec)
++                is spec_uniform_base_map[spec_cls]
++            )
++
++    @pytest.mark.parametrize("spec_cls", list(spec_manager_map))
++    def test_custom_spec_register(self, spec_cls):
++        """A decorated custom spec resolves to the declared manager."""
++        manager = spec_manager_map[spec_cls]
++        uniform_base_spec = spec_uniform_base_map[spec_cls]
++
++        @register_kv_cache_spec(
++            manager_class=manager,
++            uniform_type_base_spec=uniform_base_spec,
++        )
++        @dataclass(frozen=True, kw_only=True)
++        class _CustomSpec(spec_cls):  # type: ignore[valid-type,misc]
++            custom_param: int = 16
++
++        spec = _CustomSpec(**spec_args_map[spec_cls], custom_param=100)
++
++        assert KVCacheSpecRegistry.get_manager_class(spec) is manager
++        assert KVCacheSpecRegistry.get_uniform_type_base_spec(spec) is uniform_base_spec
++
++    def test_custom_spec_register_requires_manager(self):
++        """Invalid register decorator arguments fail early."""
++
++        with pytest.raises(AssertionError, match="manager_class is required"):
++
++            @register_kv_cache_spec(
++                uniform_type_base_spec=FullAttentionSpec,
++            )
++            @dataclass(frozen=True, kw_only=True)
++            class _CustomFullSpecWithoutManager(FullAttentionSpec):
++                custom_param: int = 16
++
++    def test_unregistered_spec_no_registered_parent_raises(self):
++        """
++        A spec whose entire MRO contains no registered class resolves to None.
++        Runtime callers should use check_kv_cache_spec_registry to fail early.
++        Subclasses of registered specs intentionally do not fail — they inherit
++        their parent's manager via MRO walking.
++        """
++        spec = _TrulyUnregisteredSpec(block_size=16)
++
++        assert KVCacheSpecRegistry.get_manager_class(spec) is None
++        assert KVCacheSpecRegistry.get_uniform_type_base_spec(spec) is None
++
++        with pytest.raises(
++            ValueError, match="Unsupported KV cache spec type for layer layer_0"
++        ):
++            KVCacheSpecRegistry.check_kv_cache_spec_registry({"layer_0": spec})
++
++        with pytest.raises(AssertionError, match="Unsupported KV cache spec type"):
++            UniformTypeKVCacheSpecs.is_uniform_type({"layer_0": spec})
++
++    def test_unregistered_subclass_inherits_parent_manager(self):
++        """
++        An unregistered subclass of a registered spec resolves via MRO
++        to its parent's manager — this is intentional registry behaviour.
++        """
++
++        @dataclass(frozen=True, kw_only=True)
++        class _ImplicitlyInheritedSpec(FullAttentionSpec):
++            pass
++
++        spec = _ImplicitlyInheritedSpec(
++            block_size=16, num_kv_heads=8, head_size=128, dtype=torch.bfloat16
++        )
++
++        # MRO walk finds FullAttentionSpec → FullAttentionManager
++        assert KVCacheSpecRegistry.get_manager_class(spec) is FullAttentionManager
++
++    @pytest.mark.parametrize("spec_cls", list(spec_manager_map))
++    def test_builtin_specs_are_uniform_with_same_spec_type(self, spec_cls):
++        spec = make_spec(spec_cls)
++        assert are_uniform_specs(spec, replace(spec))
++
++    def test_full_attention_family_specs_are_uniform(self):
++        specs = [
++            make_spec(FullAttentionSpec),
++            make_spec(TQFullAttentionSpec),
++            make_spec(MLAAttentionSpec),
++            make_spec(HiddenStateCacheSpec),
++            make_spec(SinkFullAttentionSpec),
++        ]
++
++        assert are_uniform_specs(*specs)
++
++    @pytest.mark.parametrize(
++        ("spec_cls", "field", "value"),
++        [
++            (SlidingWindowSpec, "sliding_window", 256),
++            (SlidingWindowMLASpec, "sliding_window", 256),
++            (ChunkedLocalAttentionSpec, "attention_chunk_size", 8),
++            (MambaSpec, "num_speculative_blocks", 4),
++        ],
++    )
++    def test_specs_with_type_specific_uniform_fields(self, spec_cls, field, value):
++        spec = make_spec(spec_cls)
++        changed_spec = replace(spec, **{field: value})
++
++        assert not are_uniform_specs(spec, changed_spec)
++
++    @pytest.mark.parametrize(
++        ("left_cls", "right_cls"),
++        [
++            (FullAttentionSpec, CrossAttentionSpec),
++            (FullAttentionSpec, SlidingWindowSpec),
++            (FullAttentionSpec, ChunkedLocalAttentionSpec),
++            (FullAttentionSpec, MambaSpec),
++            (SlidingWindowMLASpec, SlidingWindowSpec),
++            (ChunkedLocalAttentionSpec, SlidingWindowSpec),
++            (MambaSpec, CrossAttentionSpec),
++        ],
++    )
++    def test_different_uniform_groups_are_not_uniform(self, left_cls, right_cls):
++        assert not are_uniform_specs(make_spec(left_cls), make_spec(right_cls))
++
++    def test_different_block_sizes_are_not_uniform(self):
++        spec = make_spec(FullAttentionSpec)
++
++        assert not are_uniform_specs(spec, replace(spec, block_size=32))
++
++    def test_registered_custom_spec_uses_base_uniform_rule(self):
++        @register_kv_cache_spec(
++            manager_class=FullAttentionManager,
++            uniform_type_base_spec=FullAttentionSpec,
++        )
++        @dataclass(frozen=True, kw_only=True)
++        class _CustomFullSpec(FullAttentionSpec):
++            custom_param: int = 16
++
++        custom_spec = _CustomFullSpec(
++            block_size=64,
++            num_kv_heads=8,
++            head_size=128,
++            dtype=torch.bfloat16,
++        )
++
++        assert are_uniform_specs(custom_spec, make_spec(FullAttentionSpec))
+diff --git a/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py b/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py
+index a17f0b5f5ff7..ad5281409664 100644
+--- a/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py
++++ b/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py
+@@ -13,7 +13,6 @@
+ )
+ from vllm.v1.core.single_type_kv_cache_manager import (
+     SingleTypeKVCacheManager,
+-    spec_manager_map,
+ )
+ from vllm.v1.kv_cache_interface import (
+     FullAttentionSpec,
+@@ -21,6 +20,7 @@
+     KVCacheSpec,
+     UniformTypeKVCacheSpecs,
+ )
++from vllm.v1.kv_cache_spec_registry import KVCacheSpecRegistry
+ 
+ # Dummy placeholder hash for store_mask's template computation.
+ _DUMMY_BLOCK_HASH = BlockHash(b"\x00" * 32)
+@@ -89,7 +89,10 @@ def _verify_and_split_kv_cache_groups(self) -> None:
+         ] = []
+         for i, g in enumerate(self.kv_cache_groups):
+             spec = _unwrap_spec(g.kv_cache_spec)
+-            manager_cls = spec_manager_map[type(spec)]
++            manager_cls = KVCacheSpecRegistry.get_manager_class(spec)
++            assert manager_cls is not None, (
++                f"No manager registered for KVCacheSpec {spec}"
++            )
+             for existing_spec, group_ids, existing_cls in attention_groups:
+                 if existing_spec == spec:
+                     assert manager_cls is existing_cls
+diff --git a/vllm/platforms/interface.py b/vllm/platforms/interface.py
+index 546361229e1f..b357c5798bf6 100644
+--- a/vllm/platforms/interface.py
++++ b/vllm/platforms/interface.py
+@@ -698,6 +698,13 @@ def _align_hybrid_block_size(
+                 mamba_padding_pct,
+             )
+ 
++    @classmethod
++    def register_custom_kv_cache_specs(cls, vllm_config: "VllmConfig") -> None:
++        """
++        Register custom KVCacheSpec class on current platform.
++        """
++        pass
++
+     @classmethod
+     def verify_model_arch(cls, model_arch: str) -> None:
+         """
+diff --git a/vllm/v1/core/kv_cache_utils.py b/vllm/v1/core/kv_cache_utils.py
+index 7f3a5e4fdf3f..cfa79f077a16 100644
+--- a/vllm/v1/core/kv_cache_utils.py
++++ b/vllm/v1/core/kv_cache_utils.py
+@@ -33,6 +33,7 @@
+     SlidingWindowSpec,
+     UniformTypeKVCacheSpecs,
+ )
++from vllm.v1.kv_cache_spec_registry import KVCacheSpecRegistry
+ from vllm.v1.request import Request
+ from vllm.v1.utils import tensor_data
+ 
+@@ -1991,6 +1992,9 @@ def get_kv_cache_configs(
+                     "across workers. This is not supported yet."
+                 )
+ 
++    # Check if the KV cache specs are registered correctly.
++    # This is to prevent that some layers are initialized with unregistered specs.
++    KVCacheSpecRegistry.check_kv_cache_spec_registry(merged_kv_cache_specs)
+     # Get global KV cache groups. This also handles spec unification for
+     # hybrid models when disable_hybrid_kv_cache_manager is enabled.
+     # After this call, merged_kv_cache_specs may be modified in-place.
+diff --git a/vllm/v1/core/single_type_kv_cache_manager.py b/vllm/v1/core/single_type_kv_cache_manager.py
+index 7b16d9c6f05e..281b79639db3 100644
+--- a/vllm/v1/core/single_type_kv_cache_manager.py
++++ b/vllm/v1/core/single_type_kv_cache_manager.py
+@@ -25,6 +25,7 @@
+     SlidingWindowSpec,
+     TQFullAttentionSpec,
+ )
++from vllm.v1.kv_cache_spec_registry import KVCacheSpecRegistry
+ from vllm.v1.request import Request
+ 
+ 
+@@ -1247,27 +1248,30 @@ def __init__(
+         self.sink_blocks = self.block_pool.free_block_queue.popleft_n(num_sink_block)
+ 
+ 
+-spec_manager_map: dict[type[KVCacheSpec], type[SingleTypeKVCacheManager]] = {
+-    FullAttentionSpec: FullAttentionManager,
+-    TQFullAttentionSpec: FullAttentionManager,
+-    MLAAttentionSpec: FullAttentionManager,
+-    HiddenStateCacheSpec: FullAttentionManager,
+-    SlidingWindowSpec: SlidingWindowManager,
+-    SlidingWindowMLASpec: SlidingWindowManager,
+-    ChunkedLocalAttentionSpec: ChunkedLocalAttentionManager,
+-    MambaSpec: MambaManager,
+-    CrossAttentionSpec: CrossAttentionManager,
+-    SinkFullAttentionSpec: SinkFullAttentionManager,
+-}
+-
+-
+ def get_manager_for_kv_cache_spec(
+     kv_cache_spec: KVCacheSpec,
+     max_num_batched_tokens: int,
+     max_model_len: int,
+     **kwargs,
+ ) -> SingleTypeKVCacheManager:
+-    manager_class = spec_manager_map[type(kv_cache_spec)]
++    """
++    Get the appropriate manager for a given KVCacheSpec.
++
++    Uses the KVCacheSpecRegistry to look up the manager class, supporting
++    both built-in and custom specs registered via @register_kv_cache_spec
++    and KVCacheSpecRegistry.register.
++
++    Args:
++        kv_cache_spec: The KVCacheSpec instance
++        max_num_batched_tokens: The maximum number of tokens in a batch
++        max_model_len: The maximum context length the model could serve
++    Returns:
++        An instance of the appropriate SingleTypeKVCacheManager subclass
++    """
++    manager_class = KVCacheSpecRegistry.get_manager_class(kv_cache_spec)
++    assert manager_class is not None, (
++        f"No manager registered for KVCacheSpec {type(kv_cache_spec)}"
++    )
+     # SlidingWindow / ChunkedLocalAttention managers recycle blocks across
+     # chunks; the runtime admission cap must match the recycling-aware bound
+     # the startup pool sizer uses (single source of truth: the spec method).
+@@ -1280,3 +1284,64 @@ def get_manager_for_kv_cache_spec(
+         )
+     manager = manager_class(kv_cache_spec, **kwargs)
+     return manager
++
++
++def register_all_kvcache_specs(vllm_config):
++    """Built-in spec registration"""
++    KVCacheSpecRegistry.register(
++        FullAttentionSpec,
++        FullAttentionManager,
++        uniform_type_base_spec=FullAttentionSpec,
++    )
++
++    KVCacheSpecRegistry.register(
++        SlidingWindowSpec,
++        SlidingWindowManager,
++        uniform_type_base_spec=SlidingWindowSpec,
++    )
++    KVCacheSpecRegistry.register(
++        SlidingWindowMLASpec,
++        SlidingWindowManager,
++        uniform_type_base_spec=SlidingWindowMLASpec,
++    )
++
++    KVCacheSpecRegistry.register(
++        MambaSpec, MambaManager, uniform_type_base_spec=MambaSpec
++    )
++    KVCacheSpecRegistry.register(
++        ChunkedLocalAttentionSpec,
++        ChunkedLocalAttentionManager,
++        uniform_type_base_spec=ChunkedLocalAttentionSpec,
++    )
++    KVCacheSpecRegistry.register(
++        CrossAttentionSpec,
++        CrossAttentionManager,
++        uniform_type_base_spec=CrossAttentionSpec,
++    )
++
++    # FullAttentionSpec subclasses — grouped with FullAttentionSpec
++    KVCacheSpecRegistry.register(
++        TQFullAttentionSpec,
++        FullAttentionManager,
++        uniform_type_base_spec=FullAttentionSpec,
++    )
++    KVCacheSpecRegistry.register(
++        MLAAttentionSpec, FullAttentionManager, uniform_type_base_spec=FullAttentionSpec
++    )
++    # NOTE(Mengqing): HiddenStateCacheSpec won't take part in
++    # grouping, thus the uniform_type_base_spec is just a
++    # placeholder.
++    KVCacheSpecRegistry.register(
++        HiddenStateCacheSpec,
++        FullAttentionManager,
++        uniform_type_base_spec=FullAttentionSpec,
++    )
++    KVCacheSpecRegistry.register(
++        SinkFullAttentionSpec,
++        SinkFullAttentionManager,
++        uniform_type_base_spec=FullAttentionSpec,
++    )
++
++    from vllm.platforms import current_platform
++
++    current_platform.register_custom_kv_cache_specs(vllm_config)
+diff --git a/vllm/v1/engine/core.py b/vllm/v1/engine/core.py
+index 50fd98e1fdf0..b12aa9d0505d 100644
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -52,6 +52,7 @@
+ )
+ from vllm.v1.core.sched.interface import PauseState, SchedulerInterface
+ from vllm.v1.core.sched.output import SchedulerOutput
++from vllm.v1.core.single_type_kv_cache_manager import register_all_kvcache_specs
+ from vllm.v1.engine import (
+     EEP_NOTIFICATION_CALL_ID,
+     EEPNotificationType,
+@@ -235,6 +236,9 @@ def __init__(
+     def _initialize_kv_caches(self, vllm_config: VllmConfig) -> KVCacheConfig:
+         start = time.time()
+ 
++        # register all kvcache specs in enginecore process.
++        register_all_kvcache_specs(vllm_config)
++
+         # Get all kv cache needed by the model
+         kv_cache_specs = self.model_executor.get_kv_cache_specs()
+ 
+diff --git a/vllm/v1/kv_cache_interface.py b/vllm/v1/kv_cache_interface.py
+index 31ee89bc72aa..3bbfba1a0fe6 100644
+--- a/vllm/v1/kv_cache_interface.py
++++ b/vllm/v1/kv_cache_interface.py
+@@ -17,6 +17,7 @@
+ from vllm.utils.math_utils import cdiv, round_up
+ from vllm.utils.torch_utils import get_dtype_size, nvfp4_kv_cache_full_dim
+ from vllm.v1.attention.backends.registry import MambaAttentionBackendEnum
++from vllm.v1.kv_cache_spec_registry import KVCacheSpecRegistry
+ 
+ if TYPE_CHECKING:
+     from vllm.config import VllmConfig
+@@ -139,6 +140,21 @@ def merge(cls, specs: list[Self]) -> Self:
+         )
+         return copy.deepcopy(specs[0])
+ 
++    def is_uniform_with_collection(
++        self, kv_cache_specs: dict[str, KVCacheSpec]
++    ) -> bool:
++        """
++        Whether this KVCacheSpec is uniform with all specs of all layers.
++        """
++        uniform_type_base_spec = KVCacheSpecRegistry.get_uniform_type_base_spec(self)
++        assert uniform_type_base_spec is not None, (
++            f"Unsupported KV cache spec type: {type(self)}. "
++            "Please register it using @register_kv_cache_spec decorator."
++        )
++        return all(
++            isinstance(spec, uniform_type_base_spec) for spec in kv_cache_specs.values()
++        )
++
+ 
+ @dataclass(frozen=True, kw_only=True)
+ class AttentionSpec(KVCacheSpec):
+@@ -430,6 +446,15 @@ def max_memory_usage_bytes(self, vllm_config: VllmConfig) -> int:
+         )
+         return max_blocks * self.page_size_bytes
+ 
++    def is_uniform_with_collection(
++        self, kv_cache_specs: dict[str, KVCacheSpec]
++    ) -> bool:
++        return all(
++            isinstance(spec, ChunkedLocalAttentionSpec)
++            and spec.attention_chunk_size == self.attention_chunk_size
++            for spec in kv_cache_specs.values()
++        )
++
+ 
+ @dataclass(frozen=True, kw_only=True)
+ class SlidingWindowSpec(AttentionSpec):
+@@ -493,6 +518,15 @@ def max_memory_usage_bytes(self, vllm_config: VllmConfig) -> int:
+         )
+         return max_blocks * self.page_size_bytes
+ 
++    def is_uniform_with_collection(
++        self, kv_cache_specs: dict[str, KVCacheSpec]
++    ) -> bool:
++        return all(
++            isinstance(spec, SlidingWindowSpec)
++            and spec.sliding_window == self.sliding_window
++            for spec in kv_cache_specs.values()
++        )
++
+ 
+ @dataclass(frozen=True, kw_only=True)
+ class SlidingWindowMLASpec(SlidingWindowSpec):
+@@ -558,6 +592,15 @@ def merge(cls, specs: list[Self]) -> Self:
+             model_version=model_version_set.pop(),
+         )
+ 
++    def is_uniform_with_collection(
++        self, kv_cache_specs: dict[str, KVCacheSpec]
++    ) -> bool:
++        return all(
++            isinstance(spec, SlidingWindowMLASpec)
++            and spec.sliding_window == self.sliding_window
++            for spec in kv_cache_specs.values()
++        )
++
+ 
+ @dataclass(frozen=True)
+ class MambaSpec(KVCacheSpec):
+@@ -590,6 +633,15 @@ def max_memory_usage_bytes(self, vllm_config: VllmConfig) -> int:
+         else:
+             return self.page_size_bytes * (1 + self.num_speculative_blocks)
+ 
++    def is_uniform_with_collection(
++        self, kv_cache_specs: dict[str, KVCacheSpec]
++    ) -> bool:
++        return all(
++            isinstance(spec, MambaSpec)
++            and spec.num_speculative_blocks == self.num_speculative_blocks
++            for spec in kv_cache_specs.values()
++        )
++
+ 
+ @dataclass(frozen=True)
+ class EncoderOnlyAttentionSpec(AttentionSpec):
+@@ -689,53 +741,16 @@ def max_memory_usage_bytes(self, vllm_config: VllmConfig) -> int:
+     def is_uniform_type(cls, kv_cache_specs: dict[str, KVCacheSpec]) -> bool:
+         """
+         Whether all layers have the same type of KV cache spec.
++
++        Uses the registry to determine grouping base classes, so custom specs
++        that inherit from FullAttentionSpec are treated as full attention.
+         """
+         block_sizes = set(spec.block_size for spec in kv_cache_specs.values())
+         if len(block_sizes) > 1:
+             # Different block sizes, not uniform.
+             return False
+-        one_spec = next(iter(kv_cache_specs.values()))
+-        # NOTE: Check subclasses before parent classes since isinstance()
+-        # returns True for subclasses.
+-        if isinstance(one_spec, SlidingWindowMLASpec):
+-            # SlidingWindowMLASpec is uniform if all specs are SlidingWindowMLASpec
+-            # with the same sliding_window size.
+-            return all(
+-                isinstance(spec, SlidingWindowMLASpec)
+-                and spec.sliding_window == one_spec.sliding_window
+-                for spec in kv_cache_specs.values()
+-            )
+-        elif isinstance(one_spec, FullAttentionSpec):
+-            return all(
+-                isinstance(spec, FullAttentionSpec) for spec in kv_cache_specs.values()
+-            )
+-        elif isinstance(one_spec, CrossAttentionSpec):
+-            return all(
+-                isinstance(spec, CrossAttentionSpec) for spec in kv_cache_specs.values()
+-            )
+-        elif isinstance(one_spec, SlidingWindowSpec):
+-            return all(
+-                isinstance(spec, SlidingWindowSpec)
+-                and spec.sliding_window == one_spec.sliding_window
+-                for spec in kv_cache_specs.values()
+-            )
+-        elif isinstance(one_spec, ChunkedLocalAttentionSpec):
+-            return all(
+-                isinstance(spec, ChunkedLocalAttentionSpec)
+-                and spec.attention_chunk_size == one_spec.attention_chunk_size
+-                for spec in kv_cache_specs.values()
+-            )
+-        elif isinstance(one_spec, MambaSpec):
+-            return all(
+-                isinstance(spec, MambaSpec)
+-                and spec.num_speculative_blocks == one_spec.num_speculative_blocks
+-                for spec in kv_cache_specs.values()
+-            )
+-        else:
+-            # NOTE(Chen): Please add new branches for new KV cache spec types.
+-            raise NotImplementedError(
+-                f"Unsupported KV cache spec type: {type(one_spec)}"
+-            )
++        first_spec = next(iter(kv_cache_specs.values()))
++        return first_spec.is_uniform_with_collection(kv_cache_specs)
+ 
+     @classmethod
+     def from_specs(cls, kv_cache_specs: dict[str, KVCacheSpec]) -> Self | None:
+diff --git a/vllm/v1/kv_cache_spec_registry.py b/vllm/v1/kv_cache_spec_registry.py
+new file mode 100644
+index 000000000000..816a6862dae2
+--- /dev/null
++++ b/vllm/v1/kv_cache_spec_registry.py
+@@ -0,0 +1,209 @@
++# SPDX-License-Identifier: Apache-2.0
++# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++
++"""
++Registry for KVCacheSpec types and their associated managers.
++
++This module provides a pluggable architecture for registering custom KVCacheSpec
++subclasses without modifying vLLM core code. Out-of-tree platforms can define
++custom specs and managers by using the @register_kv_cache_spec decorator.
++"""
++
++from dataclasses import dataclass
++from typing import TYPE_CHECKING
++
++from vllm.logger import init_logger
++
++logger = init_logger(__name__)
++
++if TYPE_CHECKING:
++    from vllm.v1.core.single_type_kv_cache_manager import SingleTypeKVCacheManager
++    from vllm.v1.kv_cache_interface import KVCacheSpec
++
++
++@dataclass(frozen=True)
++class KVCacheSpecMetadata:
++    """Metadata for a registered KVCacheSpec."""
++
++    kvcache_spec_cls: type["KVCacheSpec"]
++    manager_class: type["SingleTypeKVCacheManager"]
++    # The base spec class for grouping compatibility checks.
++    # KVCacheSpecs with the same uniform_type_base_spec will be
++    # grouped into one kvcache group
++    uniform_type_base_spec: type["KVCacheSpec"]
++
++
++_REGISTRY_KVCACHESPEC_LIST: dict[type["KVCacheSpec"], KVCacheSpecMetadata] = {}
++
++
++class KVCacheSpecRegistry:
++    """Global registry for KVCacheSpec types and their associated managers."""
++
++    @classmethod
++    def _ensure_registered(cls, vllm_config=None) -> None:
++        """
++        Run full KVCacheSpec registration if the registration is not done.
++        """
++        if _REGISTRY_KVCACHESPEC_LIST:
++            return
++
++        if vllm_config is None:
++            from vllm.config import get_current_vllm_config_or_none
++
++            vllm_config = get_current_vllm_config_or_none()
++
++        # lazy import to avoid circular dependency
++        from vllm.v1.core.single_type_kv_cache_manager import (
++            register_all_kvcache_specs,
++        )
++
++        register_all_kvcache_specs(vllm_config)
++
++    @classmethod
++    def register(
++        cls,
++        kvcache_spec_cls: type["KVCacheSpec"],
++        manager_class: type["SingleTypeKVCacheManager"] | None = None,
++        uniform_type_base_spec: type["KVCacheSpec"] | None = None,
++    ) -> None:
++        """
++        Register a KVCacheSpec class with its manager and base spec.
++
++        Args:
++            kvcache_spec_cls: The KVCacheSpec subclass to register
++            manager_class: The SingleTypeKVCacheManager to use for this spec
++            uniform_type_base_spec: The base spec class for grouping compatibility.
++                instead of being grouped to different kvcache group, `kvcache_spec_cls`
++                and `uniform_type_base_spec` will be trated as uniform type.
++                If None, defaults to kvcache_spec_cls itself (for built-in base specs).
++        """
++        assert manager_class is not None, "manager_class is required"
++        if uniform_type_base_spec is None:
++            uniform_type_base_spec = kvcache_spec_cls
++        assert issubclass(kvcache_spec_cls, uniform_type_base_spec), (
++            f"{kvcache_spec_cls.__name__} must inherit from its declared "
++            f"uniform_type_base_spec {uniform_type_base_spec.__name__}."
++        )
++
++        if kvcache_spec_cls in _REGISTRY_KVCACHESPEC_LIST:
++            registered_spec = _REGISTRY_KVCACHESPEC_LIST[kvcache_spec_cls]
++            is_same_registration = (
++                manager_class == registered_spec.manager_class
++                and uniform_type_base_spec == registered_spec.uniform_type_base_spec
++            )
++            assert is_same_registration, (
++                f"Conflicting registration for KVCacheSpec "
++                f": {kvcache_spec_cls.__name__}"
++            )
++
++        _REGISTRY_KVCACHESPEC_LIST[kvcache_spec_cls] = KVCacheSpecMetadata(
++            kvcache_spec_cls=kvcache_spec_cls,
++            manager_class=manager_class,
++            uniform_type_base_spec=uniform_type_base_spec,
++        )
++
++    @classmethod
++    def get_manager_class(
++        cls, kvcache_spec: "KVCacheSpec"
++    ) -> type["SingleTypeKVCacheManager"] | None:
++        """
++        Get the single type kvcache manager class for a given kvcache spec instance.
++
++        Args:
++            kvcache_spec: A KVCacheSpec instance
++
++        Returns:
++            The SingleTypeKVCacheManager class to use for this kvcache_spec
++        """
++        cls._ensure_registered()
++        kvcache_spec_cls = type(kvcache_spec)
++
++        # Walk up the MRO to find a registered base class
++        for base in kvcache_spec_cls.__mro__:
++            if base in _REGISTRY_KVCACHESPEC_LIST:
++                return _REGISTRY_KVCACHESPEC_LIST[base].manager_class
++
++        return None
++
++    @classmethod
++    def get_uniform_type_base_spec(
++        cls, kvcache_spec: "KVCacheSpec"
++    ) -> type["KVCacheSpec"] | None:
++        """
++        Get the base kvcache spec class for grouping compatibility checks.
++        KVCacheSpecs with uniform_type_base_spec will be trated as one group.
++
++        Args:
++            kvcache_spec: A KVCacheSpec instance
++
++        Returns:
++            The base KVCacheSpec class for checking uniform type kvcache specs
++        """
++        cls._ensure_registered()
++        kvcache_spec_cls = type(kvcache_spec)
++
++        # Walk up the MRO to find a registered base spec
++        for base in kvcache_spec_cls.__mro__:
++            if base in _REGISTRY_KVCACHESPEC_LIST:
++                return _REGISTRY_KVCACHESPEC_LIST[base].uniform_type_base_spec
++
++        return None
++
++    @classmethod
++    def check_kv_cache_spec_registry(
++        cls, kv_cache_spec: dict[str, "KVCacheSpec"]
++    ) -> None:
++        """
++        Check if the KVCacheSpecs of each layer are registered as expected.
++        """
++        cls._ensure_registered()
++        for layer_name, spec in kv_cache_spec.items():
++            # use raise instead of assert to make it effective in production environment
++            if cls.get_uniform_type_base_spec(spec) is None:
++                raise ValueError(
++                    f"Unsupported KV cache spec type for layer {layer_name}: "
++                    f"{type(spec)}. Please register it using "
++                    f"@register_kv_cache_spec decorator."
++                )
++            if cls.get_manager_class(spec) is None:
++                raise ValueError(
++                    f"No manager found for KV cache spec type for layer "
++                    f"{layer_name}: {type(spec)}. Please register it using "
++                    f"@register_kv_cache_spec decorator."
++                )
++
++
++def register_kv_cache_spec(
++    manager_class: type["SingleTypeKVCacheManager"] | None = None,
++    uniform_type_base_spec: type["KVCacheSpec"] | None = None,
++):
++    """
++    Decorator to register a custom KVCacheSpec class.
++
++    Args:
++        manager_class: The SingleTypeKVCacheManager to use for this spec.
++            Required for all registered specs.
++        uniform_type_base_spec: The base spec class for uniform type kv cache specs
++            compatibility. If None, the spec is treated as a new base
++            type.
++
++    Examples:
++    - Register a new specs:
++        @register_kv_cache_spec(
++            manager_class=FullAttentionManager,
++            uniform_type_base_spec=FullAttentionSpec
++        )
++        @dataclass(frozen=True, kw_only=True)
++        class CustomFullAttentionSpec(FullAttentionSpec):
++            pass
++    """
++
++    def decorator(kvcache_spec_cls: type["KVCacheSpec"]) -> type["KVCacheSpec"]:
++        KVCacheSpecRegistry.register(
++            kvcache_spec_cls=kvcache_spec_cls,
++            manager_class=manager_class,
++            uniform_type_base_spec=uniform_type_base_spec,
++        )
++        return kvcache_spec_cls
++
++    return decorator
+diff --git a/vllm/v1/worker/gpu_model_runner.py b/vllm/v1/worker/gpu_model_runner.py
+index 108e39a315ad..49b2287b3369 100644
+--- a/vllm/v1/worker/gpu_model_runner.py
++++ b/vllm/v1/worker/gpu_model_runner.py
+@@ -152,6 +152,7 @@
+     SlidingWindowSpec,
+     UniformTypeKVCacheSpecs,
+ )
++from vllm.v1.kv_cache_spec_registry import KVCacheSpecRegistry
+ from vllm.v1.outputs import (
+     EMPTY_MODEL_RUNNER_OUTPUT,
+     AsyncModelRunnerOutput,
+@@ -6240,6 +6241,7 @@ def _init_minimal_kv_cache_for_profiling(self) -> None:
+         )
+ 
+         kv_cache_spec = self.get_kv_cache_spec()
++        KVCacheSpecRegistry.check_kv_cache_spec_registry(kv_cache_spec)
+         kv_cache_groups = get_kv_cache_groups(self.vllm_config, kv_cache_spec)
+         min_blocks = self.compilation_config.max_cudagraph_capture_size or 1
+ 

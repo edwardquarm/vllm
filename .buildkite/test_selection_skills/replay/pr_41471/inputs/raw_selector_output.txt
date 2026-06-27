@@ -1,0 +1,25 @@
+Looking at this PR, I need to analyze what changed and select appropriate tests.
+
+## Analysis
+
+This PR contains three main changes:
+
+1. **Test cleanup in `test_nixl_connector.py` and `test_bidirectional_kv_transfer.py`**: Removes the `set_cycles_before_xfer_done()` testing infrastructure method and related test assertions. The test files themselves are being modified, so they must be tested.
+
+2. **KV connector utility simplification in `utils.py`**: Removes a defensive `if aggregated_kv_connector_stats is None` check, now assuming it's always initialized before calling `.aggregate()`. This is a behavioral change in stats aggregation logic.
+
+3. **Deprecated function removals in `parallel_state.py`**: Removes four functions (`get_context_model_parallel_group`, `patch_tensor_parallel_group`, `get_decode_context_model_parallel_world_size`, `get_decode_context_model_parallel_rank`). These appear to be unused/deprecated code.
+
+The candidate list is huge because these utility modules are used throughout vLLM, but I should narrow down based on what actually exercises the changed code:
+
+- The modified test files must run
+- The `utils.py` change specifically affects KV connector stats aggregation, so KV connector tests are most relevant
+- The function removals are unlikely to break active code (they're deprecations)
+- Basic correctness tests as a safety net for the distributed module changes
+
+---
+
+tests/v1/kv_connector/unit/test_bidirectional_kv_transfer.py | Modified test file, tests KV connector infrastructure
+tests/v1/kv_connector/unit/test_nixl_connector.py | Modified test file, tests removed FakeNixlWrapper method
+tests/v1/kv_connector/unit/ | KV connector unit tests exercise utils.py aggregation logic
+tests/basic_correctness/ | Safety net for distributed parallelism changes in parallel_state.py

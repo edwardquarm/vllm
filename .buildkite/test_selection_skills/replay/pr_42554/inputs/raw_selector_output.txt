@@ -1,0 +1,9 @@
+This PR modifies two core v1 components: the NIXL KV connector worker's prefix caching logic and the scheduler's Mamba block alignment handling with async receive. The worker.py change adds support for SSM prefix caching with placeholders and partial FA prefix cache hits. The scheduler.py change removes an assertion and adds a condition to skip block-aligned splitting during async KV receive setup. The test file for the connector was updated with a new parametrized test for these scenarios. Selection includes direct unit tests of both modified components, async-specific scheduler tests (which are directly affected by the new condition), and e2e tests that exercise these paths in integration.
+
+---
+tests/v1/kv_connector/unit/test_nixl_connector.py | Tests NIXL connector worker logic
+tests/v1/kv_connector/unit/test_nixl_connector_hma.py | Tests prefix caching scenarios (includes new test)
+tests/v1/core/test_scheduler.py | Unit tests for scheduler changes
+tests/v1/core/test_async_scheduler.py | Tests async scheduler (directly affected by condition change)
+tests/v1/core/test_scheduler_e2e.py | E2E scheduler tests
+tests/v1/e2e/general/test_async_scheduling.py | Tests async scheduling integration

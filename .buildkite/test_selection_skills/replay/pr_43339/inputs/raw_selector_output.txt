@@ -1,0 +1,11 @@
+I'm ready to help with the vLLM project! I've reviewed the project instructions in AGENTS.md and understand the contribution guidelines, development workflow, and tooling requirements.
+
+I notice you have modifications in the test selection skills evaluation area and appear to be on a branch focused on auto-test target determination. 
+
+**What would you like help with?** A few common starting points:
+- Working on a specific issue or PR
+- Running tests or debugging something
+- Making code changes
+- Reviewing or evaluating work
+
+Just let me know what you're working on and I'll invoke the appropriate tools and skills to assist.

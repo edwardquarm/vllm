@@ -1,0 +1,69 @@
+# PR numbers to evaluate
+# Add or remove entries here, then run:
+#   .buildkite/test_selection_skills/run_all.sh
+#
+# Options passed to run_evaluation.sh apply to every PR:
+#   --skip-lane-1   reuse existing CI evidence
+#   --skip-lane-2   reuse existing LLM replay
+#   --skip-llm      run Lane 2 without calling claude
+#   --model <m>     LLM model for Lane 2 (default: haiku)
+
+prs:
+  - 3788
+  - 37505
+  - 37888
+  - 38973
+  - 39337
+  - 39601
+  - 40172
+  - 40269
+  - 40392
+  - 40470
+  - 40717
+  - 41252
+  - 41261
+  - 41471
+  - 41802
+  - 41972
+  - 41979
+  - 41991
+  - 42070
+  - 42083
+  - 42129
+  - 42224
+  - 42288
+  - 42343
+  - 42554
+  - 42630
+  - 42676
+  - 42767
+  - 42849
+  - 42913
+  - 42950
+  - 42951
+  - 42952
+  - 42975
+  - 43045
+  - 43140
+  - 43167
+  - 43230
+  - 43260
+  - 43286
+  - 43325
+  - 43339
+  - 43358
+  - 43383
+  - 43543
+  - 43556
+  - 43571
+  - 43581
+  - 43583
+  - 43720
+  - 43824
+  - 43838
+  - 43871
+  - 43972
+  - 44036
+  - 44244
+  - 44484
+  - 44999

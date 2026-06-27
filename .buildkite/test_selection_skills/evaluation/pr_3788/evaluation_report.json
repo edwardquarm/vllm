@@ -1,0 +1,38 @@
+{
+  "pr_number": "3788",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "baseline correctness test, uses API server"
+    },
+    {
+      "selected_test": "tests/entrypoints/openai/test_cli_args.py",
+      "reason": "tests CLI arguments including root_path configuration"
+    },
+    {
+      "selected_test": "tests/entrypoints/openai/responses/",
+      "reason": "tests OpenAI response handling and authentication"
+    },
+    {
+      "selected_test": "tests/entrypoints/openai/chat_completion/test_default_mm_loras.py",
+      "reason": "exercises chat completion endpoint"
+    },
+    {
+      "selected_test": "tests/entrypoints/openai/chat_completion/test_oot_registration.py",
+      "reason": "verifies chat completion API still works"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:04.441470+00:00"
+  ]
+}

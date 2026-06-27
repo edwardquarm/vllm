@@ -1,0 +1,68 @@
+{
+  "pr_number": "43358",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 5,
+    "false_positives": 6,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: Language Models Tests (Hybrid) 1 (mi300_1)",
+      "job_name": "AMD: Language Models Tests (Hybrid) 1 (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "job_name": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (LLM) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (LLM) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/config/test_model_arch_config.py",
+      "reason": "Tests PoolerConfig validation and initialization"
+    },
+    {
+      "selected_test": "tests/test_pooling_params.py",
+      "reason": "Directly tests PoolingParams/PoolerConfig functionality"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/embed/test_offline.py",
+      "reason": "Tests embedding pooling with PoolerConfig"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/classify/test_offline.py",
+      "reason": "Tests classification pooling with PoolerConfig"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/scoring/test_cross_encoder_offline.py",
+      "reason": "Tests cross-encoder pooling with PoolerConfig"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Core correctness check for config changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.013836+00:00"
+  ]
+}

@@ -1,0 +1,210 @@
+diff --git a/tests/v1/determinism/test_batch_invariance.py b/tests/v1/determinism/test_batch_invariance.py
+index 57b466c983ba..415c7d5f3f26 100644
+--- a/tests/v1/determinism/test_batch_invariance.py
++++ b/tests/v1/determinism/test_batch_invariance.py
+@@ -147,8 +147,14 @@ def test_v1_generation_is_deterministic_across_batch_sizes_with_needle(
+     "backend",
+     BACKENDS,
+ )
++@pytest.mark.parametrize(
++    "block_m,block_n",
++    [(16, 16), (8, 16)],
++)
+ def test_logprobs_bitwise_batch_invariance_bs1_vs_bsN(
+     backend,
++    block_m,
++    block_n,
+ ):
+     seed = int(os.getenv("VLLM_TEST_SEED", "12345"))
+     random.seed(seed)
+@@ -172,7 +178,11 @@ def test_logprobs_bitwise_batch_invariance_bs1_vs_bsN(
+         max_model_len=8192,
+         dtype="auto",  # not everything is supported
+         gpu_memory_utilization=0.9,
+-        attention_config={"backend": backend},
++        attention_config={
++            "backend": backend,
++            "flex_attn_block_m": block_m,
++            "flex_attn_block_n": block_n,
++        },
+     )
+ 
+     # Use more realistic prompts for better token generation
+diff --git a/vllm/config/attention.py b/vllm/config/attention.py
+index b5dc7a5bf602..b9f387bf80c2 100644
+--- a/vllm/config/attention.py
++++ b/vllm/config/attention.py
+@@ -67,6 +67,27 @@ class AttentionConfig:
+     use_non_causal: bool = False
+     """Whether to use non-causal (bidirectional) attention."""
+ 
++    flex_attn_block_m: int | None = None
++    """Triton kernel BLOCK_M tile size for flex attention.
++    Must be a power of 2 >= 16. If None and VLLM_BATCH_INVARIANT=1,
++    defaults to 16."""
++
++    flex_attn_block_n: int | None = None
++    """Triton kernel BLOCK_N tile size for flex attention.
++    Must be a power of 2 >= 16. If None and VLLM_BATCH_INVARIANT=1,
++    defaults to 16."""
++
++    flex_attn_q_block_size: int | None = None
++    """Logical Q block size for the flex attention block mask.
++    Must be a power of 2 and divisible by flex_attn_block_m.
++    If None, uses the default (16 on PyTorch >= 2.9, 128 otherwise)."""
++
++    flex_attn_kv_block_size: int | None = None
++    """Logical KV block size for the flex attention block mask.
++    Must be a power of 2 and divisible by flex_attn_block_n.
++    If None, uses the default (kv_cache_block_size on PyTorch >= 2.9,
++    128 otherwise)."""
++
+     def compute_hash(self) -> str:
+         """
+         Provide a hash that uniquely identifies all the configs
+diff --git a/vllm/model_executor/layers/attention/attention.py b/vllm/model_executor/layers/attention/attention.py
+index db9ae2bbda34..b993de050180 100644
+--- a/vllm/model_executor/layers/attention/attention.py
++++ b/vllm/model_executor/layers/attention/attention.py
+@@ -341,6 +341,29 @@ def __init__(
+                 f"but got {self.attn_backend.get_name()}."
+             )
+ 
++        if self.attn_backend.get_name() == "FLEX_ATTENTION":
++            block_m = vllm_config.attention_config.flex_attn_block_m
++            block_n = vllm_config.attention_config.flex_attn_block_n
++
++            if envs.VLLM_BATCH_INVARIANT and cache_config is not None:
++                if block_m is not None and block_m > cache_config.block_size:
++                    raise ValueError(
++                        f"flex_attn_block_m ({block_m}) must be "
++                        f"<= cache block size ({cache_config.block_size}) for "
++                        f"batch invariance"
++                    )
++                if block_n is not None and block_n > cache_config.block_size:
++                    raise ValueError(
++                        f"flex_attn_block_n ({block_n}) must be "
++                        f"<= cache block size ({cache_config.block_size}) for "
++                        f"batch invariance"
++                    )
++
++            if block_m is not None:
++                extra_impl_args.setdefault("block_m", block_m)
++            if block_n is not None:
++                extra_impl_args.setdefault("block_n", block_n)
++
+         impl_cls = self.attn_backend.get_impl_cls()
+         self.impl = impl_cls(  # type: ignore[assignment]  # impl_cls always returns an AttentionImpl subclass
+             num_heads,
+diff --git a/vllm/v1/attention/backends/flex_attention.py b/vllm/v1/attention/backends/flex_attention.py
+index 0ce5baf1a341..3995f67ddc91 100644
+--- a/vllm/v1/attention/backends/flex_attention.py
++++ b/vllm/v1/attention/backends/flex_attention.py
+@@ -769,8 +769,15 @@ def __init__(
+         self.kv_cache_spec = kv_cache_spec
+         supports_small_blocks = is_torch_equal_or_newer("2.9.0.dev0")
+         self.direct_build: bool = supports_small_blocks
+-        self.q_block_size: int = 16 if supports_small_blocks else 128
+-        self.kv_block_size: int = self.block_size if supports_small_blocks else 128
++
++        self.q_block_size, self.kv_block_size = self._get_block_sizes(
++            vllm_config.attention_config,
++            supports_small_blocks,
++            self.block_size,
++        )
++
++        if self.direct_build and self.kv_block_size != self.block_size:
++            self.direct_build = False
+ 
+         self.max_model_len = self.model_config.max_model_len
+         max_num_seqs = vllm_config.scheduler_config.max_num_seqs
+@@ -792,6 +799,39 @@ def __init__(
+         self.persistent_physical_to_logical = None
+         self.persistent_kv_indices = None
+ 
++    @staticmethod
++    def _get_block_sizes(
++        attn_cfg,
++        supports_small_blocks: bool,
++        cache_block_size: int,
++    ) -> tuple[int, int]:
++        q_block_size = 16 if supports_small_blocks else 128
++        kv_block_size = cache_block_size if supports_small_blocks else 128
++
++        q_block_size = attn_cfg.flex_attn_q_block_size or q_block_size
++        if (q_block_size & (q_block_size - 1)) != 0 or (
++            attn_cfg.flex_attn_block_m is not None
++            and q_block_size % attn_cfg.flex_attn_block_m != 0
++        ):
++            raise ValueError(
++                f"flex_attn_q_block_size must be a power of 2 "
++                f"and divisible by flex_attn_block_m, got "
++                f"{q_block_size}, {attn_cfg.flex_attn_block_m}"
++            )
++
++        kv_block_size = attn_cfg.flex_attn_kv_block_size or kv_block_size
++        if (kv_block_size & (kv_block_size - 1)) != 0 or (
++            attn_cfg.flex_attn_block_n is not None
++            and kv_block_size % attn_cfg.flex_attn_block_n != 0
++        ):
++            raise ValueError(
++                f"flex_attn_kv_block_size must be a power of 2 "
++                f"and divisible by flex_attn_block_n, got "
++                f"{kv_block_size}, {attn_cfg.flex_attn_block_n}"
++            )
++
++        return q_block_size, kv_block_size
++
+     def build_for_cudagraph_capture(
+         self, common_attn_metadata: CommonAttentionMetadata
+     ) -> FlexAttentionMetadata:
+@@ -946,6 +986,8 @@ def __init__(
+         logits_soft_cap: float | None = None,
+         attn_type: AttentionType = AttentionType.DECODER,
+         kv_sharing_target_layer_name: str | None = None,
++        block_m: int | None = None,
++        block_n: int | None = None,
+         **kwargs,
+     ) -> None:
+         self.num_heads = num_heads
+@@ -986,6 +1028,14 @@ def __init__(
+                 "FlexAttention does not support quantized kv-cache. Yet"
+             )
+ 
++        self.block_m = 16 if envs.VLLM_BATCH_INVARIANT else None
++        self.block_n = 16 if envs.VLLM_BATCH_INVARIANT else None
++
++        if block_m is not None:
++            self.block_m = block_m
++        if block_n is not None:
++            self.block_n = block_n
++
+     @staticmethod
+     def view_as_4d(tensor: torch.Tensor) -> torch.Tensor:
+         """View a 3d tensor as 4D."""
+@@ -1131,6 +1181,13 @@ def forward(
+         kernel_options = get_kernel_options(
+             query, block_m, block_n, attn_metadata.direct_build
+         )
++
++        if self.block_m is not None:
++            kernel_options["BLOCK_M"] = self.block_m
++        if self.block_n is not None:
++            kernel_options["BLOCK_N"] = self.block_n
++        if envs.VLLM_BATCH_INVARIANT:
++            kernel_options["IS_DIVISIBLE"] = False
+         out = flex_attention_compiled(
+             query,
+             key_tensor,
+@@ -1170,11 +1227,6 @@ def ensure_divisible(candidate: int, block_size: int) -> int:
+             return block_size
+         return candidate
+ 
+-    if envs.VLLM_BATCH_INVARIANT:
+-        kernel_options["BLOCK_M"] = 16
+-        kernel_options["BLOCK_N"] = 16
+-        kernel_options["IS_DIVISIBLE"] = False
+-        return kernel_options
+     if use_direct_build:
+         kernel_options["BLOCK_M"] = block_m
+         kernel_options["BLOCK_N"] = block_n

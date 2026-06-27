@@ -1,0 +1,4 @@
+This PR modifies a CUDA dependency version in `requirements/cuda.txt`, downgrading `nvidia-cutlass-dsl` from 4.5.1 to 4.5.0. This is a dependency file change with no Python source files modified. Per Rule 3, dependency changes (`requirements/*.txt`) require running `tests/basic_correctness/` to catch any integration issues or regressions caused by the version change.
+
+---
+tests/basic_correctness/ | requirements file changed (Rule 3: run basic_correctness for requirements changes)

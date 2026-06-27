@@ -15,23 +15,22 @@ from typing import Any, Dict
 
 
 def fetch_test_runs_mcp(org_slug: str, pipeline_slug: str) -> Dict[str, Any]:
-    """Fetch test runs using the MCP `list_test_runs` tool (hardcoded test_suite_slug)."""
-    from claude_toolkit.tools import CPTool
-
-    # Guess test_suite_slug = pipeline_slug (common convention)
-    test_suite_slug = pipeline_slug
-
+    """Fetch test runs using the MCP `list_test_runs` tool (only works inside Claude Code)."""
     try:
-        # Try MCP list_test_runs tool
+        from claude_toolkit.tools import CPTool
+    except ImportError:
+        return {}
+
+    test_suite_slug = pipeline_slug
+    try:
         tool = CPTool.get_tool("mcp__buildkite_litellm__buildkite_mcp_server-list_test_runs")
         result = tool.invoke({
             "org_slug": org_slug,
             "test_suite_slug": test_suite_slug,
-            "per_page": 100  # Fetch recent test runs
+            "per_page": 100
         })
 
         if "items" in result:
-            # Extract all test executions
             all_tests = []
             for run in result["items"]:
                 if "test_executions" in run:

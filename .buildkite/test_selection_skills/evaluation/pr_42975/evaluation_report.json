@@ -1,0 +1,36 @@
+{
+  "pr_number": "42975",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] CPU-Language Generation and Pooling Model Tests",
+      "job_name": "CPU-Language Generation and Pooling Model Tests",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/entrypoints/llm/test_chat.py",
+      "reason": "chat() refactoring regression, enqueue_chat() integration"
+    },
+    {
+      "selected_test": "tests/entrypoints/llm/test_mm_processor_kwargs.py",
+      "reason": "new enqueue_chat() and refactored _run_chat() methods"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "LLM core entrypoint sanity check"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.674173+00:00"
+  ]
+}

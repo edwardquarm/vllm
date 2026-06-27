@@ -1,0 +1,22 @@
+{
+  "pr_number": "43571",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/models/quantization/test_gpt_oss.py",
+      "reason": "verify conditional import guard works on non-ROCm platforms"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:06.163687+00:00"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "pr_number": "3788",
+  "repo": "vllm-project/vllm",
+  "status": "no_results",
+  "buildkite_builds": [],
+  "buildkite_jobs_from_statuses": [],
+  "jobs_run": [],
+  "jobs_failed": [],
+  "tests_run": [],
+  "tests_failed": [],
+  "failed_test_list": [],
+  "tests_run_count": 0,
+  "summary_stats": {},
+  "artifacts": [],
+  "notes": [
+    "No Buildkite build or GitHub statuses found for this PR",
+    "Evidence collected on 2026-06-26T17:58:11.163195+00:00",
+    "Buildkite builds found: 0",
+    "Total tests run: 0",
+    "Failed tests: 0"
+  ]
+}

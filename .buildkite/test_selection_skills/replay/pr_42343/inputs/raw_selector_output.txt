@@ -1,0 +1,5 @@
+This PR increases the DP Coordinator startup timeout from 30 to 120 seconds and improves the error message to include the timeout value. The change is highly localized to the `_wait_for_zmq_addrs` initialization method in the DPCoordinator class. Since the change only increases the timeout window (making startup more lenient) and improves diagnostics, tests that directly exercise the DP Coordinator's startup path are the most relevant. The two tests that specifically test distributed Data Parallel scenarios are the primary candidates. This is a low-risk change that should make the system more robust rather than cause regressions.
+
+---
+tests/v1/distributed/test_async_llm_dp.py | DP Coordinator startup timeout change
+tests/v1/distributed/test_eagle_dp.py | DP Coordinator used in Eagle distributed scenario

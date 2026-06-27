@@ -1,0 +1,37 @@
+{
+  "pr_number": "43045",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 2,
+    "false_positives": 2,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server 2) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/quantization/test_register_quantization_config.py",
+      "reason": "Test file directly validates the logging level change"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Log-level changes are low risk, include basic_correctness per Rule 1"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.711134+00:00"
+  ]
+}

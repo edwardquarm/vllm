@@ -1,0 +1,5 @@
+This PR only modifies `.buildkite/test_areas/*.yaml` files, changing device specifications from `mi300_1` to `mi325_1` for AMD mirrors. These are Buildkite CI configuration files that specify which hardware to run tests on, not the tests themselves. No Python source files in vllm/ are changed, and no candidate tests were identified by import analysis.
+
+---
+
+NONE | changes are `.buildkite/` configuration only (Rule 3)

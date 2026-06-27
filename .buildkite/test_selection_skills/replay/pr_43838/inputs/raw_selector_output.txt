@@ -1,0 +1,5 @@
+This PR refactors the `is_cumem_allocator_available()` function by moving it from `vllm/config/model.py` to `vllm/platforms/interface.py` as a method of the Platform class. The function logic remains unchanged—only its location and the single call site are updated. Since this is a low-risk refactoring with no behavior changes, I'm selecting tests that would catch if the function is misplaced or the call site is broken: tests that specifically exercise the cumem allocator path and model config initialization.
+
+---
+tests/basic_correctness/test_cumem.py | directly tests cumem allocator functionality
+tests/config/test_model_arch_config.py | tests ModelConfig initialization and validation

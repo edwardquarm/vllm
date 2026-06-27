@@ -1,0 +1,2 @@
+.readthedocs.yaml
+docs/pre_run_check.sh

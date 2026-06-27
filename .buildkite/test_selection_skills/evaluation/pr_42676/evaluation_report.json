@@ -1,0 +1,30 @@
+{
+  "pr_number": "42676",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/",
+      "reason": "directly tests KV connector pre_forward logic"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "exercises the changed pre_forward() code path end-to-end"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "sanity check for basic model correctness"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-27T02:48:05.419257+00:00"
+  ]
+}
