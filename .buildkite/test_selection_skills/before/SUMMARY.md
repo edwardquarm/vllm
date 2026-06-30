@@ -2,6 +2,26 @@
 
 > Evaluated using `TEST_SELECTION.md` (Rules 1–5)
 
+## How to Read This Report
+
+The LLM selector reads a PR diff and predicts which CI tests will fail. We compare those
+predictions against what actually failed in Buildkite CI.
+
+| Term | Meaning | Impact |
+|------|---------|--------|
+| **TP (True Positive)**  | LLM selected it AND CI failed it | ✅ Correct prediction |
+| **FN (False Negative)** | LLM did NOT select it BUT CI failed it | ❌ Missed failure — dangerous |
+| **FP (False Positive)** | LLM selected it BUT CI passed it | ⚠️ Wasted test run — costly, not dangerous |
+| **Recall** | `TP / (TP + FN)` — fraction of real failures the LLM caught | Higher = safer |
+| **Precision** | `TP / (TP + FP)` — fraction of selections that were real failures | Higher = less waste |
+
+**Ideal state: FN = 0, FP as low as possible.**
+FN = 0 means every real CI failure was predicted — you can safely skip everything else.
+FP just wastes compute; FN ships bugs. A "select everything" selector achieves FN = 0 trivially
+but saves nothing — the goal is FN = 0 with minimal FP.
+
+---
+
 ## Overall Results
 
 | Metric                                    | Value        |
