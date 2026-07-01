@@ -72,6 +72,11 @@ def main():
         default=None,
         help="Model passed to Lane 2 replay_selector.py"
     )
+    parser.add_argument(
+        "--with-second-pass",
+        action="store_true",
+        help="Run second pass agent between Lane 2 and Lane 3"
+    )
 
     args = parser.parse_args()
 
@@ -130,6 +135,57 @@ def main():
     else:
         print(f"\n>>> Skipping Lane 2 (using existing replay at {selector_replay_path})")
 
+    # Lane 2.5: Second Pass Agent
+    replay_for_lane3 = selector_replay_path
+    if args.with_second_pass and not args.dry_run:
+        skills_dir = script_dir.parent
+        patterns_file       = skills_dir / "failure_patterns.json"
+        second_pass_script  = skills_dir / "after" / "second_pass.py"
+        second_pass_instr   = skills_dir / "after" / "SECOND_PASS.md"
+        merge_script        = skills_dir / "after" / "merge_second_pass.py"
+        augmented_replay    = selector_replay_path.parent / "selector_replay_augmented.json"
+
+        if all(f.exists() for f in [patterns_file, second_pass_script, second_pass_instr, merge_script, selector_replay_path]):
+            print("\n>>> Lane 2.5: Running second pass agent...")
+            import json, subprocess
+
+            replay_data   = json.loads(selector_replay_path.read_text())
+            changed_files = "\n".join(replay_data.get("changed_files", []))
+            initial_sel   = "\n".join(
+                f"{(t.get('identifier',t) if isinstance(t,dict) else t)} | {(t.get('reason','selected') if isinstance(t,dict) else 'selected')}"
+                for t in replay_data.get("llm_selected_tests", [])
+            )
+
+            sp_result = subprocess.run(
+                [str(python), str(second_pass_script),
+                 "--changed-files",     changed_files,
+                 "--initial-selection", initial_sel,
+                 "--patterns-file",     str(patterns_file),
+                 "--instructions",      str(second_pass_instr),
+                 "--model", "haiku"],
+                capture_output=True, text=True
+            )
+            additions = sp_result.stdout.strip()
+            is_none   = "NONE" in additions.upper() if additions else True
+
+            if additions and not is_none:
+                print(f"    Second pass additions:\n" +
+                      "\n".join(f"      {l}" for l in additions.splitlines()))
+                merge_result = subprocess.run(
+                    [str(python), str(merge_script),
+                     "--replay",    str(selector_replay_path),
+                     "--additions", additions,
+                     "--output",    str(augmented_replay)],
+                    capture_output=True, text=True
+                )
+                print(merge_result.stdout.strip())
+                replay_for_lane3 = augmented_replay
+            else:
+                print("    Second pass: no additions — initial selection is complete.")
+            print("✓ Lane 2.5 complete")
+        else:
+            print("\n>>> Skipping Lane 2.5 (second pass files not found)")
+
     # Lane 3: Compare Results
     if args.dry_run:
         print("\n>>> --dry-run specified. Skipping Lane 3 comparison.")
@@ -148,7 +204,7 @@ def main():
             str(python), str(script_dir / "compare_selector_vs_ci.py"),
             args.pr_number,
             "--ci-evidence", str(ci_evidence_path),
-            "--selector-replay", str(selector_replay_path)
+            "--selector-replay", str(replay_for_lane3)
         ]
 
         if args.output_dir:

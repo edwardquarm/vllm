@@ -34,12 +34,13 @@ PASS_THROUGH=()
 for arg in "$@"; do
     if [ "$arg" = "--second-pass" ]; then
         SECOND_PASS=1
+        PASS_THROUGH+=("--with-second-pass")
     else
         PASS_THROUGH+=("$arg")
     fi
 done
 
-# Run normal evaluation
+# Run evaluation (with --with-second-pass wired through if requested)
 "$PYTHON" "$SCRIPT_DIR/scripts/run_evaluation_skill.py" "$PR_NUMBER" "${PASS_THROUGH[@]}"
 
 # Optionally run the second pass agent and score the result
