@@ -1,0 +1,4356 @@
+{
+  "_meta": {
+    "description": "Historical CI failure patterns derived from offline evaluation runs. Maps source areas to jobs/tests that historically fail when those areas change. Used by the critic agent to identify gaps in test selections.",
+    "pr_count": 38,
+    "source_area_count": 28,
+    "how_to_use": "Given a PR's changed files, look up each source area in 'by_source_area'. The 'frequently_failing_jobs' list tells you which CI jobs historically fail for that area \u2014 check whether the primary selector covered them. Use 'by_job' to ask the reverse question: given a known failing job type, what source areas usually caused it?"
+  },
+  "by_source_area": {
+    "CMakeLists.txt": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention/mla",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/fp4",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ]
+    },
+    "csrc/attention/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention/mla",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/fp4",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ]
+    },
+    "csrc/cache_kernels_fused.cu/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        }
+      ]
+    },
+    "csrc/moe/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Basic Models Tests (Extra Initialization) 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        },
+        {
+          "job": "Distributed DP Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        },
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        },
+        {
+          "job": "Language Models Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/models",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/distributed",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms/rocm.py",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41261",
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/distributed",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        },
+        {
+          "test_path": "tests/distributed/test_utils",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41261"
+          ]
+        }
+      ]
+    },
+    "csrc/ops.h/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention/mla",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/fp4",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ]
+    },
+    "csrc/quantization/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41802",
+            "41979"
+          ]
+        },
+        {
+          "job": "AMD: V1 Sample + Logits",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "job": "Basic Models Tests (Extra Initialization) 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "job": "Basic Models Tests (Extra Initialization) 2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "job": "Distributed Model Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "job": "PyTorch Compilation Unit Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "job": "e2e Scheduling",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41802",
+            "41979"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41802",
+            "41979"
+          ]
+        },
+        {
+          "test_path": "tests/compile",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/model_executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/model_executor/model_loader",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/model_executor/model_loader/test_sharded_state_loader.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/models/language",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        },
+        {
+          "test_path": "tests/models/multimodal",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41802"
+          ]
+        }
+      ]
+    },
+    "csrc/torch_bindings.cpp/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention/mla",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/fp4",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ]
+    },
+    "requirements/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Ascend NPU Test",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "job": "Cudagraph",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Distributed Torchrun + Examples",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Engine",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Entrypoints Unit Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Fusion and Compile Unit Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Kernels Quantization Test 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Kernels Quantization Test 2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        },
+        {
+          "job": "Language Models Tests (Extra Standard) 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/models",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/layers",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/v1/attention",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43230",
+            "44036"
+          ]
+        },
+        {
+          "test_path": "tests/compile",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43230"
+          ]
+        }
+      ]
+    },
+    "vllm/_custom_ops.py/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 1)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Hybrid SSM NixlConnector PD accuracy tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/attention/mla",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/cutlass_w8a8/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization/fp4",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42767"
+          ]
+        }
+      ]
+    },
+    "vllm/benchmarks/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "CPU-Language Generation and Pooling Model Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "Ascend NPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "CPU-Multi-Modal Model Tests 3",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "Kernels FP8 MoE Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "LM Eval Large Models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "LM Eval TurboQuant KV Cache",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "Model Executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "job": "Multi-Modal Models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/models",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42975",
+            "44244"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42975",
+            "44244"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/cpu",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language/generation",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language/pooling",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "44244"
+          ]
+        }
+      ]
+    },
+    "vllm/compilation/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        }
+      ]
+    },
+    "vllm/config/": {
+      "total_prs_with_failures": 5,
+      "frequently_failing_jobs": [
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40392"
+          ]
+        },
+        {
+          "job": "XPU V1 test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41252"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (LLM)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Language Models Tests (Hybrid) 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43838"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 4,
+          "seen_in_prs": [
+            "39337",
+            "41252",
+            "43358",
+            "43838"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39337",
+            "41252"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "40392",
+            "43358"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e/spec_decode",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/layers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/model_loader",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms/rocm.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        }
+      ]
+    },
+    "vllm/distributed/": {
+      "total_prs_with_failures": 4,
+      "frequently_failing_jobs": [
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "job": ":python: Build vLLM ROCm Wheel - x86_64",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CPU",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CUDA 12.9",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CUDA 13.0",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CPU",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CUDA 12.9",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CUDA 13.0",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        },
+        {
+          "job": "Generate and upload wheel indices",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41471"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/config",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/renderers",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests/lazy_imports.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_inputs.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_outputs.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_pooling_params.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_ray_env.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42554",
+            "43339",
+            "43720"
+          ]
+        }
+      ]
+    },
+    "vllm/entrypoints/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "CPU-Language Generation and Pooling Model Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42975",
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/cpu",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language/generation",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/models/language/pooling",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42975"
+          ]
+        },
+        {
+          "test_path": "tests/config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        }
+      ]
+    },
+    "vllm/env_override.py/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": ":python: Build vLLM ROCm Wheel - x86_64",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Ascend NPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CPU",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CUDA 12.9",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - aarch64 - CUDA 13.0",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CPU",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CUDA 12.9",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Build wheel - x86_64 - CUDA 13.0",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "CPU-ModelRunnerV2 Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "job": "Generate and upload wheel indices",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai/completion",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai/completion/test_tensorizer_entrypoint.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/kernels/moe",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/kernels/moe/test_block_int8.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/kernels/moe/test_cutlass_moe.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        },
+        {
+          "test_path": "tests/kernels/moe/test_flashinfer.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42129"
+          ]
+        }
+      ]
+    },
+    "vllm/envs.py/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "job": "V1 Sample + Logits",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39337",
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39337",
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e/spec_decode",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/layers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/model_loader",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms/rocm.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        }
+      ]
+    },
+    "vllm/model_executor/": {
+      "total_prs_with_failures": 13,
+      "frequently_failing_jobs": [
+        {
+          "job": "Intel GPU Test",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "40392",
+            "41979"
+          ]
+        },
+        {
+          "job": "XPU V1 test",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "41252",
+            "42630"
+          ]
+        },
+        {
+          "job": "CPU-Language Generation and Pooling Model Tests",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42630",
+            "43167"
+          ]
+        },
+        {
+          "job": "bootstrap",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43167",
+            "44999"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43581",
+            "44484"
+          ]
+        },
+        {
+          "job": "AMD: :docker: build image",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Batch Invariance",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Fusion E2E TP2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Regression",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42070"
+          ]
+        },
+        {
+          "job": "Multi-Modal Models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42224"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 11,
+          "seen_in_prs": [
+            "40717",
+            "41252",
+            "42070",
+            "42224",
+            "42630",
+            "43045",
+            "43167",
+            "43383",
+            "43581",
+            "44484",
+            "44999"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 6,
+          "seen_in_prs": [
+            "40392",
+            "41979",
+            "42630",
+            "43045",
+            "43581",
+            "44484"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 4,
+          "seen_in_prs": [
+            "40717",
+            "41252",
+            "42630",
+            "43383"
+          ]
+        },
+        {
+          "test_path": "tests/models",
+          "failure_count": 4,
+          "seen_in_prs": [
+            "42224",
+            "42630",
+            "43167",
+            "44999"
+          ]
+        },
+        {
+          "test_path": "tests/models/multimodal",
+          "failure_count": 4,
+          "seen_in_prs": [
+            "42224",
+            "42630",
+            "43167",
+            "44999"
+          ]
+        },
+        {
+          "test_path": "tests/models/multimodal/generation",
+          "failure_count": 4,
+          "seen_in_prs": [
+            "42224",
+            "42630",
+            "43167",
+            "44999"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40717",
+            "42630",
+            "43167"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42630",
+            "43045",
+            "44484"
+          ]
+        },
+        {
+          "test_path": "tests/models/multimodal/generation/test_common.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "42630",
+            "43167",
+            "44999"
+          ]
+        },
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "40392",
+            "41979"
+          ]
+        }
+      ]
+    },
+    "vllm/models/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "job": "Metrics, Tracing",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/rpc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/serve",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/serve/instrumentator",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/renderers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests/lazy_imports.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        }
+      ]
+    },
+    "vllm/platforms/": {
+      "total_prs_with_failures": 3,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: :docker: build image",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Batch Invariance",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Fusion E2E TP2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "job": "V1 Sample + Logits",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43838"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40717",
+            "42083",
+            "43838"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "40717",
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/compile",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/compile/fusions_e2e",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/compile/fusions_e2e/test_tp2_ar_rms.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/compile/fusions_e2e/test_tp2_async_tp.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/csrc/quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/v1/determinism",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        },
+        {
+          "test_path": "tests/v1/determinism/test_batch_invariance.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40717"
+          ]
+        }
+      ]
+    },
+    "vllm/renderers/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/renderers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests/lazy_imports.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/test_inputs.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/test_outputs.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/test_pooling_params.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        },
+        {
+          "test_path": "tests/test_ray_env.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43260"
+          ]
+        }
+      ]
+    },
+    "vllm/tool_parsers/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": ":docker: Build XPU image",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Ascend NPU Test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Distributed Torchrun + Examples",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Fusion and Compile Unit Tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Kernels",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Kernels Quantization Test 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Kernels Quantization Test 2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Multi-Modal Models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Python-only Installation",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        },
+        {
+          "job": "Quantization",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39601"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/compile",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/csrc",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1/logits_processors",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1/sample",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_oracle.py",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_outputs.py",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_request.py",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/compilation",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39601",
+            "41991"
+          ]
+        }
+      ]
+    },
+    "vllm/utils/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "job": "Metrics, Tracing",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (LLM)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Language Models Tests (Hybrid) 1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        },
+        {
+          "job": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43358"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43339",
+            "43358"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43339",
+            "43358"
+          ]
+        },
+        {
+          "test_path": "tests/config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/rpc",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/serve",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/serve/instrumentator",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/renderers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43339"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/attention/": {
+      "total_prs_with_failures": 3,
+      "frequently_failing_jobs": [
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "job": "XPU V1 test",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "41252"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43325"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43325"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "39337",
+            "41252",
+            "43325"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39337",
+            "41252"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e/spec_decode",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/layers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/model_loader",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms/rocm.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/core/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42554"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "39337",
+            "42554"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/v1/e2e/spec_decode",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/layers",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/model_executor/model_loader",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/platforms/rocm.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "test_path": "tests/vllm/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/engine/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 3)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42343"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "job": "RayExecutorV2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/basic_correctness",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/basic_correctness/test_basic_correctness.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/distributed",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/distributed/test_pipeline_parallel.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/distributed/test_ray_v2_executor.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/distributed/test_ray_v2_executor_e2e.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai/chat_completion",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/executor/": {
+      "total_prs_with_failures": 2,
+      "frequently_failing_jobs": [
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42083",
+            "43720"
+          ]
+        },
+        {
+          "job": "V1 Sample + Logits",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        },
+        {
+          "job": "RayExecutorV2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/entrypoints",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42083",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/openai",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42083",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/entrypoints/test_chat_utils",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42083",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "42083",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/logits_processors",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/sample",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_oracle.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_outputs.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        },
+        {
+          "test_path": "tests/v1/test_request.py",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42083"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/pool/": {
+      "total_prs_with_failures": 1,
+      "frequently_failing_jobs": [
+        {
+          "job": "Metrics, Tracing",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43383"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/v1",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43383"
+          ]
+        },
+        {
+          "test_path": "tests/v1/tracing",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43383"
+          ]
+        },
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43383"
+          ]
+        }
+      ]
+    },
+    "vllm/v1/worker/": {
+      "total_prs_with_failures": 6,
+      "frequently_failing_jobs": [
+        {
+          "job": "Async Engine, Inputs, Utils, Worker, Config",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "job": "Entrypoints Integration",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "job": "Metrics, Tracing",
+          "failure_count": 2,
+          "seen_in_prs": [
+            "43339",
+            "43543"
+          ]
+        },
+        {
+          "job": "Spec Decode Draft Model",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "39337"
+          ]
+        },
+        {
+          "job": "Multi-Modal Processor",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "40172"
+          ]
+        },
+        {
+          "job": "Multi-Modal Models",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "42224"
+          ]
+        },
+        {
+          "job": "AMD: Entrypoints Integration (API Server openai - Part 2)",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43543"
+          ]
+        },
+        {
+          "job": "AMD: Language Models Tests (Hybrid) 2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43543"
+          ]
+        },
+        {
+          "job": "RayExecutorV2",
+          "failure_count": 1,
+          "seen_in_prs": [
+            "43720"
+          ]
+        }
+      ],
+      "frequently_failing_tests": [
+        {
+          "test_path": "tests/vllm",
+          "failure_count": 6,
+          "seen_in_prs": [
+            "39337",
+            "40172",
+            "42224",
+            "43339",
+            "43543",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/v1",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "39337",
+            "43339",
+            "43543"
+          ]
+        },
+        {
+          "test_path": "tests/config",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/multimodal",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/reasoning",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/renderers",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/standalone_tests/lazy_imports.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_inputs.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        },
+        {
+          "test_path": "tests/test_outputs.py",
+          "failure_count": 3,
+          "seen_in_prs": [
+            "40172",
+            "43339",
+            "43720"
+          ]
+        }
+      ]
+    }
+  },
+  "by_job": {
+    ":docker: Build XPU image": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    ":python: Build vLLM ROCm Wheel - x86_64": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: :docker: build image": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/platforms/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (API Server 2)": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (API Server OpenAI - Part 1)": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (API Server openai - Part 1)": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/torch_bindings.cpp/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/ops.h/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/_custom_ops.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "CMakeLists.txt",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (API Server openai - Part 2)": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (API Server openai - Part 3)": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/engine/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Entrypoints Integration (LLM)": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Language Models Tests (Hybrid) 1": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Language Models Tests (Hybrid) 2": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "AMD: V1 Sample + Logits": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Ascend NPU Test": {
+      "most_common_source_areas": [
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Async Engine, Inputs, Utils, Worker": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Async Engine, Inputs, Utils, Worker, Config": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 3
+        },
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 3
+        },
+        {
+          "area": "vllm/v1/core/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/entrypoints/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/renderers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/models/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Basic Models Tests (Extra Initialization) 1": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Basic Models Tests (Extra Initialization) 2": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Batch Invariance": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/platforms/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - aarch64 - CPU": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - aarch64 - CUDA 12.9": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - aarch64 - CUDA 13.0": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - x86_64 - CPU": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - x86_64 - CUDA 12.9": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Build wheel - x86_64 - CUDA 13.0": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "CPU-Language Generation and Pooling Model Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/entrypoints/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "CPU-ModelRunnerV2 Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "CPU-Multi-Modal Model Tests 3": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/torch_bindings.cpp/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/ops.h/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/_custom_ops.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "CMakeLists.txt",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Cudagraph": {
+      "most_common_source_areas": [
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Distributed DP Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Distributed Model Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Distributed Torchrun + Examples": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Engine": {
+      "most_common_source_areas": [
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Entrypoints Integration": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/executor/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/envs.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/platforms/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/models/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Entrypoints Unit Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Fusion E2E TP2": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/platforms/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Fusion and Compile Unit Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Generate and upload wheel indices": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Hybrid SSM NixlConnector PD accuracy tests": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/torch_bindings.cpp/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/ops.h/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/_custom_ops.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "CMakeLists.txt",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Intel GPU Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/compilation/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/cache_kernels_fused.cu/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Kernels": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/torch_bindings.cpp/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/ops.h/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/_custom_ops.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "CMakeLists.txt",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Kernels FP8 MoE Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Kernels Quantization Test 1": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Kernels Quantization Test 2": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "LM Eval Large Models": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "LM Eval TurboQuant KV Cache": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Language Models Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/moe/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Language Models Tests (Extra Standard) 1": {
+      "most_common_source_areas": [
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Metrics, Tracing": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/utils/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/models/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/pool/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Model Executor": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Multi-Modal Models": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Multi-Modal Models (Standard) 2: qwen3 + gemma": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Multi-Modal Models (Standard) 3: llava + qwen2_vl": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Multi-Modal Processor": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "PyTorch Compilation Unit Tests": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Python-only Installation": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Quantization": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Quantized MoE Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Quantized Models Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "RayExecutorV2": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/executor/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/engine/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/distributed/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Regression": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Spec Decode Draft Model": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/v1/core/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/envs.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/worker/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/torch_bindings.cpp/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "csrc/attention/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Spec Decode Draft Model Nightly B200": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Torch Nightly Basic Models Tests (Extra Initialization) 1": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Torch Nightly Basic Models Tests (Extra Initialization) 2": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/env_override.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "Transformers Backward Compatibility Models Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "V1 Core + KV + Metrics": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "V1 Sample + Logits": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/envs.py/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/platforms/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/v1/executor/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "V1 Spec Decode": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "requirements/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "XPU V1 test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 2
+        },
+        {
+          "area": "vllm/v1/attention/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/config/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "XPU example Test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "XPU server test": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/tool_parsers/",
+          "co_occurrence_count": 1
+        }
+      ]
+    },
+    "bootstrap": {
+      "most_common_source_areas": [
+        {
+          "area": "vllm/model_executor/",
+          "co_occurrence_count": 2
+        }
+      ]
+    },
+    "e2e Scheduling": {
+      "most_common_source_areas": [
+        {
+          "area": "csrc/quantization/",
+          "co_occurrence_count": 1
+        },
+        {
+          "area": "vllm/benchmarks/",
+          "co_occurrence_count": 1
+        }
+      ]
+    }
+  }
+}
