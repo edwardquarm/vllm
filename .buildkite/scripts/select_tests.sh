@@ -138,6 +138,41 @@ COST_FRAC=$((COST_MICROS % 10))
 echo "Estimated cost: ~\$0.${COST_CENTS}${COST_FRAC} (${INPUT_TOKENS} input + ${OUTPUT_TOKENS} output tokens)" >&2
 
 # ---------------------------------------------------------------------------
+# Step 4b: Second Pass Agent — check historical failure patterns for gaps
+# ---------------------------------------------------------------------------
+PATTERNS_FILE="$SCRIPT_DIR/../test_selection_skills/failure_patterns.json"
+SECOND_PASS_INSTRUCTIONS="$SCRIPT_DIR/../SECOND_PASS.md"
+
+if [ -f "$PATTERNS_FILE" ] && [ -f "$SECOND_PASS_INSTRUCTIONS" ]; then
+    echo "Running second pass agent against historical failure patterns..." >&2
+
+    # Extract just the test list from the initial selection (after the --- separator)
+    INITIAL_TEST_LIST=$(echo "$SELECTION" | sed -n '/^---$/,$ p' | sed '1d' | grep -E '^[[:space:]]*[a-zA-Z0-9_/.-]+ *\|' || true)
+
+    ADDITIONS=$("$PYTHON" "$SCRIPT_DIR/second_pass.py" \
+        --changed-files "$CHANGED_FILES" \
+        --initial-selection "$INITIAL_TEST_LIST" \
+        --patterns-file "$PATTERNS_FILE" \
+        --instructions "$SECOND_PASS_INSTRUCTIONS" \
+        --model haiku 2>/dev/null || true)
+
+    # Merge additions into SELECTION if second pass found anything new
+    IS_ADDITIONS_NONE=$(echo "$ADDITIONS" | grep -ic '^[[:space:]]*NONE' || true)
+
+    if [ -n "$ADDITIONS" ] && [ "$IS_ADDITIONS_NONE" -eq 0 ]; then
+        echo "Second pass added:" >&2
+        echo "$ADDITIONS" >&2
+        # Append additions to the test list section of SELECTION
+        SELECTION="${SELECTION}
+${ADDITIONS}"
+    else
+        echo "Second pass: initial selection is complete, no additions." >&2
+    fi
+else
+    echo "Skipping second pass (patterns file or instructions not found)." >&2
+fi
+
+# ---------------------------------------------------------------------------
 # Step 5: Parse reasoning and test list, build the PR comment
 # ---------------------------------------------------------------------------
 
