@@ -141,15 +141,16 @@ echo "Estimated cost: ~\$0.${COST_CENTS}${COST_FRAC} (${INPUT_TOKENS} input + ${
 # Step 4b: Second Pass Agent — check historical failure patterns for gaps
 # ---------------------------------------------------------------------------
 PATTERNS_FILE="$SCRIPT_DIR/../test_selection_skills/failure_patterns.json"
-SECOND_PASS_INSTRUCTIONS="$SCRIPT_DIR/../SECOND_PASS.md"
+SECOND_PASS_INSTRUCTIONS="$SCRIPT_DIR/../test_selection_skills/after/SECOND_PASS.md"
+SECOND_PASS_SCRIPT="$SCRIPT_DIR/../test_selection_skills/after/second_pass.py"
 
-if [ -f "$PATTERNS_FILE" ] && [ -f "$SECOND_PASS_INSTRUCTIONS" ]; then
+if [ -f "$PATTERNS_FILE" ] && [ -f "$SECOND_PASS_INSTRUCTIONS" ] && [ -f "$SECOND_PASS_SCRIPT" ]; then
     echo "Running second pass agent against historical failure patterns..." >&2
 
     # Extract just the test list from the initial selection (after the --- separator)
     INITIAL_TEST_LIST=$(echo "$SELECTION" | sed -n '/^---$/,$ p' | sed '1d' | grep -E '^[[:space:]]*[a-zA-Z0-9_/.-]+ *\|' || true)
 
-    ADDITIONS=$("$PYTHON" "$SCRIPT_DIR/second_pass.py" \
+    ADDITIONS=$("$PYTHON" "$SECOND_PASS_SCRIPT" \
         --changed-files "$CHANGED_FILES" \
         --initial-selection "$INITIAL_TEST_LIST" \
         --patterns-file "$PATTERNS_FILE" \
