@@ -23,6 +23,35 @@ but saves nothing — the goal is FN = 0 with minimal FP.
 
 ---
 
+## What the Second Pass Does
+
+The second pass is an additive review step that runs after the primary LLM selector.
+It does not redo the initial selection from scratch. Instead, it checks whether the
+primary selector missed tests that historically fail for the source areas changed by
+the PR.
+
+For each changed `vllm/`, `csrc/`, dependency, or build/config area, the second pass
+looks up historical failure patterns generated from past PRs. It then asks whether any
+frequently failing CI jobs or test paths are not already covered by the primary
+selection.
+
+The second pass only adds a test when all of these are true:
+
+- The changed source area has a historical failure pattern for that test/job.
+- The pattern occurred at least two times, so one-off failures are ignored.
+- The job maps to a real selectable test path.
+- The primary selector did not already cover that path.
+
+Hardware-only jobs such as AMD, Ascend, Intel GPU, XPU, ROCm, HPU, and Neuron jobs are
+not added when they have no pytest path mapping. Those jobs are treated as structurally
+uncoverable by this selector.
+
+In short: the primary selector predicts tests from the current diff, while the second
+pass checks that prediction against historical failure data and appends only missing,
+repeatable, selectable coverage.
+
+---
+
 ## Overall Results vs Before
 
 | Metric                                    | Before (v1)  | After (v2)   | Change        |
@@ -149,4 +178,3 @@ appear as false negatives when the job cannot be scored.
 | Distributed DP Tests                               | 16    |
 | Quantized MoE Test                                 | 16    |
 | Distributed Model Tests                            | 15    |
-
