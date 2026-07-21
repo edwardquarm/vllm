@@ -1,0 +1,28 @@
+Now I'll analyze the PR changes and select the appropriate tests according to the instructions.
+
+This PR modifies speculative decoding functionality, specifically:
+
+1. **vllm/config/speculative.py**: Changes `DraftSampleMethod` from `"greedy" | "gumbel"` to `"greedy" | "probabilistic"` and updates documentation
+2. **vllm/v1/spec_decode/llm_base_proposer.py**: Adds probabilistic draft sampling logic and draft probability tracking
+3. **vllm/v1/worker/gpu/spec_decode/eagle/speculator.py**: Updates condition from checking `"gumbel"` to `"probabilistic"`
+4. **vllm/v1/worker/gpu_model_runner.py**: Adds draft probability caching and passing to rejection sampler
+5. **tests/test_config.py**: Adds tests for the config changes
+6. **tests/v1/spec_decode/test_eagle.py**: Adds test for draft probability storage
+7. **tests/v1/worker/test_gpu_model_runner.py**: Adds test for draft probability reordering
+
+The changes are specifically in the V1 speculative decode path (EAGLE and draft model sampling).
+
+According to the rules:
+- Rule 9 applies: Changes to `vllm/v1/spec_decode/` should select `tests/v1/spec_decode/`
+- The candidate table shows tests that import these files
+- Tests were already added/modified in the PR itself
+
+This PR modifies FlashAttention.forward() in vllm/v1/attention/flash_attn.py, changing how KV cache is sliced during prefill. The candidate set includes all tests that import vllm.v1.attention. I'm keeping the attention-specific tests and basic_correctness since this is a core code path. Dropping unrelated candidates like tests/lora/ and tests/quantization/ since the diff only touches spec decode logic. Per Rule 9, spec decode changes also select v1 spec decode tests.
+
+---
+tests/test_config.py | validates SpeculativeConfig with new draft_sample_method values
+tests/v1/spec_decode/test_eagle.py | tests draft probability storage in EAGLE proposer
+tests/v1/worker/test_gpu_model_runner.py | tests draft probability reordering in model runner
+tests/v1/spec_decode/ | all v1 spec decode tests per Rule 9
+tests/v1/e2e/spec_decode/ | e2e spec decode tests per Rule 9
+tests/basic_correctness/ | config changes affect core initialization paths

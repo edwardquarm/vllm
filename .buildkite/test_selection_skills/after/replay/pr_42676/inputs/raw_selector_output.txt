@@ -1,0 +1,23 @@
+Looking at this PR, I need to analyze what changed and determine the appropriate test coverage.
+
+## Analysis
+
+This PR modifies `vllm/v1/worker/gpu/kv_connector.py`, swapping the order of two critical method calls in the `pre_forward` method:
+- Previously: `bind_connector_metadata` → `handle_preemptions`
+- Now: `handle_preemptions` → `bind_connector_metadata`
+
+This is a functional change in the KV connector initialization sequence that could affect how metadata is bound and how preemptions are handled. The candidate table shows hundreds of tests that import this file, but most are indirectly affected through the v1 engine stack.
+
+The most relevant tests are those that directly exercise:
+1. KV connector functionality and preemption logic
+2. The v1 worker and engine components
+3. End-to-end v1 integration scenarios
+
+I'm excluding tests that only tangentially use this code (model-specific tests, kernel tests, LoRA tests, quantization tests, etc.) since they don't specifically test KV connector ordering logic. However, I'm keeping all v1-specific tests since this is a core v1 component.
+
+Per Rule 7, v1 changes require `tests/basic_correctness/` as a safety net. Per Rule 8, engine/worker changes trigger `tests/metrics/`.
+
+---
+tests/v1/ | all v1 tests exercise KV connector through worker/engine
+tests/basic_correctness/ | v1 change safety net (Rule 7)
+tests/metrics/ | engine/worker change triggers metrics (Rule 8)

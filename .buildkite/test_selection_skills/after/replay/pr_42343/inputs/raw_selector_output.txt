@@ -1,0 +1,9 @@
+This PR modifies the timeout and error message in `DPCoordinator._wait_for_zmq_addrs()` method in vllm/v1/engine/coordinator.py. The timeout is increased from 30 to 120 seconds and the error message now includes the timeout value. This is a defensive change that makes coordinator startup more lenient in slow environments. Per Rule 2, v1 engine changes trigger tests/v1/core/, and any v1 change triggers tests/v1/e2e/. The coordinator is specifically for distributed data parallel scenarios, so v1 distributed tests should also run. Per Rule 8, engine changes trigger metrics tests.
+
+---
+tests/v1/engine/ | directly tests v1 engine coordinator startup
+tests/v1/core/ | Rule 2: v1 engine changes
+tests/v1/e2e/ | Rule 2: any v1 change
+tests/v1/distributed/ | specifically tests DP coordinator startup paths
+tests/metrics/ | Rule 8: engine changes trigger metrics
+tests/basic_correctness/ | safety net for core engine path

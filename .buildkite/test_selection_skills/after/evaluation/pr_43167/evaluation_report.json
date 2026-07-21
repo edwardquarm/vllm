@@ -1,0 +1,65 @@
+{
+  "pr_number": "43167",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 1,
+    "false_negatives": 4,
+    "false_positives": 5,
+    "coverage_rate": 0.2,
+    "precision_rate": 0.167
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/models/",
+      "matched_failure": "tests/models",
+      "reason": "24 model files changed, need model-level quantization tests (Rule 2)"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/csrc",
+      "job_name": "CPU-Language Generation and Pooling Model Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/cpu",
+      "job_name": "CPU-Language Generation and Pooling Model Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "CPU-Language Generation and Pooling Model Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] bootstrap",
+      "job_name": "bootstrap",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/model_executor/",
+      "reason": "quantization test file modified, tests eagle quantization"
+    },
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "quantization layer changes affect kernel tests (Rule 3 CMake implication)"
+    },
+    {
+      "selected_test": "tests/quantization/",
+      "reason": "core quantization config and FP8 changes"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "quantization affects forward pass, safe baseline"
+    },
+    {
+      "selected_test": "tests/lora/",
+      "reason": "LoRA models use quantization, weight loading changed"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:39:01.607228+00:00"
+  ]
+}

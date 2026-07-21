@@ -1,0 +1,26 @@
+Looking at this PR, I need to analyze what changed and select the appropriate tests.
+
+## Analysis
+
+This PR modifies GDN (Gated Delta Rule) linear attention backend selection logic in two files:
+
+**`vllm/model_executor/layers/mamba/gdn_linear_attn.py`:**
+- Refactors backend selection into helper functions `_should_use_flashinfer_gdn_prefill()` and `_log_gdn_backend_decision()`
+- Adds support for Blackwell (SM10.x) GPUs with specific constraints (head_k_dim == 128, CUDA runtime >= 13)
+- Modifies `ChunkGatedDeltaRule` to accept `head_k_dim` parameter for backend selection
+
+**`vllm/platforms/cuda.py`:**
+- Adds new utility method `get_cuda_runtime_major()` to query CUDA runtime version
+
+This is a functional change (not just comments/types) affecting GDN prefill kernel selection and platform capability detection. The refactoring preserves existing Hopper behavior while adding Blackwell support.
+
+From the candidate set, most tests are there due to transitive imports but won't exercise GDN-specific logic. I'm narrowing to tests that directly exercise Mamba/GDN kernels, platform detection, and basic correctness as a safety net for the refactoring.
+
+Per Rule 2 (manual entries): `vllm/platforms/` changes require `tests/cuda/test_platform_no_cuda_init.py`.
+Per Rule 6 (hardware platform tests): `vllm/platforms/` changes require `tests/basic_correctness/`.
+
+---
+
+tests/kernels/mamba/ | directly tests GDN linear attention and Mamba kernels
+tests/basic_correctness/ | Rule 6 platform changes + refactoring safety net
+tests/cuda/test_platform_no_cuda_init.py | Rule 2 manual entry for platform changes

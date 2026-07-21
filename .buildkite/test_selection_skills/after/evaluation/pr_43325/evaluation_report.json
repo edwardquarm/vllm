@@ -1,0 +1,75 @@
+{
+  "pr_number": "43325",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 8,
+    "false_positives": 4,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server 2) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/speech_to_text",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils.py",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/attention/",
+      "reason": "new registry test plus existing MLA backend tests"
+    },
+    {
+      "selected_test": "tests/kernels/attention/",
+      "reason": "Rule 6 hardware platform coverage for attention changes"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "Rule 2 broad v1 infrastructure coverage"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Rule 4 safe fallback for v1 changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:39:39.482601+00:00"
+  ]
+}

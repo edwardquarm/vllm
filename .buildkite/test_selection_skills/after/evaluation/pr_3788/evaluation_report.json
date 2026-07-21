@@ -1,0 +1,38 @@
+{
+  "pr_number": "3788",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/entrypoints/openai/",
+      "reason": "directly tests OpenAI API entrypoint and authentication"
+    },
+    {
+      "selected_test": "tests/entrypoints/",
+      "reason": "Rule 2: entrypoint changes trigger entrypoint tests"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core entrypoint code change"
+    },
+    {
+      "selected_test": "tests/metrics/",
+      "reason": "Rule 8: entrypoint changes trigger metrics tests"
+    },
+    {
+      "selected_test": "tests/tracing/",
+      "reason": "Rule 8: entrypoint changes trigger tracing tests"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:35:41.889965+00:00"
+  ]
+}

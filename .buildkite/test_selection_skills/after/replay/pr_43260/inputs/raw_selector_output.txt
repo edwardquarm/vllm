@@ -1,0 +1,17 @@
+Looking at the PR changes and applying the test selection rules.
+
+This PR adds a new optional `truncation_side` parameter to chat completion and completion request protocols, allowing callers to control whether prompt truncation happens from the left (keeping last N tokens) or right (keeping first N tokens). The change is isolated to request protocol parsing and the tokenization parameter handling in `vllm/renderers/params.py`.
+
+The candidate set is very broad because the protocol files are imported across the entire test suite. However, the diff shows:
+- The new parameter is optional and backward-compatible
+- Only affects behavior when explicitly set alongside `truncate_prompt_tokens`
+- Tests were already added in the modified test files
+- Changes are confined to the entrypoints/openai and renderers areas
+
+Per Rule 1, I'm narrowing down from the candidate set to tests that actually exercise the changed code paths. Most candidates just import these files but don't test the tokenization/truncation logic.
+
+---
+tests/entrypoints/openai/chat_completion/ | chat completion endpoint tests, includes new truncation tests
+tests/entrypoints/openai/completion/ | completion endpoint tests, includes new truncation tests
+tests/renderers/ | tests rendering/tokenization logic modified in params.py
+tests/basic_correctness/ | safe default for core entrypoint changes (Rule 4)

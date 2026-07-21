@@ -1,0 +1,38 @@
+{
+  "pr_number": "43556",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends_selection.py",
+      "reason": "directly modified, tests LinearAttention backend selection"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "refactoring of core model layers, import path changes (Rule 4)"
+    },
+    {
+      "selected_test": "tests/models/",
+      "reason": "model executor changes affect model loading and execution"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "v1 engine changes with mamba layers (Rule 2)"
+    },
+    {
+      "selected_test": "tests/kernels/mamba/",
+      "reason": "mamba layer implementation changed"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:40:15.396670+00:00"
+  ]
+}

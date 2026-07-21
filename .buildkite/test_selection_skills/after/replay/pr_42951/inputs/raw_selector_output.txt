@@ -1,0 +1,11 @@
+Looking at the diff to select tests for this PR.
+
+This PR adds Intel XPU platform support to MoE (Mixture of Experts) layers. The changes modify `vllm/model_executor/layers/fused_moe/oracle/mxfp4.py` to add XPU to the priority backend list and handle XPU weight shuffling (no transformation needed). The second file `vllm/model_executor/layers/fused_moe/router/fused_topk_bias_router.py` adds a pure PyTorch fallback implementation `_topk_softplus_sqrt_torch` that gets called when running on XPU hardware.
+
+From the candidate table, I'm selecting MoE-specific kernel tests that directly exercise the router logic and mxfp4 backend. Per Rule 6, platform changes should include `tests/basic_correctness/` as a safety net. The MoE kernel tests include specific tests for topk routing (`test_topk_softplus_sqrt.py`, `test_fused_topk.py`) and mxfp4 quantization (`test_mxfp4_moe.py`) which directly test the modified code paths.
+
+I'm excluding unrelated areas from the large candidate set (lora, quantization, multimodal, distributed tests) since the diff only touches MoE router and oracle logic. Per Rule 1, narrowing down from the candidate set to tests that actually exercise these specific functions.
+
+---
+tests/kernels/moe/ | directly tests MoE routers and mxfp4 backend
+tests/basic_correctness/ | platform change safety net (Rule 6)

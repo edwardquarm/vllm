@@ -1,0 +1,21 @@
+Looking at this PR, I need to analyze the changes and select appropriate tests.
+
+## Analysis
+
+This PR removes unused code related to vertical_slash_index functionality (a MInference attention optimization) and an unused `marlin_gemm_moe` binding. The changes are:
+
+1. **CMakeLists.txt** - Removes `vertical_slash_index.cu` from the build
+2. **csrc/attention/vertical_slash_index.cu** - Entire file deleted (401 lines)
+3. **csrc/moe/torch_bindings.cpp** - Removes unused `marlin_gemm_moe` binding declaration
+4. **csrc/ops.h** - Removes function declarations for vertical_slash_index functions
+5. **csrc/torch_bindings.cpp** - Removes torch bindings for vertical_slash_index
+6. **vllm/_custom_ops.py** - Removes Python wrappers and fake registrations
+
+These are code deletions of apparently unused functionality. The candidate table shows all tests importing `_custom_ops.py`, but none of these tests appear to actually call the removed functions (otherwise they would fail). This is a cleanup/removal PR rather than a functional change.
+
+Per Rule 3, CMakeLists.txt and csrc/ changes trigger `tests/basic_correctness/` and `tests/kernels/`. Since this modifies build configuration and kernel bindings, a basic smoke test ensures the build still works and no hidden dependencies exist.
+
+---
+
+tests/basic_correctness/ | CMakeLists.txt change, build smoke test (Rule 3)
+tests/kernels/ | csrc/ CUDA kernel removal (Rule 3)

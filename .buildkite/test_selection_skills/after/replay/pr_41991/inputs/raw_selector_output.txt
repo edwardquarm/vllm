@@ -1,0 +1,4 @@
+This PR adds defensive guards against infinite loops when parsing malformed input in the Gemma4 tool parser. The changes are in two internal helper functions (`_parse_gemma4_args()` and `_parse_gemma4_array()`), adding progress checks that break when the parser isn't advancing. The test file was also modified to add three new test cases that verify these guards work (all with `@pytest.mark.timeout(5)` to ensure no hanging). These are purely defensive changes that don't affect parsing behavior for valid inputs, which is what all the other tests in the candidate set use.
+
+---
+tests/tool_parsers/test_gemma4_tool_parser.py | directly tests the modified parsing functions and includes new edge case tests

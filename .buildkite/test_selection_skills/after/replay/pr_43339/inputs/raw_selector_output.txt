@@ -1,0 +1,12 @@
+I'll analyze this PR to determine which tests should be run.
+
+This PR modifies EPLB (Elastic Pipeline Load Balancing) and DeepSeek V4 model code to integrate EPLB with the Mega MoE backend. The changes span distributed execution (EPLB), model implementation (DeepSeek V4), utility code (deep_gemm), and worker initialization.
+
+---
+
+tests/distributed/ | EPLB distributed execution logic changed
+tests/kernels/moe/ | MoE kernel tests for DeepGEMM and Mega MoE backend
+tests/models/language/generation/ | DeepSeek V4 model tests for generation
+tests/v1/distributed/ | v1 distributed tests for EPLB integration
+tests/v1/e2e/ | v1 end-to-end tests cover worker and model executor changes
+tests/basic_correctness/ | core code paths changed in distributed and worker init

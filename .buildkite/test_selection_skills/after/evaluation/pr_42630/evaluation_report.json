@@ -1,0 +1,30 @@
+{
+  "pr_number": "42630",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/models/multimodal/processing/test_gemma3.py",
+      "reason": "directly tests Gemma3 multimodal processing"
+    },
+    {
+      "selected_test": "tests/models/multimodal/processing/test_gemma4.py",
+      "reason": "tests related Gemma4 model, may share code"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for model initialization changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:32.602888+00:00"
+  ]
+}

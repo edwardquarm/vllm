@@ -1,0 +1,38 @@
+{
+  "pr_number": "42975",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/benchmarks/test_latency_cli.py",
+      "reason": "vllm/benchmarks/ changed"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_throughput_cli.py",
+      "reason": "vllm/benchmarks/ changed, direct usage"
+    },
+    {
+      "selected_test": "tests/entrypoints/",
+      "reason": "vllm/entrypoints/llm.py changed (Rule 2)"
+    },
+    {
+      "selected_test": "tests/metrics/",
+      "reason": "entrypoint change (Rule 8)"
+    },
+    {
+      "selected_test": "tests/tracing/",
+      "reason": "entrypoint change (Rule 8)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:47.070970+00:00"
+  ]
+}

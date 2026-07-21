@@ -1,0 +1,38 @@
+{
+  "pr_number": "37888",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/attention/test_sparse_mla_backends.py",
+      "reason": "directly tests sparse MLA backends using this indexer"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla_backends.py",
+      "reason": "MLA backends that use sparse attention indexer"
+    },
+    {
+      "selected_test": "tests/kernels/attention/",
+      "reason": "attention kernel tests per Rule 6"
+    },
+    {
+      "selected_test": "tests/v1/attention/",
+      "reason": "v1 attention system tests"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "core attention path safety net"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:35:49.600432+00:00"
+  ]
+}

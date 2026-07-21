@@ -1,0 +1,46 @@
+{
+  "pr_number": "42070",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 3,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/test_regression",
+      "job_name": "Regression",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_regression.py",
+      "job_name": "Regression",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Regression",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/fullgraph/",
+      "reason": "removing fullgraph decorator requires fullgraph compilation tests"
+    },
+    {
+      "selected_test": "tests/kernels/mamba/",
+      "reason": "tests Mamba components including GDN attention layer"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for any subtle behavioral changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:37:50.294158+00:00"
+  ]
+}

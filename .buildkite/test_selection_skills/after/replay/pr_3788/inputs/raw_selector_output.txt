@@ -1,0 +1,8 @@
+This PR modifies the authentication middleware in vllm/entrypoints/openai/api_server.py to support a configurable root_path. The change adds a root_path variable and updates the path check from `/v1` to `{root_path}/v1`. This is a narrow authentication/routing change, not a core model or processing change. From the candidate set, most tests are model/kernel/quantization tests that happen to import api_server but don't exercise authentication logic. I'm selecting tests that directly test the OpenAI entrypoint, plus metrics/tracing per Rule 8, and basic_correctness as a safety net.
+
+---
+tests/entrypoints/openai/ | directly tests OpenAI API entrypoint and authentication
+tests/entrypoints/ | Rule 2: entrypoint changes trigger entrypoint tests
+tests/basic_correctness/ | safety net for core entrypoint code change
+tests/metrics/ | Rule 8: entrypoint changes trigger metrics tests
+tests/tracing/ | Rule 8: entrypoint changes trigger tracing tests

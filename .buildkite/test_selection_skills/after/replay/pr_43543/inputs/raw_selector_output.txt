@@ -1,0 +1,24 @@
+Looking at this PR to understand what changed and which tests need to run.
+
+## Reasoning
+
+This PR modifies `vllm/v1/worker/gpu_model_runner.py` to change how attention backends are grouped during initialization. Specifically, it adds `num_heads_q` to the deduplication key so that layers with different Q-head counts (e.g., a spec-decode draft model with fewer attention heads than its target) get separate metadata builders. The change is explicitly for spec-decode scenarios as documented in the added docstring.
+
+The second change is to `.buildkite/test_areas/spec_decode.yaml`, which is just a CI configuration file documenting the dependency.
+
+From the massive candidate set, I'm narrowing down to tests that actually exercise:
+1. Spec-decode functionality (the primary use case for this fix)
+2. Attention backend initialization and grouping logic
+3. The v1 worker/model runner directly
+
+Dropping the vast majority of candidates (compile, lora, quantization, entrypoints/llm, most models, most distributed) because they import the file but don't exercise this specific attention grouping code path for spec-decode scenarios with different Q-head counts.
+
+Per Rule 9, spec-decode changes trigger `tests/v1/spec_decode/` and `tests/v1/e2e/spec_decode/`. The worker change also warrants testing the modified file's unit tests and attention backend initialization. Including `tests/basic_correctness/` as a safety net for core v1 worker initialization paths.
+
+---
+tests/v1/spec_decode/ | spec-decode with different Q-heads (Rule 9)
+tests/v1/e2e/spec_decode/ | e2e spec-decode coverage (Rule 9)
+tests/v1/worker/test_gpu_model_runner.py | unit tests for modified file
+tests/v1/attention/test_attention_backends.py | attention backend initialization
+tests/v1/attention/test_attention_backends_selection.py | backend selection logic
+tests/basic_correctness/ | core worker initialization safety net

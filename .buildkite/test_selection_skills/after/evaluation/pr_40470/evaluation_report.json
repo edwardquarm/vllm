@@ -1,0 +1,30 @@
+{
+  "pr_number": "40470",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/attention/test_cpu_attn.py",
+      "reason": "directly tests CPU attention backend"
+    },
+    {
+      "selected_test": "tests/v1/attention/",
+      "reason": "tests V1 attention backend selection and integration"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core attention code refactoring"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:36:37.733516+00:00"
+  ]
+}

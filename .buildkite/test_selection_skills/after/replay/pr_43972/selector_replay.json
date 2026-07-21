@@ -1,0 +1,21 @@
+{
+  "pr_number": "43972",
+  "repo": "vllm-project/vllm",
+  "status": "partial",
+  "changed_files": [
+    ".readthedocs.yaml",
+    "docs/pre_run_check.sh"
+  ],
+  "diff_summary": "2 files changed",
+  "diff_ref": "61a122a39018b4ca8babf2e50e8b524c4cde12bb",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model claude-sonnet-4-5",
+  "llm_selected_tests": [],
+  "selection_reasons": [],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-29T03:28:31.925128+00:00"
+  ]
+}

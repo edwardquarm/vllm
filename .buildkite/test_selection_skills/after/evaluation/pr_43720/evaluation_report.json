@@ -1,0 +1,182 @@
+{
+  "pr_number": "43720",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 1,
+    "false_negatives": 29,
+    "false_positives": 3,
+    "coverage_rate": 0.033,
+    "precision_rate": 0.25
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "matched_failure": "tests/basic_correctness",
+      "reason": "core engine initialization touched, safety net"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/config",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/multimodal",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/reasoning",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/renderers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests/lazy_imports.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_inputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_outputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_pooling_params.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_ray_env.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tokenizers_",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tool_parsers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/transformers_utils",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_pipeline_parallel.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_ray_v2_executor.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_ray_v2_executor_e2e.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/rocm.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/executor",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/executor/abstract.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/executor/multiproc_executor.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/executor/ray_executor_v2.py",
+      "job_name": "RayExecutorV2 (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/",
+      "reason": "KV connector handshake logic changed, all connector tests needed"
+    },
+    {
+      "selected_test": "tests/v1/engine/",
+      "reason": "engine core handshake initialization changed"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "v1 executor and worker changes affect end-to-end flows"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:40:43.131598+00:00"
+  ]
+}

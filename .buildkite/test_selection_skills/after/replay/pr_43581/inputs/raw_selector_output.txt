@@ -1,0 +1,8 @@
+Looking at the diff for `vllm/model_executor/models/nemotron_vl.py`.
+
+This PR renames a class attribute `weight_mapper` to `hf_to_vllm_mapper` in two classes (`LlamaNemotronVLForEmbedding` and `LlamaNemotronVLForSequenceClassification`), updating all references consistently. This is purely an internal variable renaming with no functional change - the `WeightsMapper` objects themselves are identical, just stored under a clearer attribute name. The only way this could break is if external code directly accesses the old attribute name, which is unlikely for an internal implementation detail. From the massive candidate list, most tests just import the model registry generically - only tests that specifically instantiate and load weights for Nemotron VL embedding or classification models would be affected. Selecting the two Nemotron-specific pooling tests plus basic_correctness as a safety net per Rule 4.
+
+---
+tests/models/multimodal/pooling/test_llama_nemotron_vl.py | directly tests LlamaNemotronVLForEmbedding weight loading
+tests/models/language/pooling_mteb_test/test_nemotron.py | MTEB tests use Nemotron pooling models
+tests/basic_correctness/ | safety net for model weight loading changes

@@ -1,0 +1,72 @@
+{
+  "pr_number": "44484",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 9,
+    "false_positives": 2,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/detokenizer",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/multimodal",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/utils_",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Async Engine, Inputs, Utils, Worker",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/chat_completion",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils",
+      "job_name": "Entrypoints Integration (API Server openai - Part 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Build wheel - aarch64 - CUDA 13.0",
+      "job_name": "Build wheel - aarch64 - CUDA 13.0",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for model loading and interfaces"
+    },
+    {
+      "selected_test": "tests/models/multimodal/generation/test_common.py",
+      "reason": "tests multimodal models including VL models"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:41:46.649060+00:00"
+  ]
+}

@@ -1,0 +1,7 @@
+This PR refactors the `get_input_modality()` interface method by adding a default implementation that returns "image", and removes the now-redundant override in step3_vl.py that returned the same value. This is a pure refactoring with no behavior change - step3_vl still returns "image", just via the interface default instead of its own method. The change is minimal and low-risk, affecting only the interface definition and one model implementation.
+
+From the candidate set of hundreds of tests (both files are widely imported), I'm narrowing down to tests that would catch issues with multimodal model initialization and basic functionality. Most candidate tests don't exercise the `get_input_modality()` method specifically. Given this is identical-behavior refactoring, only basic safety net tests are needed.
+
+---
+tests/basic_correctness/ | safety net for model loading and interfaces
+tests/models/multimodal/generation/test_common.py | tests multimodal models including VL models

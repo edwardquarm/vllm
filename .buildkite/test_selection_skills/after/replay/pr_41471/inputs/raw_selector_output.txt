@@ -1,0 +1,23 @@
+I'll analyze this PR's changes to select the appropriate tests.
+
+Looking at the diff, this PR makes several cleanup changes:
+
+1. **Test files**: Removes test infrastructure (`set_cycles_before_xfer_done` method and related calls, `remote_tokens` test data)
+2. **vllm/distributed/kv_transfer/kv_connector/utils.py**: Simplifies aggregation logic by removing a null check (assumes `aggregated_kv_connector_stats` is always initialized)
+3. **vllm/distributed/parallel_state.py**: Removes deprecated/unused functions (`get_context_model_parallel_group`, `patch_tensor_parallel_group`, `get_decode_context_model_parallel_*`)
+
+The changes are targeted cleanups with low risk, but the removed `patch_tensor_parallel_group` function was specifically for speculative decoding draft workers, so I should verify spec_decode still works.
+
+---
+
+**Reasoning**: This PR removes test infrastructure and deprecated functions from distributed/kv_connector code. The modified test files must run to verify test cleanup. The kv_connector utils change affects stats aggregation, so all kv_connector tests should run. The parallel_state.py removals include a function used for speculative decoding (`patch_tensor_parallel_group`), so spec_decode tests are needed. Including distributed tests to verify parallel state changes don't break distributed execution, and basic_correctness as a safety net for core distributed code paths.
+
+---
+
+tests/v1/kv_connector/unit/test_bidirectional_kv_transfer.py | modified test file must run
+tests/v1/kv_connector/unit/test_nixl_connector.py | modified test file must run
+tests/v1/kv_connector/ | stats aggregation logic changed in utils.py
+tests/distributed/ | parallel_state functions removed, verify distributed execution
+tests/spec_decode/ | patch_tensor_parallel_group removed (was for draft workers)
+tests/v1/spec_decode/ | v1 spec decode tests for draft worker changes
+tests/basic_correctness/ | safety net for core distributed code changes

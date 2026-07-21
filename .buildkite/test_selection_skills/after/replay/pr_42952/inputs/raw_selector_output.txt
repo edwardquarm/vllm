@@ -1,0 +1,24 @@
+I'll analyze this PR to determine which tests need to run based on the changes.
+
+Looking at the diff, this PR adds XPU (Intel GPU) support for FP8 block-scaled matrix multiplication operations. The changes:
+
+1. **`vllm/model_executor/kernels/linear/__init__.py`**: Adds `TritonFp8BlockScaledMMKernel` to XPU platform support
+2. **`vllm/model_executor/kernels/linear/scaled_mm/triton.py`**: Extends platform check from CUDA-only to CUDA + XPU
+3. **`vllm/model_executor/layers/quantization/input_quant_fp8.py`**: Adds group quantization path for XPU in `forward_xpu`
+4. **`vllm/model_executor/layers/quantization/utils/fp8_utils.py`**: Adds XPU kernel dispatch and E8M0 scale handling for XPU
+
+This is primarily adding XPU platform support for existing FP8 quantization functionality. Based on the instructions:
+
+**Reasoning:**
+
+This PR modifies quantization kernel selection and FP8 utilities for XPU platform support. The candidate table shows hundreds of tests that import these modules. However, since this is adding a new platform backend (XPU) rather than changing core logic for existing platforms (CUDA/ROCm), the changes should not affect tests running on CUDA/CPU hardware in CI.
+
+Per Rule 6, platform-specific tests run on their respective hardware. XPU tests would need XPU hardware to run. The changes don't modify CUDA/CPU code paths (they add parallel XPU paths), so existing CUDA/CPU tests should be unaffected.
+
+Since this adds XPU support without modifying existing CUDA/ROCm/CPU behavior, and XPU-specific tests require XPU hardware that isn't available in standard CI, I should select:
+- `tests/basic_correctness/` as a safety net for platform detection and kernel selection
+- `tests/kernels/quantization/` to verify FP8 quantization kernel selection logic isn't broken
+
+---
+tests/basic_correctness/ | XPU platform support affects kernel selection
+tests/kernels/quantization/ | FP8 quantization kernel changes

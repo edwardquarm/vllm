@@ -1,0 +1,15 @@
+Let me output the response directly instead:
+
+This PR refactors vllm/model_executor/layers/fused_moe/ by reorganizing code into subdirectories (experts/, router/, oracle/) and updating import paths across 18 files. The changes are primarily structural: moving TritonExperts, MarlinExperts, FlashInferExperts, and other MoE expert implementations into experts/, routers into router/, and quantization oracles into oracle/. The diff shows file renames, import path updates in __init__.py, and corresponding updates in test imports and documentation. While mostly mechanical, this touches the core MoE execution path used by distributed training, quantization, and compilation. Per Rule 4, when fused_moe internals change, I'm including all MoE-related tests plus basic_correctness as a safety net. Per Rule 5, this PR touches 20+ files across multiple directories, warranting basic_correctness and compilation tests.
+
+---
+tests/kernels/moe/ | directly tests fused_moe layer implementations
+tests/distributed/test_expert_parallel.py | expert parallel execution depends on fused_moe
+tests/distributed/test_eplb_fused_moe_layer.py | EPLB fused moe layer test
+tests/distributed/test_eplb_fused_moe_layer_dep_nvfp4.py | EPLB fused moe nvfp4 variant
+tests/distributed/test_torchrun_example_moe.py | torchrun moe example uses fused_moe
+tests/quantization/test_int8_w8a16_wna16.py | int8 quantization uses fused_moe oracle
+tests/quantization/test_fp8_w8a8_block_opt.py | fp8 quantization oracle refactored
+tests/quantization/test_fp8_w8a8.py | fp8 oracle in fused_moe changed
+tests/basic_correctness/ | large refactor safety net (Rule 5)
+tests/compile/ | compilation depends on fused_moe structure (Rule 5)

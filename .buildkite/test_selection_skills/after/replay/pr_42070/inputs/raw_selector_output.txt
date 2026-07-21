@@ -1,0 +1,6 @@
+This PR removes a `@torch.compile(fullgraph=True)` decorator from the `rearrange_mixed_qkv` method in the GDN linear attention layer. The change is compilation-related, not a logic change. From the massive candidate set (hundreds of tests that transitively import this module), I'm narrowing down to tests that specifically exercise fullgraph compilation behavior, Mamba components, and basic correctness. Dropping all the unrelated tests (multimodal, pooling, distributed, entrypoints, etc.) that don't directly test this specific method or compilation feature.
+
+---
+tests/compile/fullgraph/ | removing fullgraph decorator requires fullgraph compilation tests
+tests/kernels/mamba/ | tests Mamba components including GDN attention layer
+tests/basic_correctness/ | safety net for any subtle behavioral changes

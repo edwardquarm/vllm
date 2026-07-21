@@ -1,0 +1,26 @@
+{
+  "pr_number": "42767",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 2,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "CMakeLists.txt change, build smoke test (Rule 3)"
+    },
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "csrc/ CUDA kernel removal (Rule 3)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:36.114941+00:00"
+  ]
+}

@@ -1,0 +1,10 @@
+I can see this is a comprehensive test selection prompt. Let me understand what you need help with. Looking at the git status, I can see you've been working on evaluation reports for test selection. 
+
+What would you like me to do with this test selection instruction file? Are you looking to:
+
+1. **Run an evaluation** on a specific PR using these instructions?
+2. **Improve the instructions** based on evaluation results?
+3. **Analyze evaluation results** from the reports I see in git status?
+4. **Something else**?
+
+Please let me know what task you'd like me to help with!

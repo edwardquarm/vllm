@@ -1,0 +1,12 @@
+Looking at the diff to select tests for this PR.
+
+This PR adds return type annotations to several pooling-related files and one functional change: an assertion in `vllm/model_executor/layers/pooler/special.py` that enforces `group_cursor is not None`. The type annotations alone are low-risk (Rule 1: type hint additions → only basic_correctness if anything), but the assertion is a runtime check that could raise an error if `group_cursor` is unexpectedly None in the chunked prefill pooling code path.
+
+I'm selecting tests that exercise pooling functionality, particularly chunked prefill scenarios where the assertion would be evaluated. From the large candidate set (which includes many tests that just transitively import these modules), I'm narrowing to tests that directly exercise pooling operations and the specific code path containing the assertion. Per Rule 4, type annotations warrant basic_correctness as a safety net.
+
+---
+tests/basic_correctness/ | type annotations + minimal safety net (Rule 1)
+tests/entrypoints/pooling/ | directly exercises pooling entrypoints
+tests/models/language/pooling/ | tests language model pooling operations
+tests/models/multimodal/pooling/ | tests multimodal pooling operations
+tests/v1/e2e/general/test_pooling_chunked_prefill.py | chunked prefill + pooling (assertion code path)

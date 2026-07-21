@@ -1,0 +1,26 @@
+Looking at this PR, I need to analyze the changes and select appropriate tests based on the instructions.
+
+## Analysis
+
+**Changed files:**
+1. `docs/contributing/profiling.md` - Documentation only
+2. `docs/models/pooling_models/classify.md` - Documentation only  
+3. `vllm/utils/profiling.py` - **File deleted** (deprecated cprofile helpers removed)
+4. `vllm/config/pooler.py` - **Removes deprecated parameters** `logit_bias` and `logit_scale` plus their migration logic in `__post_init__`
+
+**What the diff shows:**
+- The docs changes update profiling examples and remove references to deprecated parameters
+- The `profiling.py` file deletion removes only deprecated decorator/context manager helpers
+- The `pooler.py` changes remove deprecated parameter fields and ~30 lines of `__post_init__` migration code
+
+**Applying the rules:**
+- **Rule 3**: `docs/` and `*.md` only → No tests needed for the two documentation files
+- **Rule 1**: For the Python changes, these are removing deprecated code marked for v0.21 removal. No production code should be using these deprecated features
+- **Rule 4**: When in doubt, include `tests/basic_correctness/`
+
+Since the `PoolerConfig.__post_init__` method was modified (removing deprecation handling logic), I should run pooling-related tests to verify initialization still works correctly. The profiling.py deletion should have no impact since those helpers were deprecated.
+
+---
+tests/basic_correctness/ | safety net for config changes (Rule 4)
+tests/entrypoints/pooling/ | verify pooling config initialization after deprecated param removal
+tests/models/language/pooling/ | verify pooling functionality unchanged

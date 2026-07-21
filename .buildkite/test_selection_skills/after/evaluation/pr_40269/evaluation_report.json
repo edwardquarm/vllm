@@ -1,0 +1,42 @@
+{
+  "pr_number": "40269",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/test_config.py",
+      "reason": "validates SpeculativeConfig with new draft_sample_method values"
+    },
+    {
+      "selected_test": "tests/v1/spec_decode/test_eagle.py",
+      "reason": "tests draft probability storage in EAGLE proposer"
+    },
+    {
+      "selected_test": "tests/v1/worker/test_gpu_model_runner.py",
+      "reason": "tests draft probability reordering in model runner"
+    },
+    {
+      "selected_test": "tests/v1/spec_decode/",
+      "reason": "all v1 spec decode tests per Rule 9"
+    },
+    {
+      "selected_test": "tests/v1/e2e/spec_decode/",
+      "reason": "e2e spec decode tests per Rule 9"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "config changes affect core initialization paths"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:36:28.036531+00:00"
+  ]
+}

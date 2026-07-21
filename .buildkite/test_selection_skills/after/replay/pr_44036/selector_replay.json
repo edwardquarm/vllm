@@ -1,0 +1,35 @@
+{
+  "pr_number": "44036",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "docker/Dockerfile",
+    "docker/Dockerfile.nightly_torch",
+    "docker/versions.json",
+    "requirements/cuda.txt"
+  ],
+  "diff_summary": "4 files changed",
+  "diff_ref": "989bbe5d2175cd29f371de983736514f16eb110c",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model claude-sonnet-4-5",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/basic_correctness/",
+      "granularity": "unknown",
+      "reason": "requirements/cuda.txt changed, dependency version bump (Rule 3)",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/basic_correctness/",
+      "reason": "requirements/cuda.txt changed, dependency version bump (Rule 3)"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-29T03:29:25.077391+00:00"
+  ]
+}

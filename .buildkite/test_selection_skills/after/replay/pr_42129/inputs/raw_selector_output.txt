@@ -1,0 +1,12 @@
+This PR adds an optimization to `vllm/env_override.py` that patches PyTorch Inductor's
+FALLBACK_ALLOW_LIST to short-circuit membership checks for vllm custom ops (vllm::* and
+vllm_aiter::*). This prevents expensive logging that stringifies deep IR trees during
+torch.compile. The change is purely a compile-time optimization affecting torch.compile
+behavior, not runtime semantics. The new test file comprehensively validates the patch
+semantics, idempotency, and fast-path behavior. Since this modifies early initialization
+code that patches torch internals, I'm including tests/compile/ (where the new test lives
+and all compilation tests reside) and tests/basic_correctness/ as a safety net per Rule 4.
+
+---
+tests/compile/ | new patch test + all compilation paths that may trigger vllm ops
+tests/basic_correctness/ | safety net for early initialization code changes (Rule 4)

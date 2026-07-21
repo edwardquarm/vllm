@@ -1,0 +1,15 @@
+Looking at this PR, I need to analyze what changed and determine which tests should run.
+
+## Analysis
+
+The PR updates FlashInfer (an attention backend library) from version 0.6.11.post2 to 0.6.12. The changes are:
+
+1. **Docker files** (`docker/Dockerfile`, `docker/Dockerfile.nightly_torch`, `docker/versions.json`) - build configuration updates, not covered by test selection rules
+2. **requirements/cuda.txt** - updates `flashinfer-python` and `flashinfer-cubin` versions
+
+According to Rule 3, changes to `requirements/*.txt` files trigger `tests/basic_correctness/`. This is a dependency version bump, not a source code change, so the candidate table is empty (no vllm source files changed).
+
+The basic correctness tests serve as a smoke test to ensure the new FlashInfer version doesn't break core functionality.
+
+---
+tests/basic_correctness/ | requirements/cuda.txt changed, dependency version bump (Rule 3)

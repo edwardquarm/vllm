@@ -1,0 +1,22 @@
+{
+  "pr_number": "43140",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 1,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_seed_oss_tool_parser.py",
+      "reason": "direct test of refactored SeedOSSToolParser"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:55.170769+00:00"
+  ]
+}

@@ -1,0 +1,21 @@
+I'll analyze the PR changes and select the appropriate tests to run.
+
+Looking at the diff, this PR adds a registration/override mechanism for MLA prefill backends. The changes are:
+- New test file `tests/v1/attention/test_mla_prefill_registry.py` with 137 lines testing the registry
+- Registry infrastructure in `vllm/v1/attention/backends/mla/prefill/registry.py` (adds override system, CUSTOM enum, registration functions)
+- Export of `register_mla_prefill_backend` in the package `__init__.py`
+
+The changes are purely additive infrastructure - they add the *capability* to register/override backends but don't modify existing backend behavior. The candidate table shows hundreds of tests, but most won't exercise the new registration code paths.
+
+**Applying the rules:**
+- **Rule 1**: Narrowing from candidates - this is infrastructure-only, existing backends unchanged, so most candidates aren't affected
+- **Rule 2**: `vllm/v1/attention/` changes → `tests/v1/attention/`, `tests/v1/e2e/`
+- **Rule 6**: `vllm/v1/attention/` changes → `tests/kernels/attention/` for hardware platform coverage
+- **Rule 4**: Including `tests/basic_correctness/` as a safe fallback for v1 infrastructure changes
+
+---
+
+tests/v1/attention/ | new registry test plus existing MLA backend tests
+tests/kernels/attention/ | Rule 6 hardware platform coverage for attention changes
+tests/v1/e2e/ | Rule 2 broad v1 infrastructure coverage
+tests/basic_correctness/ | Rule 4 safe fallback for v1 changes

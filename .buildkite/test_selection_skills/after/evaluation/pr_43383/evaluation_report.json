@@ -1,0 +1,54 @@
+{
+  "pr_number": "43383",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 3,
+    "false_positives": 5,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/tracing",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Metrics, Tracing (2 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "type annotations + minimal safety net (Rule 1)"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/",
+      "reason": "directly exercises pooling entrypoints"
+    },
+    {
+      "selected_test": "tests/models/language/pooling/",
+      "reason": "tests language model pooling operations"
+    },
+    {
+      "selected_test": "tests/models/multimodal/pooling/",
+      "reason": "tests multimodal pooling operations"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_pooling_chunked_prefill.py",
+      "reason": "chunked prefill + pooling (assertion code path)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:40:02.704737+00:00"
+  ]
+}

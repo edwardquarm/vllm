@@ -1,0 +1,6 @@
+This PR modifies a CUDA kernel file in csrc/moe/, specifically the topk_softplus_sqrt kernel. The change is purely structural - wrapping the main computation logic in an explicit else block rather than having it at the same level after an early-return if statement. No actual computation logic changed, but CUDA kernel modifications should still be tested to ensure compilation and runtime behavior remain correct.
+
+Per Rule 3, changes to csrc/ (C/C++/CUDA source files) map to tests/kernels/. Even though this is a formatting/style change, kernel tests should run to verify the refactoring didn't introduce compilation issues or subtle behavioral changes.
+
+---
+tests/kernels/ | csrc/ CUDA kernel modified (Rule 3)

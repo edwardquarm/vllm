@@ -1,0 +1,35 @@
+Now I have enough context. Let me analyze the PR:
+
+**Changed files:**
+1. `vllm/model_executor/layers/activation.py` - Changes to XPU platform handling in `SiluAndMulWithClamp`
+2. `vllm/models/deepseek_v4/common/ops/fused_inv_rope_fp8_quant.py` - XPU platform handling for PDL kwargs
+3. `vllm/models/deepseek_v4/compressor.py` - XPU platform handling for PDL kwargs
+4. `vllm/models/deepseek_v4/nvidia/model.py` - Renamed `_forward_rocm` to `_forward_native`, XPU platform handling, auxiliary stream handling
+5. `vllm/v1/attention/backends/mla/sparse_swa.py` - XPU platform check
+6. `vllm/v1/attention/ops/rocm_aiter_mla_sparse.py` - Device agnostic fixes (`device="cuda"` → `device=device`, `is_cuda` → `not is_cpu`)
+
+**Analysis:**
+- This PR adds XPU platform support across multiple files
+- Changes are mostly conditional platform checks (`is_rocm() or is_xpu()`)
+- Device-agnostic improvements in the last file (removing hardcoded CUDA references)
+- Changes affect activation layers, DeepSeek v4 model, and MLA attention backends
+
+Based on the rules and the nature of changes, I need to select tests that cover:
+1. Basic correctness (platform-specific behavior)
+2. Model executor layers (activation.py changes)
+3. DeepSeek v4 model tests
+4. V1 attention backend tests (MLA/sparse attention)
+5. Platform tests (Rule 6 - platforms/ changes trigger basic_correctness)
+6. Compile tests (Rule 6 - compilation/ related to activation layers)
+
+## Reasoning
+
+This PR adds XPU platform support to vLLM by updating platform conditionals throughout activation layers, DeepSeek v4 model code, and v1 MLA attention backends. The changes are primarily conditional checks (`is_rocm() or is_xpu()`) plus device-agnostic fixes replacing hardcoded CUDA device strings. Since the activation.py changes affect the `SiluAndMulWithClamp` operator used widely in models, I'm selecting tests/basic_correctness/ and tests/compile/ tests that exercise activation layers. For DeepSeek v4, I'm selecting tests/models/ to verify the model-specific changes. The v1 attention changes require tests/v1/ coverage. Per Rule 6, platform-related changes trigger tests/basic_correctness/ and tests/kernels/ for platform-specific paths.
+
+---
+
+tests/basic_correctness/ | Platform behavior changes in activation layers
+tests/compile/ | SiluAndMulWithClamp changes affect compilation paths
+tests/models/ | DeepSeek v4 model forward and compressor changes
+tests/v1/ | V1 MLA attention backend and sparse SWA changes
+tests/kernels/ | Platform-specific kernel paths per Rule 6

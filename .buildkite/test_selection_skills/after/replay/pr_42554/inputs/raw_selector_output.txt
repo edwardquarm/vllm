@@ -1,0 +1,26 @@
+Looking at the PR changes to analyze test selection.
+
+The PR modifies KV connector prefix caching logic for SSM/Mamba and removes a blocking assertion in the scheduler for external KV connector support. Let me select the relevant tests.
+
+## Reasoning
+
+This PR changes `_apply_prefix_caching` in the nixl KV connector worker to handle SSM prefix cache hits (trimming placeholder blocks) and FA partial prefix cache hits when block sizes match. It also removes an assertion in `scheduler.py` that blocked external KV connector usage and skips mamba block alignment during async KV receive. The new test added to `test_nixl_connector_hma.py` verifies the SSM prefix caching behavior.
+
+I'm selecting tests that directly exercise:
+1. Nixl connector prefix caching (the modified logic)
+2. Scheduler behavior with mamba and async operations
+3. Mamba prefix caching end-to-end
+4. KV connector integration scenarios
+
+I'm excluding most of the broad candidate list (models, entrypoints, general kernels) since the changes are narrowly scoped to KV connector prefix caching alignment and scheduler async receive logic, not general model execution or API behavior.
+
+---
+
+tests/v1/kv_connector/unit/test_nixl_connector.py | nixl connector unit tests
+tests/v1/kv_connector/unit/test_nixl_connector_hma.py | hybrid mamba attention nixl tests (modified in PR)
+tests/v1/core/test_scheduler.py | scheduler logic with mamba block alignment
+tests/v1/core/test_scheduler_e2e.py | scheduler e2e including async operations
+tests/v1/e2e/general/test_mamba_prefix_cache.py | mamba prefix caching end-to-end
+tests/v1/kv_connector/unit/test_remote_decode_lifecycle.py | async KV receive lifecycle
+tests/v1/kv_connector/unit/test_remote_prefill_lifecycle.py | async KV transfer integration
+tests/basic_correctness/ | safety net for core scheduler changes

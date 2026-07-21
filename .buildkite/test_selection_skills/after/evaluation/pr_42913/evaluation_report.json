@@ -1,0 +1,26 @@
+{
+  "pr_number": "42913",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 2,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/",
+      "reason": "Inductor compilation patch removed, verify compilation works"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for env_override.py change (Rule 4)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:39.764308+00:00"
+  ]
+}

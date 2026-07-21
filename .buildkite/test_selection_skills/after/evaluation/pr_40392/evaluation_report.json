@@ -1,0 +1,77 @@
+{
+  "pr_number": "40392",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 2,
+    "false_positives": 12,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/basic_correctness",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/passes/test_mla_rope_kvcache_cat_fusion.py",
+      "reason": "New test file for the new MLA RoPE KV cache concatenation fusion pass"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_rope_kvcache_fusion.py",
+      "reason": "Modified test for RoPE KV cache fusion (changed file)"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_fusion.py",
+      "reason": "Tests general fusion pass infrastructure used by matcher_utils.py"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_fusion_attn.py",
+      "reason": "Tests attention fusion passes, likely exercises MLA fusion"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_mla_attn_quant_fusion.py",
+      "reason": "Tests MLA attention quantization fusion, related to MLA attention changes"
+    },
+    {
+      "selected_test": "tests/kernels/core/test_rotary_embedding.py",
+      "reason": "Tests RoPE implementations modified in deepseek_scaling_rope.py and dual_chunk_rope.py"
+    },
+    {
+      "selected_test": "tests/kernels/core/test_rotary_embedding_mla_cache_fused.py",
+      "reason": "Directly tests the fused MLA RoPE cache kernel modified in csrc/"
+    },
+    {
+      "selected_test": "tests/kernels/test_cache_kernels.py",
+      "reason": "Tests cache kernels including the modified csrc/cache_kernels_fused.cu"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla_backends.py",
+      "reason": "Tests MLA attention backends affected by mla_attention.py changes"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_sparse_mla_backends.py",
+      "reason": "Tests sparse MLA attention backends"
+    },
+    {
+      "selected_test": "tests/compile/test_config.py",
+      "reason": "Tests compilation config changes (fuse_rope_kvcache_cat_mla flag)"
+    },
+    {
+      "selected_test": "tests/basic_correctness/test_basic_correctness.py",
+      "reason": "Basic correctness tests to catch config-level regressions (Rule 4 fallback)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:36:32.558354+00:00"
+  ]
+}

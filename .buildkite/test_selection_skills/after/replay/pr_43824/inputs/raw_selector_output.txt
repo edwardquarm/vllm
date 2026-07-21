@@ -1,0 +1,4 @@
+This PR only modifies BuildKite CI configuration files under `.buildkite/test_areas/`, specifically changing AMD GPU device specifications from `mi300_1` to `mi325_1` across multiple test area YAML files. No Python source files, C/C++ code, dependencies, or build configuration were changed. Per Rule 3, when only `.buildkite/` files are changed, no tests are needed. This is a pure CI infrastructure change that updates hardware device labels in the pipeline configuration.
+
+---
+NONE | only .buildkite/ CI config files changed (Rule 3)

@@ -1,0 +1,2 @@
+tests/tool_parsers/test_qwen3coder_tool_parser.py
+vllm/tool_parsers/qwen3coder_tool_parser.py

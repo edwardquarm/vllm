@@ -1,0 +1,43 @@
+{
+  "pr_number": "42224",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 5,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/models",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/test_mapping.py",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-30T06:38:22.049622+00:00"
+  ]
+}

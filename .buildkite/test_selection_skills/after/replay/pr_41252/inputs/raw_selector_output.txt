@@ -1,0 +1,18 @@
+Looking at the PR changes to analyze which tests need to run.
+
+This PR adds configurable block sizes for the flex attention backend (`flex_attn_block_m`, `flex_attn_block_n`, `flex_attn_q_block_size`, `flex_attn_kv_block_size`) to support batch invariance testing with different Triton kernel tile sizes. The changes are focused on:
+
+1. Adding new config fields in `vllm/config/attention.py`
+2. Adding validation and parameter passing in `vllm/model_executor/layers/attention/attention.py` when backend is "FLEX_ATTENTION"
+3. Implementing the configurable block sizes in `vllm/v1/attention/backends/flex_attention.py`
+4. Expanding test coverage in `tests/v1/determinism/test_batch_invariance.py` to test different block size combinations
+
+From the candidate set, I'm narrowing down to tests that actually exercise the flex attention backend or batch invariance behavior. The vast majority of candidates merely import these modules but won't exercise the new configuration parameters (which default to None and preserve existing behavior).
+
+Per Rule 6, changes to `vllm/v1/attention/` trigger `tests/kernels/attention/` to cover hardware platform variants.
+
+---
+tests/v1/determinism/ | batch invariance tests, modified test file exercises new params
+tests/v1/attention/ | v1 attention backend tests, flex attention is in v1
+tests/kernels/attention/ | attention kernel tests (Rule 6: attention changes)
+tests/basic_correctness/ | safety net for core attention config changes

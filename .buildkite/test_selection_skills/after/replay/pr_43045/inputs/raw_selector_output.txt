@@ -1,0 +1,9 @@
+Looking at the test selection instructions for this PR.
+
+The PR changes logging levels from `logger.warning` to `logger.debug` when re-registering quantization configs or model architectures, plus updates the corresponding test to expect DEBUG level instead of WARNING.
+
+This is a log-level-only change with no functional behavior modification. Per Rule 3, log message changes are low risk and only need `tests/basic_correctness/` coverage. The modified test file itself must run to verify the new assertion passes.
+
+---
+tests/quantization/test_register_quantization_config.py | verifies DEBUG log level assertion works
+tests/basic_correctness/ | log message changes safety net (Rule 3)

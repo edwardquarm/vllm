@@ -1,0 +1,123 @@
+{
+  "pr_number": "41991",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 20,
+    "false_positives": 1,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/compile",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/compilation",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config/compilation.py",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/rocm.py",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/cudagraph_dispatcher.py",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/worker",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/logits_processors",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/sample",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_oracle.py",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_outputs.py",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/test_request.py",
+      "job_name": "AMD: V1 Sample + Logits (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/tool_parsers/test_gemma4_tool_parser.py",
+      "reason": "directly tests the modified parsing functions and includes new edge case tests"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:37:46.088029+00:00"
+  ]
+}

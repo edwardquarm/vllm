@@ -1,0 +1,111 @@
+{
+  "pr_number": "43358",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 16,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/speech_to_text",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils.py",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 2) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_common.py",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_qwen2_vl.py",
+      "job_name": "AMD: Multi-Modal Models (Standard) 3: llava + qwen2_vl (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_qwen2_5_vl.py",
+      "job_name": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_vit_cudagraph.py",
+      "job_name": "AMD: Multi-Modal Models (Standard) 2: qwen3 + gemma (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Language Models Tests (Hybrid) 1 (mi300_1)",
+      "job_name": "AMD: Language Models Tests (Hybrid) 1 (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (LLM) (mi300_1)",
+      "job_name": "AMD: Entrypoints Integration (LLM) (mi300_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for config changes (Rule 4)"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/",
+      "reason": "verify pooling config initialization after deprecated param removal"
+    },
+    {
+      "selected_test": "tests/models/language/pooling/",
+      "reason": "verify pooling functionality unchanged"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:39:56.697521+00:00"
+  ]
+}

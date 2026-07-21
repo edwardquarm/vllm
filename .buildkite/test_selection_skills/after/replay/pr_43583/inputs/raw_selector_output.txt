@@ -1,0 +1,4 @@
+This PR only modifies a test file (`tests/v1/kv_connector/nixl_integration/test_accuracy.py`), not any vllm source code. The change is a minor reordering of print statements for debugging output. No Python files in `vllm/` were changed, so the candidate table is empty. Since no vllm source code was modified, no additional tests beyond the changed test itself need to be selected based on the mapping rules.
+
+---
+NONE | only test file changed, no vllm source modified

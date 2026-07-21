@@ -1,0 +1,9 @@
+This PR modifies a Triton kernel compilation directive in the DeepSeek v4 fused inverse RoPE FP8 quantization kernel, adding `do_not_specialize=["num_tokens"]` to prevent Triton from creating specialized kernel versions for different token counts. This is a narrow kernel-level change affecting MLA (Multi-head Latent Attention) with FP8 quantization. From the large candidate set, I'm keeping only tests that directly exercise this kernel or the MLA attention path it supports. Dropping the majority of candidates (models, lora, multimodal, etc.) since they don't specifically exercise this DeepSeek v4 kernel. Per Rule 6, attention changes also trigger `tests/kernels/attention/`.
+
+---
+tests/kernels/test_fused_inv_rope_fp8_quant.py | directly tests the modified kernel
+tests/v1/attention/test_mla_backends.py | MLA backends use this DeepSeek v4 kernel
+tests/v1/attention/test_attention_backends.py | v1 attention backend selection
+tests/kernels/attention/test_attention.py | attention kernel tests (Rule 6)
+tests/compile/passes/test_mla_attn_quant_fusion.py | MLA attention quant fusion pass
+tests/basic_correctness/ | safety net for core attention path

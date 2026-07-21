@@ -1,0 +1,50 @@
+{
+  "pr_number": "42554",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 8,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_nixl_connector.py",
+      "reason": "nixl connector unit tests"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_nixl_connector_hma.py",
+      "reason": "hybrid mamba attention nixl tests (modified in PR)"
+    },
+    {
+      "selected_test": "tests/v1/core/test_scheduler.py",
+      "reason": "scheduler logic with mamba block alignment"
+    },
+    {
+      "selected_test": "tests/v1/core/test_scheduler_e2e.py",
+      "reason": "scheduler e2e including async operations"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_mamba_prefix_cache.py",
+      "reason": "mamba prefix caching end-to-end"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_remote_decode_lifecycle.py",
+      "reason": "async KV receive lifecycle"
+    },
+    {
+      "selected_test": "tests/v1/kv_connector/unit/test_remote_prefill_lifecycle.py",
+      "reason": "async KV transfer integration"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core scheduler changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:30.697585+00:00"
+  ]
+}

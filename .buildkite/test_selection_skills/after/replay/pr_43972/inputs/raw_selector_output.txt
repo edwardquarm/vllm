@@ -1,0 +1,4 @@
+This PR only modifies documentation build infrastructure: `.readthedocs.yaml` (ReadTheDocs config) and `docs/pre_run_check.sh` (a shell script that runs during docs builds to check if docs-affecting files changed and whether pre-commit checks passed). Neither file affects vLLM's Python source code, runtime behavior, or test suite. These changes only impact the ReadTheDocs build process. Per Rule 3, docs-only changes require no tests.
+
+---
+NONE | only docs build infrastructure changed (Rule 3)

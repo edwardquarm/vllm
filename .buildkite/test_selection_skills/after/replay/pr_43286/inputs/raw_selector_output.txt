@@ -1,0 +1,13 @@
+Looking at this PR, I can see it converts `assert` statements to proper exception raises (`ValueError`, `TypeError`, `RuntimeError`) across pooling-related code. This is a code quality change with no logic modifications.
+
+---
+
+This PR replaces assertions with proper exceptions in pooling code: `vllm/model_executor/layers/pooler/activations.py`, `vllm/pooling_params.py`, and `vllm/v1/pool/metadata.py`. The test file `test_pooler_activations.py` was updated to expect `ValueError` instead of `AssertionError`. Since only error types changed (no logic), I'm keeping tests that directly exercise pooling functionality plus basic_correctness as a safety net. Dropping the hundreds of unrelated candidates (lora, quantization, multimodal generation, etc.) that import these modules but don't exercise the validation code paths.
+
+---
+tests/model_executor/layers/test_pooler_activations.py | modified test file, validates new exception type
+tests/test_pooling_params.py | directly tests pooling_params.py validation logic
+tests/entrypoints/pooling/ | exercises pooling params and functionality end-to-end
+tests/models/language/pooling/ | exercises pooling models and pooler config
+tests/v1/e2e/general/test_pooling_chunked_prefill.py | tests v1 pooling metadata code path
+tests/basic_correctness/ | safety net for assertion to exception changes

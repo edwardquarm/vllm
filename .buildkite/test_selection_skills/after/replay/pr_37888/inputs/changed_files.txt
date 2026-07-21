@@ -1,0 +1,3 @@
+vllm/_custom_ops.py
+vllm/_xpu_ops.py
+vllm/model_executor/layers/sparse_attn_indexer.py

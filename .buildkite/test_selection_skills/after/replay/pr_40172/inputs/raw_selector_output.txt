@@ -1,0 +1,24 @@
+Looking at this PR, I need to analyze the changes and select appropriate tests according to the instructions.
+
+## Reasoning
+
+This PR modifies `vllm/v1/worker/gpu_model_runner.py` and `vllm/v1/worker/mamba_utils.py`, along with significant test file changes. The diff shows removal of `postprocess_mamba` from the monkeypatch setup in `test_mamba_prefix_cache.py` and addition of ~1900 lines of golden tests for a new fused kernel implementation in `test_mamba_utils.py`.
+
+The changes are specifically to v1 worker code handling Mamba state processing during speculative decoding. Based on the test additions, this appears to be replacing a Python CPU implementation with a GPU fused kernel while maintaining identical behavior.
+
+Since the source file diffs are truncated, I'm being conservative. Per Rule 2, changes to `vllm/v1/` trigger `tests/v1/e2e/`. Per the diff content focusing on Mamba state management and spec decode, I'm selecting:
+- The directly modified test files
+- V1 end-to-end tests that exercise the worker code path
+- Mamba-specific kernel and e2e tests from the candidates
+- Spec decode tests that use Mamba state processing
+
+I'm excluding the vast majority of candidate tests (models, quantization, compile, distributed, pooling, etc.) as the diff shows this is a targeted worker-level optimization for Mamba state handling, not a change affecting model execution, attention, or other subsystems.
+
+---
+tests/v1/worker/test_mamba_utils.py | directly modified test file
+tests/v1/e2e/general/test_mamba_prefix_cache.py | directly modified test file
+tests/kernels/mamba/ | mamba kernel tests exercise mamba state
+tests/v1/e2e/spec_decode/ | v1 spec decode tests use mamba state processing
+tests/v1/spec_decode/ | v1 spec decode unit tests
+tests/v1/e2e/general/test_mamba_prefix_cache.py | validates prefix caching with mamba (already listed but critical)
+tests/basic_correctness/ | v1 worker changes require basic correctness validation

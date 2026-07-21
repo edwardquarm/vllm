@@ -1,0 +1,39 @@
+Perfect! Now I have all the information I need. Let me analyze this PR:
+
+## Analysis
+
+This PR refactors how the v2 model runner flag is determined:
+
+1. **`vllm/envs.py`**: Changes `VLLM_USE_V2_MODEL_RUNNER` from a boolean to a tri-state (`bool | None`), allowing it to be unset and defer to config defaults.
+
+2. **`vllm/config/vllm.py`**: 
+   - Adds a `use_v2_model_runner` property that implements smart defaults based on model architecture (Qwen3), model type, and feature compatibility
+   - Adds `_is_default_v2_model_runner_model()` to check if a model should use v2 by default
+   - Expands `_get_v2_model_runner_unsupported_features()` to comprehensively check for incompatible features
+   - Uses the new property instead of directly checking `envs.VLLM_USE_V2_MODEL_RUNNER`
+
+3. **`vllm/v1/attention/backends/flashinfer.py`**, **`vllm/v1/core/sched/scheduler.py`**, **`vllm/v1/worker/gpu_worker.py`**: Replace direct `envs.VLLM_USE_V2_MODEL_RUNNER` access with `vllm_config.use_v2_model_runner` to use the new property.
+
+4. **`tests/test_config.py`**: Adds comprehensive tests for the new tri-state env var and the model architecture detection logic.
+
+This is primarily a **config refactoring** that centralizes v2 model runner detection logic. The test file `tests/test_config.py` is already changed and includes new tests.
+
+Based on the instructions:
+
+This PR modifies `vllm/config/vllm.py` (the core config module) and adds comprehensive tests to `tests/test_config.py`. The candidate set includes hundreds of tests that import `vllm.config.vllm`. I need to narrow this down based on what actually changed:
+
+- The changes are to the `use_v2_model_runner` property logic and validation
+- The new tests in `tests/test_config.py` directly test this functionality
+- Other v1 files use `vllm_config.use_v2_model_runner` instead of `envs.VLLM_USE_V2_MODEL_RUNNER`
+
+Since the test file already has comprehensive tests added, and the changes affect v2 model runner initialization, I should select:
+- `tests/test_config.py` (already modified with new tests)
+- `tests/v1/` tests since v1 components now use the config property
+- `tests/basic_correctness/` as a safety net per Rule 4
+
+---
+
+tests/test_config.py | Direct tests for VllmConfig.use_v2_model_runner property and env tri-state behavior
+tests/v1/e2e/ | v1 worker/scheduler now use vllm_config.use_v2_model_runner property
+tests/v1/core/ | v1 scheduler changed to use config property
+tests/basic_correctness/ | Safety net for core config changes per Rule 4

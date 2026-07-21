@@ -1,0 +1,77 @@
+diff --git a/tests/tool_parsers/test_gemma4_tool_parser.py b/tests/tool_parsers/test_gemma4_tool_parser.py
+index 16450c6a8d01..bc2aebb7b23f 100644
+--- a/tests/tool_parsers/test_gemma4_tool_parser.py
++++ b/tests/tool_parsers/test_gemma4_tool_parser.py
+@@ -135,6 +135,11 @@ def test_empty_value_after_other_keys_partial_withheld(self):
+         result = _parse_gemma4_args('name:<|"|>test<|"|>,flag:', partial=True)
+         assert result == {"name": "test"}
+ 
++    @pytest.mark.timeout(5)
++    def test_malformed_partial_array(self):
++        result = _parse_gemma4_args(":[t:[]")
++        assert isinstance(result, dict)
++
+ 
+ class TestParseGemma4Array:
+     def test_string_array(self):
+@@ -149,6 +154,16 @@ def test_bare_values(self):
+         result = _parse_gemma4_array("42,true,3.14")
+         assert result == [42, True, 3.14]
+ 
++    @pytest.mark.timeout(5)
++    def test_string_element_with_closing_bracket(self):
++        result = _parse_gemma4_array('[<|"|>a]b<|"|>,<|"|>c<|"|>],<|"|>tail<|"|>')
++        assert result == [["a]b", "c"], "tail"]
++
++    @pytest.mark.timeout(5)
++    def test_stray_closing_bracket(self):
++        result = _parse_gemma4_array("42,]trailing")
++        assert result == [42]
++
+ 
+ # ---------------------------------------------------------------------------
+ # Non-streaming extraction tests
+diff --git a/vllm/tool_parsers/gemma4_tool_parser.py b/vllm/tool_parsers/gemma4_tool_parser.py
+index a5ff2bcf8fce..95ec7edcd8a2 100644
+--- a/vllm/tool_parsers/gemma4_tool_parser.py
++++ b/vllm/tool_parsers/gemma4_tool_parser.py
+@@ -204,6 +204,13 @@ def _parse_gemma4_args(args_str: str, *, partial: bool = False) -> dict:
+                 # Value may be incomplete (e.g. partial boolean) —
+                 # withhold to avoid type instability during streaming.
+                 break
++            if i == val_start:
++                logger.warning(
++                    "Gemma4 args parser made no progress at position %d; "
++                    "aborting on malformed input.",
++                    i,
++                )
++                break
+             result[key] = _parse_gemma4_value(args_str[val_start:i])
+ 
+     return result
+@@ -258,6 +265,11 @@ def _parse_gemma4_array(arr_str: str, *, partial: bool = False) -> list:
+             sub_start = i + 1
+             i += 1
+             while i < n and depth > 0:
++                if arr_str[i:].startswith(STRING_DELIM):
++                    i += len(STRING_DELIM)
++                    nd = arr_str.find(STRING_DELIM, i)
++                    i = nd + len(STRING_DELIM) if nd != -1 else n
++                    continue
+                 if arr_str[i] == "[":
+                     depth += 1
+                 elif arr_str[i] == "]":
+@@ -275,6 +287,13 @@ def _parse_gemma4_array(arr_str: str, *, partial: bool = False) -> list:
+                 i += 1
+             if partial and i >= n:
+                 break
++            if i == val_start:
++                logger.warning(
++                    "Gemma4 array parser made no progress at position %d; "
++                    "aborting on malformed input.",
++                    i,
++                )
++                break
+             items.append(_parse_gemma4_value(arr_str[val_start:i]))
+ 
+     return items

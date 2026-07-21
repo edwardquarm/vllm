@@ -1,0 +1,6 @@
+Looking at this PR to determine which tests to run.
+
+The PR adds a new test file `tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py` with no changes to any vllm source files. The candidate table confirms no Python files in `vllm/` were modified. Since this is purely a test addition with no source code changes, the new test itself should be run to verify it passes, but no regression testing of other areas is needed.
+
+---
+tests/v1/kv_connector/unit/test_nixl_simple_cpu_offload.py | new test file, run to verify it passes

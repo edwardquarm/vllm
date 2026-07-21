@@ -1,0 +1,549 @@
+{
+  "pr_number": "43230",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 1,
+    "false_negatives": 105,
+    "false_positives": 0,
+    "coverage_rate": 0.009,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "matched_failure": "tests/basic_correctness",
+      "reason": "requirements file change (Rule 3)"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/v1",
+      "job_name": "V1 Spec Decode",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/spec_decode",
+      "job_name": "V1 Spec Decode",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "V1 Spec Decode",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/quantization",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/_aiter_ops.py",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/quantization",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/rocm.py",
+      "job_name": "Quantization",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/engine",
+      "job_name": "Engine (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/engine/test_preprocess_error_handling.py",
+      "job_name": "Engine (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "Engine (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/engine",
+      "job_name": "Engine (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Entrypoints Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/tool_parsers",
+      "job_name": "Entrypoints Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/entrypoints",
+      "job_name": "Entrypoints Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Kernels Quantization Test 2",
+      "job_name": "Kernels Quantization Test 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/cudagraph",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/cudagraph/test_cudagraph_dispatch.py",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/cudagraph/test_cudagraph_mode.py",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/compilation",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config/compilation.py",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/cudagraph_dispatcher.py",
+      "job_name": "Cudagraph",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fullgraph",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fullgraph/test_full_graph.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/fullgraph/test_full_graph.py::test_fp8_kv_scale_compile",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/distributed",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/distributed/test_fusion_all_reduce.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_fusion_attn.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_mla_attn_quant_fusion.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile/passes/test_silu_mul_quant_fusion.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/quantization",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/quantization/fp4",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/activation.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/attention",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/attention/attention.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/layernorm.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends/flashinfer.py",
+      "job_name": "Fusion and Compile Unit Tests (2xB200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion/test_tensorizer_entrypoint.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config/model.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/engine",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/engine/arg_utils.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_torchrun_example.py",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_torchrun_example_moe.py",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/examples",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/examples/features",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/examples/features/data_parallel",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/examples/features/data_parallel/data_parallel_offline.py",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/examples/rl",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/distributed",
+      "job_name": "Distributed Torchrun + Examples (4 GPUs)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/attention",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/attention/mla",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/quantization/cutlass_w8a8",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc/quantization/cutlass_w8a8/moe",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_attention_selector.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_cutlass_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer_mla_decode.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/attention/test_flashinfer_trtllm_attention.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_cutedsl_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_mxfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_nvfp4_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_ocp_mx_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_cutlass_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_flashinfer_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_flashinfer_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_mxfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_qutlass.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_nvfp4_scaled_mm.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/quantization/test_silu_mul_nvfp4_quant.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/test_top_k_per_row.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/quantization/test_nvfp4.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/fused_moe",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/fused_moe/cutlass_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/fused_moe/flashinfer_a2a_prepare_finalize.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/fused_moe/flashinfer_cutlass_moe.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/quantization/utils",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/quantization/utils/flashinfer_utils.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/cuda.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends/mla",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends/mla/cutlass_mla.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends/mla/flashinfer_mla.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/selector.py",
+      "job_name": "Kernels (B200)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Kernels Quantization Test 1",
+      "job_name": "Kernels Quantization Test 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Language Models Tests (Extra Standard) 1",
+      "job_name": "Language Models Tests (Extra Standard) 1",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-30T06:39:23.200075+00:00"
+  ]
+}

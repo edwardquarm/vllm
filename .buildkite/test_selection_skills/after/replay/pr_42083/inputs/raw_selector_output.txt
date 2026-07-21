@@ -1,0 +1,38 @@
+Now I understand the task. This is a PR that adds GPU-to-NIC PCIe mapping for RDMA transports. Let me analyze the changes and select the appropriate tests based on the instructions.
+
+## Analysis:
+
+**Changed files:**
+1. `tests/v1/executor/test_vllm_net_devices.py` - NEW test file
+2. `vllm/envs.py` - adds 2 new environment variables
+3. `vllm/platforms/cuda.py` - adds `get_all_gpu_pci_bus_ids()` method
+4. `vllm/platforms/interface.py` - adds interface method for PCI bus IDs
+5. `vllm/v1/executor/multiproc_executor.py` - calls `set_worker_net_device()`
+6. `vllm/v1/executor/uniproc_executor.py` - calls `set_worker_net_device()`
+7. `vllm/v1/executor/vllm_net_devices.py` - NEW module with all the logic
+
+**What changed:**
+- Added infrastructure for GPU-to-NIC PCIe mapping via environment variables
+- Touches `vllm/executor/` (v1), `vllm/platforms/`, `vllm/envs.py`
+- Includes a complete test file for the new functionality
+
+**Test selection reasoning:**
+
+From the instructions:
+- Rule 2: `tests/v1/e2e/` should run when `vllm/v1/` changes broadly
+- Rule 6: Changes to `vllm/executor/`, `vllm/worker/`, `vllm/v1/worker/` trigger `tests/v1/e2e/`
+- Rule 6: Changes to `vllm/platforms/` trigger `tests/basic_correctness/`
+- Rule 2: `tests/v1/core/` runs when `vllm/v1/core/`, `vllm/v1/engine/` change (not applicable here)
+
+The new test file `tests/v1/executor/test_vllm_net_devices.py` tests the parsing/normalization logic but should be included explicitly.
+
+Since this touches v1 executor code (both multiproc and uniproc), platforms interface, and environment variables, the appropriate tests are:
+1. The new test file itself
+2. `tests/v1/e2e/` - executor changes
+3. `tests/basic_correctness/` - platform changes and env var changes
+
+---
+
+tests/v1/executor/test_vllm_net_devices.py | New test file for PCI address normalization and GPU-NIC mapping logic
+tests/v1/e2e/ | V1 executor changes (multiproc_executor.py, uniproc_executor.py) per Rule 6
+tests/basic_correctness/ | Platform interface changes (vllm/platforms/) per Rule 6 and env var changes (vllm/envs.py) per Rule 3

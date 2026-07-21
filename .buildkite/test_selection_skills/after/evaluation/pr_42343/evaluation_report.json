@@ -1,0 +1,42 @@
+{
+  "pr_number": "42343",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/engine/",
+      "reason": "directly tests v1 engine coordinator startup"
+    },
+    {
+      "selected_test": "tests/v1/core/",
+      "reason": "Rule 2: v1 engine changes"
+    },
+    {
+      "selected_test": "tests/v1/e2e/",
+      "reason": "Rule 2: any v1 change"
+    },
+    {
+      "selected_test": "tests/v1/distributed/",
+      "reason": "specifically tests DP coordinator startup paths"
+    },
+    {
+      "selected_test": "tests/metrics/",
+      "reason": "Rule 8: engine changes trigger metrics"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core engine path"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:28.748886+00:00"
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "pr_number": "40172",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 18,
+    "false_positives": 7,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/config",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/multimodal",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/reasoning",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/renderers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests/lazy_imports.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_inputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_outputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_pooling_params.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_ray_env.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tokenizers_",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tool_parsers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/transformers_utils",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Multi-Modal Processor (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Processor (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/processing",
+      "job_name": "Multi-Modal Processor (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/registry.py",
+      "job_name": "Multi-Modal Processor (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/worker/test_mamba_utils.py",
+      "reason": "directly modified test file"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_mamba_prefix_cache.py",
+      "reason": "directly modified test file"
+    },
+    {
+      "selected_test": "tests/kernels/mamba/",
+      "reason": "mamba kernel tests exercise mamba state"
+    },
+    {
+      "selected_test": "tests/v1/e2e/spec_decode/",
+      "reason": "v1 spec decode tests use mamba state processing"
+    },
+    {
+      "selected_test": "tests/v1/spec_decode/",
+      "reason": "v1 spec decode unit tests"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_mamba_prefix_cache.py",
+      "reason": "validates prefix caching with mamba (already listed but critical)"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "v1 worker changes require basic correctness validation"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:36:23.452135+00:00"
+  ]
+}

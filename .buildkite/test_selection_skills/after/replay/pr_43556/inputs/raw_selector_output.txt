@@ -1,0 +1,49 @@
+Now I have a good understanding of the changes. Let me analyze this PR:
+
+**Summary of changes:**
+1. **New files created**: 
+   - `vllm/model_executor/layers/mamba/linear/__init__.py` (empty init file)
+   - `vllm/model_executor/layers/mamba/linear/bailing_linear_attn.py` (new Bailing linear attention implementation)
+   - `vllm/model_executor/layers/mamba/linear/base.py` (new base class `LinearAttention`)
+
+2. **File renamed/refactored**:
+   - `vllm/model_executor/layers/mamba/linear_attn.py` → `vllm/model_executor/layers/mamba/linear/minimax_linear_attn.py`
+   - `MiniMaxText01LinearAttention` class refactored to inherit from `LinearAttention` base class
+
+3. **Model files updated**:
+   - `vllm/model_executor/models/bailing_moe_linear.py`: Updated imports to use new paths
+   - `vllm/model_executor/models/minimax_text_01.py`: Updated imports and constructor signatures to use `VllmConfig`
+
+4. **Test file updated**:
+   - `tests/v1/attention/test_attention_backends_selection.py`: Updated test to use new constructor signature
+
+This is a **refactoring PR** that:
+- Extracts a base class for linear attention layers
+- Reorganizes code into a new subdirectory structure
+- Adds a new Bailing linear attention implementation
+- Updates existing code to use the new structure
+
+Based on the rules and the candidate table, I need to select tests:
+
+This PR modifies **Mamba linear attention layers** and **model implementations**. The candidate table shows all tests that import the modified `__init__.py` file. However, looking at the diff:
+
+1. The actual changes are primarily **refactoring and code reorganization**
+2. New base class `LinearAttention` is created
+3. New Bailing implementation added
+4. Import paths changed
+5. Constructor signatures updated to use `VllmConfig` pattern
+
+According to the instructions, I should narrow down from the candidate set based on what specifically changed.
+
+---
+
+This PR refactors linear attention layers by extracting a `LinearAttention` base class, moving `MiniMaxText01LinearAttention` to a subdirectory, and adding a new `BailingMoELinearAttention` implementation. The changes include file reorganization (creating `vllm/model_executor/layers/mamba/linear/` subdirectory), constructor signature updates to use `VllmConfig` instead of individual config parameters, and import path updates in `bailing_moe_linear.py` and `minimax_text_01.py`. One test file was updated to match the new constructor signature. This is primarily a refactoring with added functionality for Bailing model support.
+
+From the massive candidate set, I'm selecting tests that directly exercise linear attention layers, MiniMax/Bailing models, and mamba infrastructure. The candidate table includes hundreds of tests because they import the `__init__.py` transitively, but most don't actually test linear attention. Per Rule 6, mamba/attention changes don't trigger additional platform tests unless they change the core attention backends. Per Rule 1, I should narrow down based on what specifically changed: linear attention implementation and MiniMax/Bailing model layers.
+
+---
+tests/v1/attention/test_attention_backends_selection.py | directly modified, tests LinearAttention backend selection
+tests/basic_correctness/ | refactoring of core model layers, import path changes (Rule 4)
+tests/models/ | model executor changes affect model loading and execution
+tests/v1/e2e/ | v1 engine changes with mamba layers (Rule 2)
+tests/kernels/mamba/ | mamba layer implementation changed

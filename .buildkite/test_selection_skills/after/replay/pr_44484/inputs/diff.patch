@@ -1,0 +1,32 @@
+diff --git a/vllm/model_executor/models/interfaces.py b/vllm/model_executor/models/interfaces.py
+index 749222b08470..46be838f8acc 100644
+--- a/vllm/model_executor/models/interfaces.py
++++ b/vllm/model_executor/models/interfaces.py
+@@ -1524,8 +1524,8 @@ def get_input_modality(
+         self,
+         mm_kwargs: dict[str, Any],
+     ) -> str:
+-        """Return the modality of the inputs."""
+-        ...
++        """Return the modality of the inputs (default: image-only)."""
++        return "image"
+ 
+     def get_max_frames_per_video(
+         self,
+diff --git a/vllm/model_executor/models/step3_vl.py b/vllm/model_executor/models/step3_vl.py
+index 5a28ce3d004c..35a817f009d5 100644
+--- a/vllm/model_executor/models/step3_vl.py
++++ b/vllm/model_executor/models/step3_vl.py
+@@ -709,12 +709,6 @@ def get_encoder_cudagraph_config(self):
+             out_hidden_size=self.config.hidden_size,
+         )
+ 
+-    def get_input_modality(
+-        self,
+-        mm_kwargs: dict[str, Any],
+-    ) -> str:
+-        return "image"
+-
+     def get_encoder_cudagraph_budget_range(
+         self,
+         vllm_config: "VllmConfig",

@@ -1,0 +1,34 @@
+Based on my analysis of the test selection task, I can see this is about selecting tests for a PR that modifies MLA (Multi-headed Latent Attention) RoPE KV cache fusion functionality. Let me provide my response following the exact format required:
+
+## Reasoning
+
+This PR modifies MLA RoPE KV cache fusion functionality across compilation, kernel, config, and model layers. The changes include:
+
+1. **CUDA kernel updates** (`csrc/cache_kernels_fused.cu`): Adds template parameter `cos_sin_t` for type flexibility, moves slot validation earlier, renames parameter from `kv_cache_slot_mapping` to `slot_mapping`
+2. **New fusion pass** (`vllm/compilation/passes/fusion/mla_rope_kvcache_cat_fusion.py`): A new compilation pass for fusing MLA RoPE operations
+3. **Config changes** (`vllm/config/vllm.py`, `vllm/config/compilation.py`): Adds `enable_rope_kvcache_mla_fusion` function and new config flag `fuse_rope_kvcache_cat_mla`
+4. **Model layer changes** (`vllm/model_executor/layers/attention/mla_attention.py`, rotary embedding files): Updates to MLA attention and RoPE implementations
+5. **New and modified tests**: Two test files in `tests/compile/passes/` directly test this fusion
+
+From the candidate table, I need to narrow down to tests that specifically exercise:
+- MLA attention functionality 
+- RoPE (rotary embedding) operations
+- Compilation fusion passes
+- KV cache operations with MLA
+
+I'll exclude the vast majority of candidates that just happen to import these modules transitively but don't actually test MLA, RoPE fusion, or compilation behavior.
+
+---
+
+tests/compile/passes/test_mla_rope_kvcache_cat_fusion.py | New test file for the new MLA RoPE KV cache concatenation fusion pass
+tests/compile/passes/test_rope_kvcache_fusion.py | Modified test for RoPE KV cache fusion (changed file)
+tests/compile/passes/test_fusion.py | Tests general fusion pass infrastructure used by matcher_utils.py
+tests/compile/passes/test_fusion_attn.py | Tests attention fusion passes, likely exercises MLA fusion
+tests/compile/passes/test_mla_attn_quant_fusion.py | Tests MLA attention quantization fusion, related to MLA attention changes
+tests/kernels/core/test_rotary_embedding.py | Tests RoPE implementations modified in deepseek_scaling_rope.py and dual_chunk_rope.py
+tests/kernels/core/test_rotary_embedding_mla_cache_fused.py | Directly tests the fused MLA RoPE cache kernel modified in csrc/
+tests/kernels/test_cache_kernels.py | Tests cache kernels including the modified csrc/cache_kernels_fused.cu
+tests/v1/attention/test_mla_backends.py | Tests MLA attention backends affected by mla_attention.py changes
+tests/v1/attention/test_sparse_mla_backends.py | Tests sparse MLA attention backends
+tests/compile/test_config.py | Tests compilation config changes (fuse_rope_kvcache_cat_mla flag)
+tests/basic_correctness/test_basic_correctness.py | Basic correctness tests to catch config-level regressions (Rule 4 fallback)

@@ -1,0 +1,4 @@
+This PR refactors the `_convert_param_value` method in `Qwen3CoderToolParser`, extracting the type conversion logic to utility functions (`coerce_to_schema_type`, `extract_types_from_schema`). The change is highly localized to parameter type conversion in the Qwen3Coder tool parser. New tests were added specifically for `anyOf` schema handling (Pydantic v2). The candidate list is very broad due to import dependencies, but the diff shows this is a focused refactoring of one method in one parser class, not a change to core vllm functionality that would affect models, kernels, or engine behavior.
+
+---
+tests/tool_parsers/test_qwen3coder_tool_parser.py | directly tests the refactored type conversion logic

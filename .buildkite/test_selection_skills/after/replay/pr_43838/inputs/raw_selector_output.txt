@@ -1,0 +1,20 @@
+Looking at this PR, I need to analyze the changes and select appropriate tests.
+
+## Analysis
+
+This PR refactors the `is_cumem_allocator_available()` function by moving it from `vllm/config/model.py` to `vllm/platforms/interface.py` as a method on the Platform class. The change updates the call site in ModelConfig's `__post_init__` to use `current_platform.is_cumem_allocator_available()` instead of the module-level function.
+
+This is primarily a code organization refactoring that:
+- Moves platform-specific logic to the platform interface (better architecture)
+- Changes how cumem allocator availability is checked in ModelConfig initialization
+- Affects platform detection and model configuration with cumem/sleep mode
+
+From the candidate tests, most are unrelated to this specific change. I'm keeping tests that directly exercise cumem allocator, platform detection, or model config initialization. Dropping the vast majority of candidates (entrypoints, compile tests, model tests, etc.) since they don't exercise the cumem allocator availability check code path.
+
+Per Rule 2, `vllm/platforms/` changes should also trigger `tests/cuda/test_platform_no_cuda_init.py` even though it's not in the import-based candidate list. Per Rule 6, platform changes should include `tests/basic_correctness/` to cover platform-specific variants.
+
+---
+tests/basic_correctness/test_cumem.py | directly tests cumem allocator functionality
+tests/basic_correctness/ | platform changes safety net (Rule 6)
+tests/cuda/test_platform_no_cuda_init.py | platform initialization test (Rule 2)
+tests/plugins_tests/test_platform_plugins.py | tests platform plugin system

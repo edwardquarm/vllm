@@ -1,0 +1,34 @@
+{
+  "pr_number": "37505",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 4,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/",
+      "reason": "v1 core refactoring: registry system affects all v1 KV cache logic (Rule 2, broad v1/ change)"
+    },
+    {
+      "selected_test": "tests/v1/core/",
+      "reason": "direct changes to kv_cache_utils.py and single_type_kv_cache_manager.py (Rule 2)"
+    },
+    {
+      "selected_test": "tests/v1/engine/",
+      "reason": "vllm/v1/engine/core.py modified (Rule 2)"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "core v1 infrastructure change, CPU variant coverage (Rules 4, 7)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:35:45.022636+00:00"
+  ]
+}

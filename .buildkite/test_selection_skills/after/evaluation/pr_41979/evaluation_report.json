@@ -1,0 +1,66 @@
+{
+  "pr_number": "41979",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 1,
+    "false_negatives": 1,
+    "false_positives": 9,
+    "coverage_rate": 0.5,
+    "precision_rate": 0.1
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "matched_failure": "tests/basic_correctness",
+      "reason": "large refactor safety net (Rule 5)"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Intel GPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/moe/",
+      "reason": "directly tests fused_moe layer implementations"
+    },
+    {
+      "selected_test": "tests/distributed/test_expert_parallel.py",
+      "reason": "expert parallel execution depends on fused_moe"
+    },
+    {
+      "selected_test": "tests/distributed/test_eplb_fused_moe_layer.py",
+      "reason": "EPLB fused moe layer test"
+    },
+    {
+      "selected_test": "tests/distributed/test_eplb_fused_moe_layer_dep_nvfp4.py",
+      "reason": "EPLB fused moe nvfp4 variant"
+    },
+    {
+      "selected_test": "tests/distributed/test_torchrun_example_moe.py",
+      "reason": "torchrun moe example uses fused_moe"
+    },
+    {
+      "selected_test": "tests/quantization/test_int8_w8a16_wna16.py",
+      "reason": "int8 quantization uses fused_moe oracle"
+    },
+    {
+      "selected_test": "tests/quantization/test_fp8_w8a8_block_opt.py",
+      "reason": "fp8 quantization oracle refactored"
+    },
+    {
+      "selected_test": "tests/quantization/test_fp8_w8a8.py",
+      "reason": "fp8 oracle in fused_moe changed"
+    },
+    {
+      "selected_test": "tests/compile/",
+      "reason": "compilation depends on fused_moe structure (Rule 5)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:37:37.913457+00:00"
+  ]
+}

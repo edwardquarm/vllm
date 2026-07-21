@@ -1,0 +1,21 @@
+Looking at the changed files and diff content to select the appropriate tests.
+
+## Analysis
+
+This PR modifies two source files and one test file:
+
+1. **`vllm/benchmarks/throughput.py`**: Adds a `--prequeue-requests` flag that uses new `enqueue()` and `enqueue_chat()` methods from the LLM class. This affects how benchmark requests are queued but doesn't change core vLLM logic.
+
+2. **`vllm/entrypoints/llm.py`**: Adds a new public `enqueue_chat()` method that mirrors the existing `chat()` API but doesn't wait for completion. Refactors `_run_chat()` to extract `_add_chat_requests()` for code reuse. This is a new feature addition with some internal refactoring.
+
+3. **`tests/entrypoints/llm/test_mm_processor_kwargs.py`**: Adds new tests for the `enqueue_chat()` and `_run_chat()` changes.
+
+The changes are focused on the entrypoint's chat interface and benchmark utilities. Per Rule 2, any `vllm/entrypoints/` change triggers `tests/entrypoints/`. Per Rule 8, entrypoint changes also trigger metrics and tracing tests. The benchmark file change triggers benchmark CLI tests.
+
+---
+
+tests/benchmarks/test_latency_cli.py | vllm/benchmarks/ changed
+tests/benchmarks/test_throughput_cli.py | vllm/benchmarks/ changed, direct usage
+tests/entrypoints/ | vllm/entrypoints/llm.py changed (Rule 2)
+tests/metrics/ | entrypoint change (Rule 8)
+tests/tracing/ | entrypoint change (Rule 8)

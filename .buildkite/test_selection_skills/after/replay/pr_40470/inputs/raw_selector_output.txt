@@ -1,0 +1,6 @@
+This PR refactors the CPU attention backend by extracting KV cache update logic from the `forward()` method into a new `do_kv_cache_update()` method. The `isa` field is removed from `CPUAttentionMetadata` (now computed locally) and a new flag `forward_includes_kv_cache_update = False` is added to signal the separation. This is a code organization change that doesn't alter the computation itself, but changes the interface - the KV cache update must now be called separately. I'm keeping tests that directly exercise CPU attention, V1 attention backends, and basic correctness as a safety net. Dropping the vast majority of model tests from the candidate set since they typically use GPU backends and wouldn't exercise this CPU-specific code path.
+
+---
+tests/kernels/attention/test_cpu_attn.py | directly tests CPU attention backend
+tests/v1/attention/ | tests V1 attention backend selection and integration
+tests/basic_correctness/ | safety net for core attention code refactoring

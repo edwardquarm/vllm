@@ -1,0 +1,174 @@
+{
+  "pr_number": "44036",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 1,
+    "false_negatives": 30,
+    "false_positives": 0,
+    "coverage_rate": 0.032,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "matched_failure": "tests/basic_correctness",
+      "reason": "requirements/cuda.txt changed, dependency version bump (Rule 3)"
+    }
+  ],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/models",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/config",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/multimodal",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/reasoning",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/renderers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/standalone_tests/lazy_imports.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_inputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_outputs.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_pooling_params.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/test_ray_env.py",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tokenizers_",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tool_parsers",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/transformers_utils",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Async Engine, Inputs, Utils, Worker, Config (CPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py::test_v1_generation_is_deterministic_across_batch_sizes_with_needle[FLASH_ATTN]",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_batch_invariance.py::test_v1_generation_is_deterministic_across_batch_sizes_with_needle[TRITON_MLA]",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/determinism/test_rms_norm_batch_invariant.py",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention",
+      "job_name": "Batch Invariance (H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (API Server 2)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/rpc",
+      "job_name": "Entrypoints Integration (API Server 2)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/serve",
+      "job_name": "Entrypoints Integration (API Server 2)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/serve/instrumentator",
+      "job_name": "Entrypoints Integration (API Server 2)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/tool_use",
+      "job_name": "Entrypoints Integration (API Server 2)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-30T06:41:18.732192+00:00"
+  ]
+}

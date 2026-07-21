@@ -1,0 +1,65 @@
+{
+  "pr_number": "41252",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 6,
+    "false_positives": 4,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/.buildkite",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/.buildkite/intel_jobs",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/.buildkite/intel_jobs/test-intel.yaml",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/core",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "XPU V1 test",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/determinism/",
+      "reason": "batch invariance tests, modified test file exercises new params"
+    },
+    {
+      "selected_test": "tests/v1/attention/",
+      "reason": "v1 attention backend tests, flex attention is in v1"
+    },
+    {
+      "selected_test": "tests/kernels/attention/",
+      "reason": "attention kernel tests (Rule 6: attention changes)"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core attention config changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:36:52.200587+00:00"
+  ]
+}

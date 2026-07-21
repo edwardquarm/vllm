@@ -1,0 +1,14 @@
+Looking at the PR changes to determine which tests to run.
+
+This PR modifies benchmark dataset loading (`vllm/benchmarks/datasets/datasets.py`) and the serve CLI (`vllm/benchmarks/serve.py`) to add a `--chat-template-kwargs` parameter that forwards kwargs to `apply_chat_template()`. The change adds optional parameters with backwards-compatible defaults (None/empty dict), and includes a new test file that verifies the forwarding behavior.
+
+The candidate set includes hundreds of tests because many import the benchmark utilities, but most don't exercise the chat template code path. I'll narrow down to tests that actually use the affected dataset sampling and CLI argument parsing.
+
+---
+
+tests/benchmarks/test_custom_dataset_chat_template_kwargs.py | new test for chat_template_kwargs feature
+tests/benchmarks/test_random_dataset.py | exercises get_samples() and dataset sampling
+tests/benchmarks/test_random_multimodal_dataset_video.py | exercises multimodal dataset sampling path
+tests/benchmarks/test_txt_slices_dataset.py | exercises text dataset sampling
+tests/benchmarks/test_latency_cli.py | exercises vllm/benchmarks/ CLI (Rule 2)
+tests/benchmarks/test_throughput_cli.py | exercises vllm/benchmarks/ CLI (Rule 2)

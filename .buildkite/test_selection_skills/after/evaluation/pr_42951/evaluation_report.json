@@ -1,0 +1,26 @@
+{
+  "pr_number": "42951",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 2,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/moe/",
+      "reason": "directly tests MoE routers and mxfp4 backend"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "platform change safety net (Rule 6)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:43.305535+00:00"
+  ]
+}

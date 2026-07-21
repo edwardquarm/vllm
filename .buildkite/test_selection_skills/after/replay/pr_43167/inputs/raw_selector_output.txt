@@ -1,0 +1,26 @@
+Now let me analyze this systematically. Based on what I've seen:
+
+**Summary of PR changes:**
+1. **Core quantization refactor**: Changed `get_cache_scale(name)` method to `get_cache_scale_mapper()` in base_config.py and fp8.py
+2. **New KVCacheScaleParameter class** in kv_cache.py with weight_loader
+3. **Removed boilerplate** from 24+ model files (all the load_weights methods no longer need manual KV cache scale handling)
+4. **Weight utils update** in weight_utils.py to handle pre-renamed weights
+5. **Test cleanup** in test_eagle_quantization.py (removed obsolete tests for the old API)
+6. **Quark quantization** update in quark.py
+
+This is a refactoring that centralizes KV-cache scale loading logic. The changes are:
+- Core infrastructure in quantization layers
+- Mechanical deletions in model files
+- Test updates
+
+Let me now write the output following the exact format specified:
+
+This PR refactors KV-cache scale loading by introducing `get_cache_scale_mapper()` and `KVCacheScaleParameter` to centralize the logic previously duplicated across 24+ model files. The core changes are in `vllm/model_executor/layers/quantization/` (base_config.py, fp8.py, kv_cache.py, quark.py) and weight_utils.py. All model file changes are mechanical deletions of the now-obsolete manual scale-loading code. The test file removes tests for the deprecated `get_cache_scale()` API. This affects quantization, model loading, and weight handling, so I'm selecting tests that cover quantization workflows, model loading, and the specific models changed. Per Rule 2, tests/model_executor/test_eagle_quantization.py itself changed (test code), so tests/model_executor/ is included.
+
+---
+tests/model_executor/ | quantization test file modified, tests eagle quantization
+tests/kernels/ | quantization layer changes affect kernel tests (Rule 3 CMake implication)
+tests/models/ | 24 model files changed, need model-level quantization tests (Rule 2)
+tests/quantization/ | core quantization config and FP8 changes
+tests/basic_correctness/ | quantization affects forward pass, safe baseline
+tests/lora/ | LoRA models use quantization, weight loading changed

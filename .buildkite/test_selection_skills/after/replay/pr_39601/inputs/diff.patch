@@ -1,0 +1,222 @@
+diff --git a/tests/tool_parsers/test_glm4_moe_tool_parser.py b/tests/tool_parsers/test_glm4_moe_tool_parser.py
+index c706d0a4c257..b0300297ddc4 100644
+--- a/tests/tool_parsers/test_glm4_moe_tool_parser.py
++++ b/tests/tool_parsers/test_glm4_moe_tool_parser.py
+@@ -5,6 +5,7 @@
+ from unittest.mock import Mock
+ 
+ import pytest
++from openai.types.responses import FunctionTool
+ 
+ from vllm.entrypoints.openai.chat_completion.protocol import (
+     ChatCompletionRequest,
+@@ -1363,3 +1364,122 @@ def test_stream_interval_content_between_tool_calls(
+     args1 = json.loads("".join(tools_found[1]["args_fragments"]))
+     assert args0 == {"city": "Beijing"}
+     assert args1 == {"city": "Shanghai"}
++
++
++# ── FunctionTool (Responses API) tests ──────────────────────────────
++
++
++@pytest.fixture
++def function_tools():
++    return [
++        FunctionTool(
++            type="function",
++            name="get_weather",
++            parameters={
++                "type": "object",
++                "properties": {
++                    "city": {"type": "string"},
++                    "unit": {"type": "string"},
++                },
++            },
++        ),
++        FunctionTool(
++            type="function",
++            name="calculate",
++            parameters={
++                "type": "object",
++                "properties": {
++                    "operation": {"type": "string"},
++                    "a": {"type": "number"},
++                    "b": {"type": "number"},
++                },
++            },
++        ),
++    ]
++
++
++@pytest.fixture
++def glm4_moe_parser_function_tools(glm4_moe_tokenizer, function_tools):
++    return Glm4MoeModelToolParser(glm4_moe_tokenizer, tools=function_tools)
++
++
++@pytest.fixture
++def mock_request_function_tools(function_tools) -> ChatCompletionRequest:
++    request = Mock(spec=ChatCompletionRequest)
++    request.tools = function_tools
++    return request
++
++
++def test_extract_tool_calls_with_function_tool(
++    glm4_moe_parser_function_tools, mock_request_function_tools
++):
++    model_output = """<tool_call>get_weather
++<arg_key>city</arg_key>
++<arg_value>Dallas</arg_value>
++<arg_key>unit</arg_key>
++<arg_value>fahrenheit</arg_value>
++</tool_call>"""
++
++    extracted = glm4_moe_parser_function_tools.extract_tool_calls(
++        model_output, request=mock_request_function_tools
++    )
++    assert extracted.tools_called
++    assert len(extracted.tool_calls) == 1
++    assert extracted.tool_calls[0].function.name == "get_weather"
++    args = json.loads(extracted.tool_calls[0].function.arguments)
++    assert args["city"] == "Dallas"
++    assert args["unit"] == "fahrenheit"
++
++
++def test_extract_tool_calls_with_function_tool_mixed_types(
++    glm4_moe_parser_function_tools, mock_request_function_tools
++):
++    model_output = """<tool_call>calculate
++<arg_key>operation</arg_key>
++<arg_value>add</arg_value>
++<arg_key>a</arg_key>
++<arg_value>42</arg_value>
++<arg_key>b</arg_key>
++<arg_value>3.14</arg_value>
++</tool_call>"""
++
++    extracted = glm4_moe_parser_function_tools.extract_tool_calls(
++        model_output, request=mock_request_function_tools
++    )
++    assert extracted.tools_called
++    args = json.loads(extracted.tool_calls[0].function.arguments)
++    assert args["operation"] == "add"
++    assert isinstance(args["a"], (int, float))
++    assert isinstance(args["b"], float)
++
++
++def test_streaming_with_function_tool(
++    glm4_moe_parser_function_tools, mock_request_function_tools
++):
++    _reset_streaming_state(glm4_moe_parser_function_tools)
++
++    chunks = [
++        "<tool_call>get_weather\n",
++        "<arg_key>city</arg_key>",
++        "<arg_value>Bei",
++        "jing",
++        "</arg_value>",
++        "</tool_call>",
++    ]
++
++    current_text = ""
++    for chunk in chunks:
++        current_text += chunk
++        glm4_moe_parser_function_tools.extract_tool_calls_streaming(
++            previous_text="",
++            current_text=current_text,
++            delta_text=chunk,
++            previous_token_ids=[],
++            current_token_ids=[],
++            delta_token_ids=[],
++            request=mock_request_function_tools,
++        )
++
++    assert len(glm4_moe_parser_function_tools.prev_tool_call_arr) == 1
++    args = json.loads(glm4_moe_parser_function_tools.prev_tool_call_arr[0]["arguments"])
++    assert args["city"] == "Beijing"
+diff --git a/vllm/tool_parsers/glm4_moe_tool_parser.py b/vllm/tool_parsers/glm4_moe_tool_parser.py
+index 64c4beb14357..1779896e5b66 100644
+--- a/vllm/tool_parsers/glm4_moe_tool_parser.py
++++ b/vllm/tool_parsers/glm4_moe_tool_parser.py
+@@ -38,7 +38,11 @@
+     Tool,
+     ToolParser,
+ )
+-from vllm.tool_parsers.utils import partial_tag_overlap
++from vllm.tool_parsers.utils import (
++    extract_types_from_schema,
++    find_tool_properties,
++    partial_tag_overlap,
++)
+ 
+ logger = init_logger(__name__)
+ 
+@@ -123,27 +127,13 @@ def _json_escape_string_content(s: str) -> str:
+             return ""
+         return json.dumps(s, ensure_ascii=False)[1:-1]
+ 
+-    @staticmethod
+-    def _is_string_type(
+-        tool_name: str,
+-        arg_name: str,
+-        tools: list[Tool] | None,
+-    ) -> bool:
+-        if tools is None:
++    def _is_string_type(self, tool_name: str, arg_name: str) -> bool:
++        tool_properties = find_tool_properties(self.tools, tool_name)
++        param_schema = tool_properties.get(arg_name)
++        if param_schema is None:
+             return False
+-        for tool in tools:
+-            if tool.function.name != tool_name:
+-                continue
+-            if tool.function.parameters is None:
+-                return False
+-            arg_type = (
+-                tool.function.parameters.get("properties", {})
+-                .get(arg_name, {})
+-                .get("type", None)
+-            )
+-            return arg_type == "string"
+-        logger.debug("No tool named '%s'.", tool_name)
+-        return False
++        param_types = extract_types_from_schema(param_schema)
++        return set(param_types) - {"null"} == {"string"}
+ 
+     @staticmethod
+     def _tools_enabled(request: ChatCompletionRequest) -> bool:
+@@ -210,7 +200,7 @@ def extract_tool_calls(
+                 arg_dct: dict[str, Any] = {}
+                 for key, value in pairs:
+                     arg_key = key.strip()
+-                    if self._is_string_type(tc_name, arg_key, self.tools):
++                    if self._is_string_type(tc_name, arg_key):
+                         arg_val = value
+                     else:
+                         arg_val = self._deserialize(value.strip())
+@@ -352,7 +342,7 @@ def _build_args_json_so_far(
+         for key, value in pairs:
+             key = key.strip()
+             key_json = json.dumps(key, ensure_ascii=False)
+-            if self._is_string_type(tool_name, key, self.tools):
++            if self._is_string_type(tool_name, key):
+                 # Don't strip string values — whitespace is significant
+                 # and must match the partial-value path for diffing.
+                 val_json = json.dumps(value, ensure_ascii=False)
+@@ -392,7 +382,7 @@ def _build_args_json_so_far(
+                     # Tool call finished but </arg_value> is missing
+                     # (malformed output). Treat partial as complete value
+                     # so the diff naturally closes any open quotes.
+-                    if self._is_string_type(tool_name, partial_key, self.tools):
++                    if self._is_string_type(tool_name, partial_key):
+                         val_json = json.dumps(partial_content, ensure_ascii=False)
+                     else:
+                         val_json = json.dumps(
+@@ -400,7 +390,7 @@ def _build_args_json_so_far(
+                             ensure_ascii=False,
+                         )
+                     parts.append(f"{key_json}: {val_json}")
+-                elif self._is_string_type(tool_name, partial_key, self.tools):
++                elif self._is_string_type(tool_name, partial_key):
+                     escaped = self._json_escape_string_content(partial_content)
+                     # Open quote but no close — more content may arrive
+                     parts.append(f'{key_json}: "{escaped}')

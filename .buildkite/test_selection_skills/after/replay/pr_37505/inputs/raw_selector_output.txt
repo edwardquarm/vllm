@@ -1,0 +1,26 @@
+Perfect! Now I have the complete context. Let me analyze this PR and select the appropriate tests.
+
+Based on the instructions and the PR diff, I can see:
+
+**Changed files:**
+- `tests/v1/core/utils.py` - test file (imports new function)
+- `tests/v1/simple_kv_offload/test_scheduler.py` - test file (imports new function)
+- `tests/v1/test_kv_cache_spec_registry.py` - NEW test file (322 lines)
+- `vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py` - replaces `spec_manager_map` with registry
+- `vllm/platforms/interface.py` - adds new method `register_custom_kv_cache_specs`
+- `vllm/v1/core/kv_cache_utils.py` - adds registry check
+- `vllm/v1/core/single_type_kv_cache_manager.py` - removes `spec_manager_map`, adds `register_all_kvcache_specs()`, uses registry
+- `vllm/v1/engine/core.py` - (need to check the diff)
+- `vllm/v1/kv_cache_interface.py` - adds `is_uniform_with_collection()` methods
+- `vllm/v1/kv_cache_spec_registry.py` - NEW file (209 lines)
+- `vllm/v1/worker/gpu_model_runner.py` - adds registry check
+
+This PR is refactoring the KV cache spec system from a hardcoded map to a registry pattern. Let me output my analysis:
+
+This PR refactors the KV cache spec management system from a hardcoded `spec_manager_map` dictionary to a pluggable `KVCacheSpecRegistry`. The changes touch core v1 engine, worker, and cache management code, moving spec-to-manager mapping logic into a new registry module (`vllm/v1/kv_cache_spec_registry.py`). A new test file (`tests/v1/test_kv_cache_spec_registry.py`) is added to test the registry directly. The changes affect how KV cache specs are looked up and validated across the v1 engine path. Per Rule 1, I'm selecting tests from v1 areas affected by the refactoring. Per Rule 7 (cpu v1 coverage) and Rules 2 and 8 (engine/worker changes trigger broader tests), I'm including v1 core, engine, and basic correctness tests. The new test file will obviously run.
+
+---
+tests/v1/ | v1 core refactoring: registry system affects all v1 KV cache logic (Rule 2, broad v1/ change)
+tests/v1/core/ | direct changes to kv_cache_utils.py and single_type_kv_cache_manager.py (Rule 2)
+tests/v1/engine/ | vllm/v1/engine/core.py modified (Rule 2)
+tests/basic_correctness/ | core v1 infrastructure change, CPU variant coverage (Rules 4, 7)

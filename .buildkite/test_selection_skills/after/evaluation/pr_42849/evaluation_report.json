@@ -1,0 +1,42 @@
+{
+  "pr_number": "42849",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/kernels/test_fused_inv_rope_fp8_quant.py",
+      "reason": "directly tests the modified kernel"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_mla_backends.py",
+      "reason": "MLA backends use this DeepSeek v4 kernel"
+    },
+    {
+      "selected_test": "tests/v1/attention/test_attention_backends.py",
+      "reason": "v1 attention backend selection"
+    },
+    {
+      "selected_test": "tests/kernels/attention/test_attention.py",
+      "reason": "attention kernel tests (Rule 6)"
+    },
+    {
+      "selected_test": "tests/compile/passes/test_mla_attn_quant_fusion.py",
+      "reason": "MLA attention quant fusion pass"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core attention path"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:37.815892+00:00"
+  ]
+}

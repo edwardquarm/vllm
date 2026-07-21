@@ -1,0 +1,4 @@
+This PR modifies a CUDA/HIP compatibility header in csrc/quantization/gptq/compat.cuh, adding a HIP version check to conditionally exclude HIP 7.13+ from using a custom atomicAdd implementation for half precision types. This is a ROCm/AMD GPU kernel compatibility fix. Per Rule 3, csrc/ changes map to tests/kernels/. The change is specific to quantization kernel behavior and atomic operations, so kernel tests are the appropriate target. No Python source files changed, so there are no import-based candidates.
+
+---
+tests/kernels/ | csrc/ CUDA/HIP kernel change (Rule 3)

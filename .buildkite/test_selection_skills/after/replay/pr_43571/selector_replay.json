@@ -1,0 +1,32 @@
+{
+  "pr_number": "43571",
+  "repo": "vllm-project/vllm",
+  "status": "success",
+  "changed_files": [
+    "tests/models/quantization/test_gpt_oss.py"
+  ],
+  "diff_summary": "1 files changed",
+  "diff_ref": "2260ccf23e300858ff7c3cbdb7e87821c759ca22",
+  "test_dependency_ref": "build_test_mapping.py",
+  "test_selection_rules_ref": ".buildkite/TEST_SELECTION.md",
+  "selector_command": "claude -p --model claude-sonnet-4-5",
+  "llm_selected_tests": [
+    {
+      "identifier": "tests/models/quantization/test_gpt_oss.py",
+      "granularity": "unknown",
+      "reason": "test file itself was modified with import guard",
+      "source": "llm_selector"
+    }
+  ],
+  "selection_reasons": [
+    {
+      "identifier": "tests/models/quantization/test_gpt_oss.py",
+      "reason": "test file itself was modified with import guard"
+    }
+  ],
+  "candidate_mapping": "| Changed source file | Candidate test files |\n|---|---|\n| (no Python files in vllm/) | N/A |",
+  "total_candidates": 0,
+  "notes": [
+    "Replay performed on 2026-06-29T03:23:34.761160+00:00"
+  ]
+}

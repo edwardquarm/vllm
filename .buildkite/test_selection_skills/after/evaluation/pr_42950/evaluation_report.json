@@ -1,0 +1,38 @@
+{
+  "pr_number": "42950",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 5,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "Platform behavior changes in activation layers"
+    },
+    {
+      "selected_test": "tests/compile/",
+      "reason": "SiluAndMulWithClamp changes affect compilation paths"
+    },
+    {
+      "selected_test": "tests/models/",
+      "reason": "DeepSeek v4 model forward and compressor changes"
+    },
+    {
+      "selected_test": "tests/v1/",
+      "reason": "V1 MLA attention backend and sparse SWA changes"
+    },
+    {
+      "selected_test": "tests/kernels/",
+      "reason": "Platform-specific kernel paths per Rule 6"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:41.542580+00:00"
+  ]
+}

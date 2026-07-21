@@ -1,0 +1,26 @@
+Looking at the changes in this PR, I need to analyze the diff and apply the test selection rules.
+
+## Analysis
+
+This PR refactors sparse attention indexer operations by:
+
+1. **Moving top_k operations to shared code** (`vllm/_custom_ops.py`): Added `top_k_per_row_prefill` and `top_k_per_row_decode` as centralized ops instead of platform-specific implementations
+2. **Adding XPU-specific FP8 MQA logits ops** (`vllm/_xpu_ops.py`): New `xpu_fp8_mqa_logits` and `xpu_fp8_paged_mqa_logits` implementations with registration
+3. **Refactoring sparse attention indexer** (`sparse_attn_indexer.py`): Unified the platform-specific code paths to use the new consolidated ops, added XPU support via `forward_xpu` method
+
+This is functional refactoring of attention kernel operations, not just style changes. The changes affect the sparse attention indexer layer which is used in MLA (multi-head latent attention) backends, and they introduce platform-specific XPU code paths.
+
+**Applying rules:**
+- **Rule 1**: Narrowing from candidates - keeping attention-specific tests that exercise sparse indexer
+- **Rule 6**: Attention changes (`vllm/model_executor/layers/` affecting attention) trigger `tests/kernels/attention/` and platform tests
+- **Rule 4**: Core attention code path warrants `tests/basic_correctness/`
+
+The key tests are those that exercise sparse MLA backends and attention kernels where this indexer code runs.
+
+---
+
+tests/v1/attention/test_sparse_mla_backends.py | directly tests sparse MLA backends using this indexer
+tests/v1/attention/test_mla_backends.py | MLA backends that use sparse attention indexer
+tests/kernels/attention/ | attention kernel tests per Rule 6
+tests/v1/attention/ | v1 attention system tests
+tests/basic_correctness/ | core attention path safety net

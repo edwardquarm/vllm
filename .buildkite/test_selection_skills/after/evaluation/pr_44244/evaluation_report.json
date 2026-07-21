@@ -1,0 +1,338 @@
+{
+  "pr_number": "44244",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 59,
+    "false_positives": 6,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/basic_correctness",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models",
+      "job_name": "Ascend NPU Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_block_int8.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_cutlass_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_flashinfer.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_gpt_oss_triton_kernels.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_modular_oai_triton_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_moe.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_triton_moe_no_act_mul.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/kernels/moe/test_triton_moe_ptpc_fp8.py",
+      "job_name": "Kernels FP8 MoE Test (1 H100)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] LM Eval Large Models (B200, EP)",
+      "job_name": "LM Eval Large Models (B200, EP)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/test_mapping.py",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Multi-Modal Models (Extended Generation 1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/openai/completion/test_tensorizer_entrypoint.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/model_executor",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/_aiter_ops.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config/model.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/engine",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/engine/arg_utils.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/rocm.py",
+      "job_name": "Model Executor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] CPU-Multi-Modal Model Tests 3",
+      "job_name": "CPU-Multi-Modal Model Tests 3",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/evals",
+      "job_name": "MoE Refactor Integration Test (B200 - TEMPORARY)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/evals/gsm8k",
+      "job_name": "MoE Refactor Integration Test (B200 - TEMPORARY)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/evals/gsm8k/test_gsm8k_correctness.py",
+      "job_name": "MoE Refactor Integration Test (B200 - TEMPORARY)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/processing",
+      "job_name": "Multi-Modal Processor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/processing/test_tensor_schema.py",
+      "job_name": "Multi-Modal Processor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/registry.py",
+      "job_name": "Multi-Modal Processor",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_common.py",
+      "job_name": "Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_qwen2_5_vl.py",
+      "job_name": "Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_vit_cudagraph.py",
+      "job_name": "Multi-Modal Models (Standard) 2: qwen3 + gemma",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/general",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/v1/e2e/general/test_async_scheduling.py",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "e2e Scheduling (1 GPU)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/quantization",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers/quantization/turboquant",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/backends/turboquant_attn.py",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/ops",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/ops/triton_turboquant_decode.py",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention/ops/triton_turboquant_store.py",
+      "job_name": "LM Eval TurboQuant KV Cache",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Torch Nightly Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/pooling",
+      "job_name": "Multi-Modal Models (Extended Pooling)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/test_chat_utils",
+      "job_name": "Entrypoints Integration (API Server openai - Part 3)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server 2) (mi325_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server 2) (mi325_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/benchmarks/test_custom_dataset_chat_template_kwargs.py",
+      "reason": "new test for chat_template_kwargs feature"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_random_dataset.py",
+      "reason": "exercises get_samples() and dataset sampling"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_random_multimodal_dataset_video.py",
+      "reason": "exercises multimodal dataset sampling path"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_txt_slices_dataset.py",
+      "reason": "exercises text dataset sampling"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_latency_cli.py",
+      "reason": "exercises vllm/benchmarks/ CLI (Rule 2)"
+    },
+    {
+      "selected_test": "tests/benchmarks/test_throughput_cli.py",
+      "reason": "exercises vllm/benchmarks/ CLI (Rule 2)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:41:39.233072+00:00"
+  ]
+}

@@ -1,0 +1,25 @@
+Looking at this PR to determine which tests to run.
+
+This PR modifies `vllm/model_executor/models/gemma3n_mm.py` by adding an explicit `input_is_parallel=False` parameter to a layer initialization. The comment indicates this controls how inputs are scattered internally, suggesting it affects distributed/parallel tensor handling. The change appears to be making an implicit default explicit rather than changing behavior.
+
+The candidate table shows hundreds of tests that import this file, but most are generic tests that import many models. I need to narrow down to tests that actually exercise the Gemma3n multimodal model and the specific projection layer being modified.
+
+Key observations:
+- File changed: `gemma3n_mm.py` (Gemma 3 Native Multimodal model)
+- Change: Single parameter addition to a projection layer init
+- Scope: Model-specific, affects multimodal input projection
+- Risk: Low (explicit default), but affects distributed input handling
+
+From the candidate set, the most relevant tests are:
+1. Gemma3/4 multimodal processing tests (directly exercise this model)
+2. Basic correctness (safety net per Rule 4)
+
+I'm dropping the bulk of the candidate tests (compile, distributed, quantization, lora, etc.) because:
+- The diff only adds an explicit parameter default
+- No functional behavior change is indicated
+- Tests that don't specifically use Gemma3n multimodal won't exercise this code path
+
+---
+tests/models/multimodal/processing/test_gemma3.py | directly tests Gemma3 multimodal processing
+tests/models/multimodal/processing/test_gemma4.py | tests related Gemma4 model, may share code
+tests/basic_correctness/ | safety net for model initialization changes

@@ -1,0 +1,30 @@
+{
+  "pr_number": "42676",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 3,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/v1/",
+      "reason": "all v1 tests exercise KV connector through worker/engine"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "v1 change safety net (Rule 7)"
+    },
+    {
+      "selected_test": "tests/metrics/",
+      "reason": "engine/worker change triggers metrics (Rule 8)"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:38:34.562514+00:00"
+  ]
+}

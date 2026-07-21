@@ -1,0 +1,35 @@
+Based on my analysis of the PR, here's my test selection:
+
+This PR modifies the encoder CUDA graph API in v1, specifically:
+- Changes to the encoder CUDA graph interface and implementation
+- Updates to 4 multimodal vision models (Qwen2-VL, Qwen2.5-VL, Qwen3-VL, Step3-VL)
+- The test file itself was updated to match the new API
+
+**Key observations:**
+1. This is an API refactoring of the v1 encoder CUDA graph system
+2. The change affects `vllm/v1/worker/encoder_cudagraph.py` and the interface definitions
+3. Multiple vision models implement this interface and were updated
+4. The test file `tests/v1/cudagraph/test_encoder_cudagraph.py` was modified to match the new API
+
+**Test selection reasoning:**
+- The modified test file itself must run: `tests/v1/cudagraph/test_encoder_cudagraph.py`
+- Per Rule 2: changes to `vllm/v1/` trigger `tests/v1/e2e/` 
+- The worker changes affect v1 core functionality, so `tests/v1/core/` should run per Rule 2
+- Per Rule 6: changes to `vllm/v1/worker/` trigger `tests/v1/e2e/`
+- Per Rule 7: v1 changes trigger CPU variant coverage
+- Model-specific tests for the 4 changed models should run to verify the interface implementation
+
+Let me prepare the response:
+
+---
+
+This PR refactors the encoder CUDA graph API in v1 by consolidating `mm_kwargs` and `buffers` into a single `values` dict and removing `input_key_by_modality` from the config. It modifies the v1 worker encoder CUDA graph implementation and updates 4 vision models (Qwen2-VL, Qwen2.5-VL, Qwen3-VL, Step3-VL) to match the new interface. The test file itself was updated to test the new API.
+
+From the candidate set, I'm selecting tests that directly exercise encoder CUDA graphs and v1 multimodal models. Per Rule 2, changes to `vllm/v1/worker/` and `vllm/v1/` broadly trigger v1 e2e tests. Per Rule 6, worker changes also cover hardware platform variants. Dropping unrelated candidates from interfaces.py (like compile/, distributed/, detokenizer/) since the diff only touches the encoder CUDA graph interface method signature, not general model functionality.
+
+---
+tests/v1/cudagraph/ | directly tests encoder CUDA graph API (modified test file)
+tests/v1/e2e/ | v1 worker changes trigger e2e tests (Rule 2, Rule 6)
+tests/v1/core/ | v1 engine/worker interaction (Rule 2)
+tests/models/ | vision model interface implementation (Qwen models, Step3-VL changed)
+tests/basic_correctness/ | v1 changes minimum safety net for CPU variants (Rule 7)

@@ -1,0 +1,4 @@
+This PR only modifies a test file itself (`tests/models/quantization/test_gpt_oss.py`), not any vllm source files. The change adds an import guard to prevent import errors on non-ROCm platforms by conditionally importing `on_gfx950`. Since no vllm source files changed, the candidate table is empty. The modified test file should be run to verify the import refactoring works correctly.
+
+---
+tests/models/quantization/test_gpt_oss.py | test file itself was modified with import guard

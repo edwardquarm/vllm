@@ -1,0 +1,4 @@
+This PR refactors `vllm/tool_parsers/seed_oss_tool_parser.py` by extracting inline logic for finding tool properties and converting parameter values into shared utility functions (`find_tool_properties`, `extract_types_from_schema`, `coerce_to_schema_type`). The public API and behavior should remain unchanged—this is purely an internal code reorganization. From the huge candidate set, only the direct test for this specific parser is needed to verify the refactoring preserved correctness.
+
+---
+tests/tool_parsers/test_seed_oss_tool_parser.py | direct test of refactored SeedOSSToolParser

@@ -1,0 +1,36 @@
+Now I have all the information needed to select tests for this PR. Let me analyze the changes and select the appropriate tests.
+
+This PR modifies the KV connector handshake infrastructure to support pipeline parallelism (PP) with per-PP-rank metadata. The changes are:
+
+1. **New test files** (3 test files added)
+2. **Source file changes**:
+   - `vllm/distributed/kv_transfer/kv_connector/utils.py` - adds PP-aware fields to `EngineTransferInfo` and updates `TransferTopology` to key by `(engine_id, pp_rank)`
+   - `vllm/distributed/kv_transfer/kv_connector/v1/base.py` - adds `set_xfer_handshake_metadata_pp_aware()` method
+   - `vllm/distributed/kv_transfer/kv_connector/v1/multi_connector.py` - implements PP-aware handshake forwarding
+   - `vllm/v1/engine/core.py` - switches from `set_xfer_handshake_metadata()` to `set_xfer_handshake_metadata_pp_aware()`
+   - `vllm/v1/executor/abstract.py` - updates type signature for `get_kv_connector_handshake_metadata()`
+   - `vllm/v1/worker/gpu_worker.py` - returns metadata keyed by `(pp_rank, tp_rank)` instead of just `tp_rank`
+
+Looking at the diff, this is a focused infrastructure change to the KV connector handshake mechanism. The candidate table shows a massive list of tests that import the changed source file, but most are unrelated to KV connector functionality.
+
+Let me apply the rules:
+
+**Section 1: Reasoning**
+
+This PR adds pipeline-parallelism awareness to KV connector handshake metadata by changing the metadata key from `tp_rank` to `(pp_rank, tp_rank)`. It adds three new test files that directly test this functionality and modifies one existing test to expect the new method name. The source changes touch KV connector infrastructure (`vllm/distributed/kv_transfer/`), v1 engine core, executor abstraction, and GPU worker.
+
+From the candidate table, I should narrow down to tests that actually exercise KV connectors. The vast majority of candidates import the changed files transitively but don't test KV connector handshake logic. Per Rule 1, I'll drop tests unrelated to KV transfer.
+
+Per Rule 2 (manual entries), `tests/v1/kv_connector/` maps to changes in `vllm/v1/kv_connector/` - but this PR actually changes `vllm/distributed/kv_transfer/kv_connector/`, which is the underlying infrastructure.
+
+Per Rule 4, I'll include `tests/basic_correctness/` as a safety net since this touches core engine initialization.
+
+Per Rule 6, changes to `vllm/v1/engine/`, `vllm/v1/executor/`, and `vllm/v1/worker/` should also trigger `tests/v1/` tests.
+
+**Section 2: Test list**
+
+---
+tests/v1/kv_connector/ | KV connector handshake logic changed, all connector tests needed
+tests/v1/engine/ | engine core handshake initialization changed
+tests/v1/e2e/ | v1 executor and worker changes affect end-to-end flows
+tests/basic_correctness/ | core engine initialization touched, safety net

@@ -1,0 +1,23 @@
+{
+  "pr_number": "43824",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 1,
+    "false_positives": 0,
+    "coverage_rate": 0.0,
+    "precision_rate": 1.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (LLM) (mi325_1)",
+      "job_name": "AMD: Entrypoints Integration (LLM) (mi325_1)",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [],
+  "notes": [
+    "Generated on 2026-06-30T06:40:50.359357+00:00"
+  ]
+}

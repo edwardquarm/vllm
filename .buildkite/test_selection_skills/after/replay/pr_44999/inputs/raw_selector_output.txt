@@ -1,0 +1,14 @@
+This PR refactors weight loading for ColBERT embedding models. It replaces manual prefix stripping logic with new utilities (`AutoWeightsLoader`, `WeightsMapper`) in four ColBERT model classes. The change only affects how weights are loaded from checkpoints, not the model architecture or forward pass. I'm selecting tests that load and exercise ColBERT models, plus the late interaction tests that depend on ColBERT functionality. Dropping all candidates that only import the module but don't actually instantiate or test ColBERT models (generation tests, kernels, LoRA, compilation, etc.).
+
+---
+tests/models/language/pooling/test_colbert.py | directly tests ColBERT model weight loading
+tests/models/language/pooling/test_bge_m3.py | BGE-M3 sparse mode uses ColBERT
+tests/models/language/pooling/test_multi_vector_retrieval.py | multi-vector retrieval uses ColBERT
+tests/models/multimodal/pooling/test_colpali.py | ColPali vision ColBERT model
+tests/models/multimodal/pooling/test_colqwen3.py | uses refactored ColQwen2EmbeddingModel
+tests/models/multimodal/pooling/test_colqwen3_5.py | ColQwen3.5 variant
+tests/models/multimodal/pooling/test_colmodernvbert.py | ColModernBERT uses ColBERT
+tests/entrypoints/pooling/scoring/test_late_interaction_offline.py | late interaction scoring uses ColBERT
+tests/entrypoints/pooling/scoring/test_late_interaction_online.py | late interaction online uses ColBERT
+tests/entrypoints/pooling/scoring/test_late_interaction_offline_vision.py | vision late interaction uses ColBERT
+tests/entrypoints/pooling/scoring/test_late_interaction_online_vision.py | vision late interaction online uses ColBERT

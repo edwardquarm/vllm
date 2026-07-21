@@ -1,0 +1,159 @@
+{
+  "pr_number": "41972",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 24,
+    "false_positives": 5,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/models",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_common.py",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/models/multimodal/generation/test_ultravox.py",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Multi-Modal Models (Standard) 1: qwen2",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/compile",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/csrc",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/compilation",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/config/compilation.py",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/platforms/rocm.py",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/attention",
+      "job_name": "PyTorch Fullgraph Smoke Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/distributed/test_elastic_ep.py",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/distributed",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/engine",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/executor",
+      "job_name": "Elastic EP Scaling Test",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/model_executor/layers",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/cudagraph_dispatcher.py",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm/v1/worker",
+      "job_name": "PyTorch Compilation Unit Tests",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/compile/fusions_e2e/test_tp2_ar_rms.py",
+      "reason": "directly tests TP2 allreduce+RMS fusion"
+    },
+    {
+      "selected_test": "tests/compile/passes/distributed/test_fusion_all_reduce.py",
+      "reason": "tests allreduce fusion passes"
+    },
+    {
+      "selected_test": "tests/compile/correctness_e2e/test_async_tp.py",
+      "reason": "async TP correctness with compilation"
+    },
+    {
+      "selected_test": "tests/compile/correctness_e2e/test_sequence_parallel.py",
+      "reason": "sequence parallel uses allreduce fusion"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for core compilation change"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:37:32.710596+00:00"
+  ]
+}

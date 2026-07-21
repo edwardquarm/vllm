@@ -1,0 +1,42 @@
+{
+  "pr_number": "43286",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 0,
+    "false_positives": 6,
+    "coverage_rate": 1.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/model_executor/layers/test_pooler_activations.py",
+      "reason": "modified test file, validates new exception type"
+    },
+    {
+      "selected_test": "tests/test_pooling_params.py",
+      "reason": "directly tests pooling_params.py validation logic"
+    },
+    {
+      "selected_test": "tests/entrypoints/pooling/",
+      "reason": "exercises pooling params and functionality end-to-end"
+    },
+    {
+      "selected_test": "tests/models/language/pooling/",
+      "reason": "exercises pooling models and pooler config"
+    },
+    {
+      "selected_test": "tests/v1/e2e/general/test_pooling_chunked_prefill.py",
+      "reason": "tests v1 pooling metadata code path"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for assertion to exception changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:39:32.583308+00:00"
+  ]
+}

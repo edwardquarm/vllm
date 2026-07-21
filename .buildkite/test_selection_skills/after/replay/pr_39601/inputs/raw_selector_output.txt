@@ -1,0 +1,6 @@
+This PR refactors the `_is_string_type` method in `vllm/tool_parsers/glm4_moe_tool_parser.py` to use utility functions (`find_tool_properties`, `extract_types_from_schema`) instead of inline logic. The refactoring preserves behavior but now properly handles nullable string types and delegates type checking to reusable utilities. The test file adds comprehensive tests for the new FunctionTool (Responses API) support.
+
+The candidate table lists hundreds of tests because many files transitively import this module, but they don't actually exercise the GLM4 MoE tool parser's string type detection logic. This change is isolated to a specific parser method that only the dedicated tool parser test exercises.
+
+---
+tests/tool_parsers/test_glm4_moe_tool_parser.py | directly tests the refactored method and FunctionTool support

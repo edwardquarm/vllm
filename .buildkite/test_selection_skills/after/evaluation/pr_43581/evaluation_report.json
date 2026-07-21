@@ -1,0 +1,61 @@
+{
+  "pr_number": "43581",
+  "evaluation_status": "success",
+  "summary": {
+    "true_positives": 0,
+    "false_negatives": 6,
+    "false_positives": 3,
+    "coverage_rate": 0.0,
+    "precision_rate": 0.0
+  },
+  "true_positive_details": [],
+  "false_negative_details": [
+    {
+      "failed_test": "tests/entrypoints",
+      "job_name": "Entrypoints Integration (Pooling)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/entrypoints/pooling",
+      "job_name": "Entrypoints Integration (Pooling)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "tests/vllm",
+      "job_name": "Entrypoints Integration (Pooling)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] AMD: Entrypoints Integration (API Server openai - Part 3) (mi325_1)",
+      "job_name": "AMD: Entrypoints Integration (API Server openai - Part 3) (mi325_1)",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Basic Models Tests (Extra Initialization) 1",
+      "job_name": "Basic Models Tests (Extra Initialization) 1",
+      "why_missed": "not_in_candidate_mapping"
+    },
+    {
+      "failed_test": "[job] Basic Models Tests (Extra Initialization) 2",
+      "job_name": "Basic Models Tests (Extra Initialization) 2",
+      "why_missed": "not_in_candidate_mapping"
+    }
+  ],
+  "false_positive_details": [
+    {
+      "selected_test": "tests/models/multimodal/pooling/test_llama_nemotron_vl.py",
+      "reason": "directly tests LlamaNemotronVLForEmbedding weight loading"
+    },
+    {
+      "selected_test": "tests/models/language/pooling_mteb_test/test_nemotron.py",
+      "reason": "MTEB tests use Nemotron pooling models"
+    },
+    {
+      "selected_test": "tests/basic_correctness/",
+      "reason": "safety net for model weight loading changes"
+    }
+  ],
+  "notes": [
+    "Generated on 2026-06-30T06:40:31.040486+00:00"
+  ]
+}
